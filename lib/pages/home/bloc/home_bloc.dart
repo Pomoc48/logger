@@ -31,10 +31,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<RemoveFromHome>((event, emit) async {
       try {
-        List<Table> tables = List.from(event.tableList);
-        tables.remove(event.table);
-
-        emit(HomeLoaded(tables));
+        await removeTable(event.table.name);
+        emit(HomeLoaded(await getTables()));
       } catch (e) {
         emit(HomeError());
       }

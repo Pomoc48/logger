@@ -26,6 +26,17 @@ Future<void> addTable(String name) async {
     Uri.parse("https://lukawski.xyz/logs/tables/?table_name=$name"),
   );
 
+  // TODO: do something
+  if (response.statusCode == 200) {
+    return;
+  }
+}
+
+Future<void> removeTable(String name) async {
+  Response response = await delete(
+    Uri.parse("https://lukawski.xyz/logs/tables/?table_name=$name"),
+  );
+
   if (response.statusCode == 200) {
     return;
   }
