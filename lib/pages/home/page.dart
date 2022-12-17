@@ -7,6 +7,8 @@ import 'package:log_app/pages/home/widgets/dismiss_background.dart';
 import 'package:log_app/pages/home/widgets/empty_list.dart';
 import 'package:log_app/pages/home/widgets/loading.dart';
 import 'package:log_app/pages/home/widgets/network_error.dart';
+import 'package:log_app/pages/home/widgets/server_setup.dart';
+import 'package:log_app/pages/list/bloc/list_bloc.dart';
 import 'package:log_app/strings.dart';
 
 class HomePage extends StatelessWidget {
@@ -46,7 +48,10 @@ class HomePage extends StatelessWidget {
                           state.tables[index], state.tables));
                     },
                     child: ListTile(
-                      onTap: () {},
+                      onTap: () {
+                        context.read<ListBloc>().add(LoadList(
+                            state.tables[index]));
+                      },
                       trailing: SizedBox(
                         width: 120,
                         height: 40,
@@ -74,6 +79,10 @@ class HomePage extends StatelessWidget {
               ),
             ),
           );
+        }
+
+        if (state is HomeServerSetup) {
+          return const ServerSetup();
         }
 
         if (state is HomeError) {

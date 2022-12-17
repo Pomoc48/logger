@@ -1,13 +1,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart';
 import 'package:log_app/pages/home/bloc/functions.dart';
 import 'package:log_app/pages/home/bloc/home_bloc.dart';
 import 'package:log_app/strings.dart';
 
 Future<void> refresh(BuildContext context) async {
   try {
-    context.read<HomeBloc>().add(UpdateHome(await getTables()));
+    List serverConfig = GetStorage().read('serverConfig');
+    context.read<HomeBloc>().add(UpdateHome(await getTables(serverConfig)));
   } catch (e) {
     context.read<HomeBloc>().add(ReportHomeError());
   }
@@ -78,4 +81,21 @@ Future<bool> confirmDismiss({
   );
   
   return dismiss;
+}
+
+Future<bool> checkServerConnection({
+  required String hostname,
+  required String username,
+  required String password,
+  required String database,
+}) async {
+  Response response = await post(
+    Uri.parse("https://lukawski.xyz/logs/test/?hostname=$hostname&username=$username&password=$password&database=$database"),
+  );
+
+  if (response.statusCode == 200) {
+    return true;
+  }
+
+  return false;
 }

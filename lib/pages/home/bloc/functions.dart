@@ -4,7 +4,7 @@ import 'package:http/http.dart';
 import 'package:log_app/models/table.dart';
 
 
-Future<List<TableItem>> getTables() async {
+Future<List<TableItem>> getTables(List serverConfig) async {
   Response response = await get(
     Uri.parse("https://lukawski.xyz/logs/tables/"),
   );
@@ -22,7 +22,7 @@ Future<List<TableItem>> getTables() async {
   return tables;
 }
 
-Future<void> addTable(String name) async {
+Future<void> addTable(String name, List serverConfig) async {
   Response response = await post(
     Uri.parse("https://lukawski.xyz/logs/tables/?table_name=$name"),
   );
@@ -33,7 +33,7 @@ Future<void> addTable(String name) async {
   }
 }
 
-Future<void> removeTable(String name) async {
+Future<void> removeTable(String name, List serverConfig) async {
   Response response = await delete(
     Uri.parse("https://lukawski.xyz/logs/tables/?table_name=$name"),
   );

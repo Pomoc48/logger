@@ -19,3 +19,5 @@ class HomeLoaded extends HomeState {
   @override
   List<Object> get props => [tables];
 }
+
+class HomeServerSetup extends HomeState {}

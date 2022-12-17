@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:log_app/models/table.dart';
 import 'package:log_app/pages/home/bloc/functions.dart';
 
@@ -9,10 +10,16 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitial()) {
     on<LoadHome>((event, emit) async {
-      try {
-        emit(HomeLoaded(await getTables()));
-      } catch (e) {
-        emit(HomeError());
+      List? serverConfig = GetStorage().read('serverConfig');
+
+      if (serverConfig == null) {
+        emit(HomeServerSetup());
+      } else {
+        try {
+          emit(HomeLoaded(await getTables(serverConfig)));
+        } catch (e) {
+          emit(HomeError());
+        }
       }
     });
 
@@ -22,8 +29,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<InsertHome>((event, emit) async {
       try {
-        await addTable(event.newTable);
-        emit(HomeLoaded(await getTables()));
+        List serverConfig = GetStorage().read('serverConfig');
+        
+        await addTable(event.newTable, serverConfig);
+        emit(HomeLoaded(await getTables(serverConfig)));
       } catch (e) {
         emit(HomeError());
       }
@@ -31,8 +40,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<RemoveFromHome>((event, emit) async {
       try {
-        await removeTable(event.table.name);
-        emit(HomeLoaded(await getTables()));
+        List serverConfig = GetStorage().read('serverConfig');
+
+        await removeTable(event.table.name, serverConfig);
+        emit(HomeLoaded(await getTables(serverConfig)));
       } catch (e) {
         emit(HomeError());
       }
