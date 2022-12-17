@@ -44,7 +44,39 @@ class HomePage extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(title: Text(Strings.appName)),
             floatingActionButton: FloatingActionButton.extended(
-              onPressed: () => Navigator.pushNamed(context, Routes.add),
+              onPressed: () {
+                TextEditingController controller = TextEditingController();
+
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("New log"),
+                      content: TextField(
+                        controller: controller,
+                        decoration: InputDecoration(
+                          label: Text("Name"),
+                        ),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text("Cancel"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            context.read<HomeBloc>().add(
+                              InsertHome(state.tables, controller.text),
+                            );
+                            Navigator.pop(context);
+                          },
+                          child: Text("Create"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
               icon: const Icon(Icons.add),
               label: Text(Strings.newLog),
             ),

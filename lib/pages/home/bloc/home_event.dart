@@ -17,3 +17,13 @@ class UpdateHome extends HomeEvent {
   @override
   List<Object> get props => [tableList];
 }
+
+class InsertHome extends HomeEvent {
+  final List<String> tableList;
+  final String newTable;
+
+  const InsertHome(this.tableList, this.newTable);
+
+  @override
+  List<Object> get props => [tableList, newTable];
+}

@@ -18,5 +18,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<UpdateHome>((event, emit) {
       emit(HomeLoaded(event.tableList));
     });
+
+    on<InsertHome>((event, emit) async {
+      try {
+        await addTable(event.newTable);
+        emit(HomeLoaded(await getTables()));
+      } catch (e) {
+        emit(HomeError());
+      }
+    });
+    
   }
 }
