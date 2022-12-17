@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 
-class Table extends Equatable {
+class TableItem extends Equatable {
   final String name;
   final int rows;
 
-  const Table({required this.name, required this.rows});
+  const TableItem({required this.name, required this.rows});
 
-  factory Table.fromMap(dynamic map) {
-    return Table(
+  factory TableItem.fromMap(dynamic map) {
+    return TableItem(
       name: map["name"],
       rows: map["rows"],
     );

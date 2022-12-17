@@ -1,8 +1,11 @@
 import 'package:chart_sparkline/chart_sparkline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:log_app/pages/home/bloc/functions.dart';
 import 'package:log_app/pages/home/bloc/home_bloc.dart';
+import 'package:log_app/pages/home/functions.dart';
+import 'package:log_app/pages/home/widgets/empty_list.dart';
+import 'package:log_app/pages/home/widgets/loading.dart';
+import 'package:log_app/pages/home/widgets/network_error.dart';
 import 'package:log_app/strings.dart';
 
 class HomePage extends StatelessWidget {
@@ -13,89 +16,20 @@ class HomePage extends StatelessWidget {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
 
-        Future<void> refresh() async {
-          try {
-            context.read<HomeBloc>().add(UpdateHome(await getTables()));
-          } catch (e) {
-            context.read<HomeBloc>().add(ReportHomeError());
-          }
-        }
-
-        Future<void> addNewTableDialog() async {
-          TextEditingController controller = TextEditingController();
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text(Strings.newLog),
-                content: TextField(
-                  controller: controller,
-                  decoration: InputDecoration(
-                    label: Text(Strings.listName),
-                    hintText: Strings.newListHint,
-                  ),
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(Strings.cancel),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      context.read<HomeBloc>().add(
-                        InsertHome(controller.text),
-                      );
-                      Navigator.pop(context);
-                    },
-                    child: Text(Strings.create),
-                  ),
-                ],
-              );
-            },
-          );
-        }
-
         ThemeData t = Theme.of(context);
 
         if (state is HomeLoaded) {
-          if (state.tables.isEmpty) {
-            return Scaffold(
-              appBar: AppBar(title: Text(Strings.appName)),
-              floatingActionButton: FloatingActionButton.extended(
-                onPressed: addNewTableDialog,
-                icon: const Icon(Icons.add),
-                label: Text(Strings.newLog),
-              ),
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Icon(
-                    Icons.error_outline,
-                    size: 56,
-                    color: t.colorScheme.primary,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    Strings.empty,
-                    textAlign: TextAlign.center,
-                    style: t.textTheme.bodyLarge,
-                  ),
-                  const SizedBox(height: 56+32),
-                ],
-              ),
-            );
-          }
+          if (state.tables.isEmpty) return const EmptyList();
 
           return Scaffold(
             appBar: AppBar(title: Text(Strings.appName)),
             floatingActionButton: FloatingActionButton.extended(
-              onPressed: addNewTableDialog,
+              onPressed: () => addNewTableDialog(context),
               icon: const Icon(Icons.add),
               label: Text(Strings.newLog),
             ),
             body: RefreshIndicator(
-              onRefresh: refresh,
+              onRefresh: () async => refresh(context),
               child: ListView.separated(
                 separatorBuilder: (context, index) => const Divider(height: 0),
                 itemBuilder: (context, index) {
@@ -198,33 +132,10 @@ class HomePage extends StatelessWidget {
         }
 
         if (state is HomeError) {
-          return Scaffold(
-            appBar: AppBar(title: Text(Strings.appName)),
-            body: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 56),
-                  Text(Strings.error, style: t.textTheme.titleLarge),
-                  const SizedBox(height: 16),
-                  Text(Strings.noNet, style: t.textTheme.bodyLarge),
-                  const SizedBox(height: 32),
-                  OutlinedButton.icon(
-                    onPressed: refresh,
-                    icon: const Icon(Icons.refresh),
-                    label: Text(Strings.refresh),
-                  ),
-                ],
-              ),
-            ),
-          );
+          return const NetworkError();
         }
 
-        return Scaffold(
-          appBar: AppBar(title: Text(Strings.appName)),
-          body: const Center(child: CircularProgressIndicator()),
-        );
+        return const PageLoading();
       },
     );
   }

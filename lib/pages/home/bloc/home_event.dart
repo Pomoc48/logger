@@ -10,7 +10,7 @@ abstract class HomeEvent extends Equatable {
 class LoadHome extends HomeEvent {}
 
 class UpdateHome extends HomeEvent {
-  final List<Table> tables;
+  final List<TableItem> tables;
 
   const UpdateHome(this.tables);
 
@@ -28,8 +28,8 @@ class InsertHome extends HomeEvent {
 }
 
 class RemoveFromHome extends HomeEvent {
-  final List<Table> tableList;
-  final Table table;
+  final List<TableItem> tableList;
+  final TableItem table;
 
   const RemoveFromHome(this.table, this.tableList);
 

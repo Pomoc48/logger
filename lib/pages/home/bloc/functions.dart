@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:log_app/models/table.dart';
 
-Future<List<Table>> getTables() async {
+
+Future<List<TableItem>> getTables() async {
   Response response = await get(
     Uri.parse("https://lukawski.xyz/logs/tables/"),
   );
@@ -12,10 +13,10 @@ Future<List<Table>> getTables() async {
 
   if (decoded == null) return [];
 
-  List<Table> tables = [];
+  List<TableItem> tables = [];
 
   for (Map element in decoded) {
-    tables.add(Table.fromMap(element));
+    tables.add(TableItem.fromMap(element));
   }
 
   return tables;
