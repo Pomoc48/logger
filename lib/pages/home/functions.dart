@@ -46,3 +46,36 @@ Future<void> addNewTableDialog(BuildContext context) async {
     },
   );
 }
+
+Future<bool> confirmDismiss({
+  required BuildContext context,
+  required String message,
+}) async {
+  bool dismiss = false;
+  await showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(Strings.confirmation),
+        content: Text(message),
+        actions: [
+          TextButton.icon(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(Icons.close),
+            label: Text(Strings.cancel),
+          ),
+          TextButton.icon(
+            onPressed: () {
+              dismiss = true;
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.delete_outlined),
+            label: Text(Strings.delete),
+          ),
+        ],
+      );
+    },
+  );
+  
+  return dismiss;
+}
