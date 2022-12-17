@@ -23,7 +23,7 @@ class ServerSetup extends StatelessWidget {
               || passwordC.text == "" || databaseC.text == "") {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text("Please enter all the fields"),
+                content: Text(Strings.allFields),
                 behavior: SnackBarBehavior.floating,
               ),
             );

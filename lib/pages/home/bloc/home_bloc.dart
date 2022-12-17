@@ -52,5 +52,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<ReportHomeError>((event, emit) {
       emit(HomeError());
     });
+
+    on<ReportServerUpdate>((event, emit) {
+      emit(HomeServerSetup());
+    });
   }
 }

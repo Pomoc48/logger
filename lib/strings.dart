@@ -5,6 +5,7 @@ class Strings {
 
   static String empty = "No lists to display";
   static String error = "Something went wrong";
+  static String allFields = "Please enter all the fields";
   static String areSure = "Are you sure you want to delete this list? All items inside will be permanently deleted.";
   static String noNet = "Device has no internet connection or the server is not available.";
 
@@ -16,6 +17,7 @@ class Strings {
   static String cancel = "Cancel";
   static String delete = "Delete";
   static String refresh = "Refresh";
+  static String updatePassword = "MySQL setup";
 
   static String newListHint = "Workout";
 

@@ -38,3 +38,5 @@ class RemoveFromHome extends HomeEvent {
 }
 
 class ReportHomeError extends HomeEvent {}
+
+class ReportServerUpdate extends HomeEvent {}

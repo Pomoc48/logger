@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:log_app/pages/home/bloc/home_bloc.dart';
 import 'package:log_app/pages/home/functions.dart';
 import 'package:log_app/strings.dart';
 
@@ -20,10 +22,21 @@ class NetworkError extends StatelessWidget {
             const SizedBox(height: 16),
             Text(Strings.noNet, style: t.textTheme.bodyLarge),
             const SizedBox(height: 32),
-            OutlinedButton.icon(
-              onPressed: () async => refresh(context),
-              icon: const Icon(Icons.refresh),
-              label: Text(Strings.refresh),
+            Row(
+              children: [
+                OutlinedButton.icon(
+                  onPressed: () async => refresh(context),
+                  icon: const Icon(Icons.refresh),
+                  label: Text(Strings.refresh),
+                ),
+                const SizedBox(width: 16),
+                TextButton(
+                  onPressed: () {
+                    context.read<HomeBloc>().add(ReportServerUpdate());
+                  },
+                  child: Text(Strings.updatePassword),
+                ),
+              ],
             ),
           ],
         ),
