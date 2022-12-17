@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:log_app/pages/home/bloc/functions.dart';
 import 'package:log_app/pages/home/bloc/home_bloc.dart';
 import 'package:log_app/strings.dart';
 
@@ -48,7 +49,9 @@ class HomePage extends StatelessWidget {
               label: Text(Strings.newLog),
             ),
             body: RefreshIndicator(
-              onRefresh: () async {},
+              onRefresh: () async {
+                context.read<HomeBloc>().add(UpdateHome(await getTables()));
+              },
               child: ListView.separated(
                 itemBuilder: (context, index) {
                   return ListTile(
@@ -56,12 +59,8 @@ class HomePage extends StatelessWidget {
                     leading: Container(
                       padding: const EdgeInsets.only(right: 16),
                       decoration: BoxDecoration(
-                        border: Border(
-                          right: BorderSide(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                          
-                        ),
+                        border: Border(right: BorderSide(
+                            color: Theme.of(context).colorScheme.primary)),
                       ),
                       width: 40+16,
                       height: 40,
@@ -106,7 +105,11 @@ class HomePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
                   OutlinedButton.icon(
-                    onPressed: () async {},
+                    onPressed: () async {
+                      context.read<HomeBloc>().add(
+                        UpdateHome(await getTables()),
+                      );
+                    },
                     icon: const Icon(Icons.refresh),
                     label: Text(Strings.refresh),
                   ),

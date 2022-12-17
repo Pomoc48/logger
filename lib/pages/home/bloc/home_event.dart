@@ -8,3 +8,12 @@ abstract class HomeEvent extends Equatable {
 }
 
 class LoadHome extends HomeEvent {}
+
+class UpdateHome extends HomeEvent {
+  final List<String> tableList;
+
+  const UpdateHome(this.tableList);
+
+  @override
+  List<Object> get props => [tableList];
+}
