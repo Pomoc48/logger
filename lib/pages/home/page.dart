@@ -31,7 +31,8 @@ class HomePage extends StatelessWidget {
                 content: TextField(
                   controller: controller,
                   decoration: InputDecoration(
-                    label: Text(Strings.name),
+                    label: Text(Strings.listName),
+                    hintText: Strings.newListHint,
                   ),
                 ),
                 actions: [
