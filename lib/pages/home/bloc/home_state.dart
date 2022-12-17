@@ -11,4 +11,11 @@ class HomeInitial extends HomeState {}
 
 class HomeError extends HomeState {}
 
-class HomeLoaded extends HomeState {}
+class HomeLoaded extends HomeState {
+  final List<String> tables;
+
+  const HomeLoaded(this.tables);
+
+  @override
+  List<Object> get props => [tables];
+}

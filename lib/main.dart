@@ -8,18 +8,18 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => HomeBloc()),
+        BlocProvider(create: (context) => HomeBloc()..add(LoadHome())),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: Strings.appName,
         theme: ThemeData(
           useMaterial3: true,
-          colorSchemeSeed: Colors.pink,
+          colorSchemeSeed: Colors.blue,
         ),
         darkTheme: ThemeData(
           useMaterial3: true,
-          colorSchemeSeed: Colors.pink,
+          colorSchemeSeed: Colors.blue,
           brightness: Brightness.dark,
         ),
         routes: {

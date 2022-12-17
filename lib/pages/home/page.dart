@@ -24,10 +24,12 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 child: ListView.separated(
                   itemBuilder: (context, index) {
-                    return Text(index.toString());
+                    return ListTile(
+                      title: Text(state.tables[index]),
+                    );
                   },
                   separatorBuilder: (context, index) => const Divider(),
-                  itemCount: 25,
+                  itemCount: state.tables.length,
                 ),
               ),
             ),
