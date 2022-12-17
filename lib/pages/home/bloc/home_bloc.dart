@@ -28,6 +28,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         emit(HomeError());
       }
     });
+
+    on<RemoveFromHome>((event, emit) async {
+      try {
+        List<Table> tables = List.from(event.tableList);
+        tables.remove(event.table);
+
+        emit(HomeLoaded(tables));
+      } catch (e) {
+        emit(HomeError());
+      }
+    });
     
+    on<ReportHomeError>((event, emit) {
+      emit(HomeError());
+    });
   }
 }

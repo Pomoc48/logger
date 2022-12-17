@@ -11,6 +11,17 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
+
+        refresh() async {
+          try {
+            context.read<HomeBloc>().add(UpdateHome(await getTables()));
+          } catch (e) {
+            context.read<HomeBloc>().add(ReportHomeError());
+          }
+        }
+
+        ThemeData t = Theme.of(context);
+
         if (state is HomeLoaded) {
           if (state.tables.isEmpty) {
             return Scaffold(
@@ -27,13 +38,13 @@ class HomePage extends StatelessWidget {
                   Icon(
                     Icons.error_outline,
                     size: 56,
-                    color: Theme.of(context).colorScheme.primary,
+                    color: t.colorScheme.primary,
                   ),
                   const SizedBox(height: 16),
                   Text(
                     Strings.empty,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    style: t.textTheme.bodyLarge,
                   ),
                   const SizedBox(height: 56+32),
                 ],
@@ -81,36 +92,62 @@ class HomePage extends StatelessWidget {
               label: Text(Strings.newLog),
             ),
             body: RefreshIndicator(
-              onRefresh: () async {
-                context.read<HomeBloc>().add(UpdateHome(await getTables()));
-              },
-              child: ListView.separated(
+              onRefresh: refresh,
+              child: ListView.builder(
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    onTap: () {},
-                    leading: Container(
-                      padding: const EdgeInsets.only(right: 16),
-                      decoration: BoxDecoration(
-                        border: Border(right: BorderSide(
-                            color: Theme.of(context).colorScheme.primary)),
-                      ),
-                      width: 56,
-                      height: 40,
-                      child: Center(
-                        child: Text(
-                          (index + 1).toString(),
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+                  return Dismissible(
+                    key: Key(state.tables[index].name),
+                    direction: DismissDirection.startToEnd,
+                    background: Container(
+                      color: t.colorScheme.error,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.delete_forever,
+                              color: t.colorScheme.onError,
+                            ),
+                            const SizedBox(width: 16),
+                            Text(
+                              "Remove",
+                              style: t.textTheme.labelLarge!
+                                  .copyWith(color: t.colorScheme.onError),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    title: Text(state.tables[index].name),
-                    subtitle: Text("${state.tables[index].rows} items"),
+                    onDismissed: (direction) {
+                      context.read<HomeBloc>().add(RemoveFromHome(
+                        state.tables[index],
+                        state.tables,
+                      ));
+                    },
+                    child: ListTile(
+                      onTap: () {},
+                      leading: Container(
+                        padding: const EdgeInsets.only(right: 16),
+                        decoration: BoxDecoration(
+                          border: Border(right: BorderSide(
+                              color: t.colorScheme.primary)),
+                        ),
+                        width: 56,
+                        height: 40,
+                        child: Center(
+                          child: Text(
+                            (index + 1).toString(),
+                            style: t.textTheme.headlineSmall?.copyWith(
+                              color: t.colorScheme.primary,
+                            ),
+                          ),
+                        ),
+                      ),
+                      title: Text(state.tables[index].name),
+                      subtitle: Text("${state.tables[index].rows} items"),
+                    ),
                   );
                 },
-                separatorBuilder: (context, index) => const SizedBox(height: 0),
-                // separatorBuilder: (context, index) => const Divider(),
                 itemCount: state.tables.length,
               ),
             ),
@@ -126,22 +163,12 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 56),
-                  Text(
-                    Strings.error,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    Strings.noNet,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
+                  Text(Strings.error, style: t.textTheme.titleLarge),
+                  const SizedBox(height: 16),
+                  Text(Strings.noNet, style: t.textTheme.bodyLarge),
                   const SizedBox(height: 32),
                   OutlinedButton.icon(
-                    onPressed: () async {
-                      context.read<HomeBloc>().add(
-                        UpdateHome(await getTables()),
-                      );
-                    },
+                    onPressed: refresh,
                     icon: const Icon(Icons.refresh),
                     label: Text(Strings.refresh),
                   ),

@@ -26,3 +26,15 @@ class InsertHome extends HomeEvent {
   @override
   List<Object> get props => [newTable];
 }
+
+class RemoveFromHome extends HomeEvent {
+  final List<Table> tableList;
+  final Table table;
+
+  const RemoveFromHome(this.table, this.tableList);
+
+  @override
+  List<Object> get props => [table, tableList];
+}
+
+class ReportHomeError extends HomeEvent {}
