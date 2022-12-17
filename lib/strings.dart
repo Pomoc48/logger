@@ -1,5 +1,6 @@
 class Strings {
   static String appName = "Logs";
+  static String serverSetup = "MySQL server setup";
   static String newItem = "Add new list";
 
   static String empty = "No lists to display";
@@ -8,6 +9,7 @@ class Strings {
   static String noNet = "Device has no internet connection or the server is not available.";
 
   static String confirmation = "Confirmation";
+  static String confirm = "Confirm";
   static String listName = "Name of the list";
   static String newLog = "New List";
   static String create = "Create";
@@ -16,6 +18,16 @@ class Strings {
   static String refresh = "Refresh";
 
   static String newListHint = "Workout";
+
+  static String hostname = "Hostname";
+  static String username = "Username";
+  static String password = "Password";
+  static String database = "Database";
+
+  static String hostnameHint = "mysql.exmaple.com";
+  static String usernameHint = "something_log";
+  static String passwordHint = "HelloWorld123";
+  static String databaseHint = "something_log";
 }
 
 class Routes {

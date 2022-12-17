@@ -43,3 +43,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 backend/tables.php
+backend/rows.php
+backend/test.php
