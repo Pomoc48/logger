@@ -15,14 +15,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           Uri.parse("https://lukawski.xyz/logs/tables/"),
         );
 
-        List tablesList = jsonDecode(utf8.decode(response.bodyBytes));
-        List<String> stringList = tablesList.cast<String>();
+        dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
 
-        print(tablesList);
+        if (decoded == null) {
+          emit(const HomeLoaded([]));
+          return;
+        }
 
+        List<String> stringList = decoded.cast<String>();
         emit(HomeLoaded(stringList));
-      } catch (e) {
-        print(e);
+      }
+
+      catch (e) {
         emit(HomeError());
       }
     });
