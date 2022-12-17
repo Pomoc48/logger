@@ -10,20 +10,19 @@ abstract class HomeEvent extends Equatable {
 class LoadHome extends HomeEvent {}
 
 class UpdateHome extends HomeEvent {
-  final List<String> tableList;
+  final List<Table> tables;
 
-  const UpdateHome(this.tableList);
+  const UpdateHome(this.tables);
 
   @override
-  List<Object> get props => [tableList];
+  List<Object> get props => [tables];
 }
 
 class InsertHome extends HomeEvent {
-  final List<String> tableList;
   final String newTable;
 
-  const InsertHome(this.tableList, this.newTable);
+  const InsertHome(this.newTable);
 
   @override
-  List<Object> get props => [tableList, newTable];
+  List<Object> get props => [newTable];
 }

@@ -12,7 +12,7 @@ class HomeInitial extends HomeState {}
 class HomeError extends HomeState {}
 
 class HomeLoaded extends HomeState {
-  final List<String> tables;
+  final List<Table> tables;
 
   const HomeLoaded(this.tables);
 

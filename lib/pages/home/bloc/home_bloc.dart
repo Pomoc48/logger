@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:log_app/models/table.dart';
 import 'package:log_app/pages/home/bloc/functions.dart';
 
 part 'home_event.dart';
@@ -16,7 +17,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
 
     on<UpdateHome>((event, emit) {
-      emit(HomeLoaded(event.tableList));
+      emit(HomeLoaded(event.tables));
     });
 
     on<InsertHome>((event, emit) async {

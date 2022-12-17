@@ -66,7 +66,7 @@ class HomePage extends StatelessWidget {
                         TextButton(
                           onPressed: () {
                             context.read<HomeBloc>().add(
-                              InsertHome(state.tables, controller.text),
+                              InsertHome(controller.text),
                             );
                             Navigator.pop(context);
                           },
@@ -94,7 +94,7 @@ class HomePage extends StatelessWidget {
                         border: Border(right: BorderSide(
                             color: Theme.of(context).colorScheme.primary)),
                       ),
-                      width: 40+16,
+                      width: 56,
                       height: 40,
                       child: Center(
                         child: Text(
@@ -105,8 +105,8 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    title: Text(state.tables[index]),
-                    subtitle: Text("31 items"),
+                    title: Text(state.tables[index].name),
+                    subtitle: Text("${state.tables[index].rows} items"),
                   );
                 },
                 separatorBuilder: (context, index) => const SizedBox(height: 0),
