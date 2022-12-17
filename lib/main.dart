@@ -22,6 +22,9 @@ void main() {
           colorSchemeSeed: Colors.blue,
           brightness: Brightness.dark,
         ),
+        scrollBehavior: const ScrollBehavior().copyWith(
+          physics: const BouncingScrollPhysics(),
+        ),
         routes: {
           Routes.home: (context) => const HomePage(),
           // Routes.add: (context) => const AddElementPage(),

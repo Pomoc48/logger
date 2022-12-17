@@ -11,26 +11,76 @@ class HomePage extends StatelessWidget {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         if (state is HomeLoaded) {
+          if (state.tables.isEmpty) {
+            return Scaffold(
+              appBar: AppBar(title: Text(Strings.appName)),
+              floatingActionButton: FloatingActionButton.extended(
+                onPressed: () => Navigator.pushNamed(context, Routes.add),
+                icon: const Icon(Icons.add),
+                label: Text(Strings.newLog),
+              ),
+              body: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Icon(
+                    Icons.error_outline,
+                    size: 56,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    Strings.empty,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  const SizedBox(height: 56+32),
+                ],
+              ),
+            );
+          }
+
           return Scaffold(
             appBar: AppBar(title: Text(Strings.appName)),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () => Navigator.pushNamed(context, Routes.add),
-              icon: const Icon(Icons.cruelty_free),
+              icon: const Icon(Icons.add),
               label: Text(Strings.newLog),
             ),
             body: RefreshIndicator(
               onRefresh: () async {},
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: ListView.separated(
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(state.tables[index]),
-                    );
-                  },
-                  separatorBuilder: (context, index) => const Divider(),
-                  itemCount: state.tables.length,
-                ),
+              child: ListView.separated(
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    onTap: () {},
+                    leading: Container(
+                      padding: const EdgeInsets.only(right: 16),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          right: BorderSide(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          
+                        ),
+                      ),
+                      width: 40+16,
+                      height: 40,
+                      child: Center(
+                        child: Text(
+                          (index + 1).toString(),
+                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                      ),
+                    ),
+                    title: Text(state.tables[index]),
+                    subtitle: Text("31 items"),
+                  );
+                },
+                separatorBuilder: (context, index) => const SizedBox(height: 0),
+                // separatorBuilder: (context, index) => const Divider(),
+                itemCount: state.tables.length,
               ),
             ),
           );

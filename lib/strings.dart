@@ -2,6 +2,7 @@ class Strings {
   static String appName = "Logs";
   static String newItem = "Add new item";
 
+  static String empty = "No items to display";
   static String error = "Something went wrong";
   static String areSure = "Are you sure you want to delete this item?";
   static String noNet = "Device has no internet connection or the server is not available.";
