@@ -51,17 +51,17 @@ class HomePage extends StatelessWidget {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      title: Text("New log"),
+                      title: Text(Strings.newLog),
                       content: TextField(
                         controller: controller,
                         decoration: InputDecoration(
-                          label: Text("Name"),
+                          label: Text(Strings.name),
                         ),
                       ),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(context),
-                          child: Text("Cancel"),
+                          child: Text(Strings.cancel),
                         ),
                         TextButton(
                           onPressed: () {
@@ -70,7 +70,7 @@ class HomePage extends StatelessWidget {
                             );
                             Navigator.pop(context);
                           },
-                          child: Text("Create"),
+                          child: Text(Strings.create),
                         ),
                       ],
                     );
