@@ -7,6 +7,7 @@ import 'package:log_app/models/table.dart';
 Future<List<TableItem>> getTables(List serverConfig) async {
   Response response = await get(
     Uri.parse("https://lukawski.xyz/logs/tables/"),
+    headers: getHeaders(serverConfig),
   );
 
   dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
@@ -23,22 +24,24 @@ Future<List<TableItem>> getTables(List serverConfig) async {
 }
 
 Future<void> addTable(String name, List serverConfig) async {
-  Response response = await post(
+  await post(
     Uri.parse("https://lukawski.xyz/logs/tables/?table_name=$name"),
+    headers: getHeaders(serverConfig),
   );
-
-  // TODO: do something
-  if (response.statusCode == 200) {
-    return;
-  }
 }
 
 Future<void> removeTable(String name, List serverConfig) async {
-  Response response = await delete(
+  await delete(
     Uri.parse("https://lukawski.xyz/logs/tables/?table_name=$name"),
+    headers: getHeaders(serverConfig),
   );
+}
 
-  if (response.statusCode == 200) {
-    return;
-  }
+Map<String, String> getHeaders(List serverConfig) {
+  return {
+    "Hostname": serverConfig[0],
+    "Username": serverConfig[1],
+    "Password": serverConfig[2],
+    "Database": serverConfig[3],
+  };
 }

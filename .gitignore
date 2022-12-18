@@ -45,3 +45,4 @@ app.*.map.json
 backend/tables.php
 backend/rows.php
 backend/test.php
+backend/auth.php
