@@ -27,18 +27,29 @@ class UpdateList extends ListEvent {
 }
 
 class RemoveFromList extends ListEvent {
-  final List<TableRow> rowList;
   final TableRow row;
   final String title;
 
   const RemoveFromList({
     required this.row,
-    required this.rowList,
     required this.title,
   });
 
   @override
-  List<Object> get props => [row, rowList, title];
+  List<Object> get props => [row, title];
 }
 
 class ReportListError extends ListEvent {}
+
+class InsertList extends ListEvent {
+  final String timestamp;
+  final String name;
+
+  const InsertList({
+    required this.timestamp,
+    required this.name,
+  });
+
+  @override
+  List<Object> get props => [timestamp, name];
+}

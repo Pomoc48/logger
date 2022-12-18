@@ -25,6 +25,20 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       }
     });
 
+    on<InsertList>((event, emit) async {
+      try {
+        List serverConfig = GetStorage().read('serverConfig');
+        await addRow(event.name, event.timestamp, serverConfig);
+
+        emit(ListLoaded(
+          rowList: await getTableRows(serverConfig, event.name),
+          title: event.name,
+        ));
+      } catch (e) {
+        emit(ListError());
+      }
+    });
+
     on<RemoveFromList>((event, emit) async {
       try {
         List serverConfig = GetStorage().read('serverConfig');

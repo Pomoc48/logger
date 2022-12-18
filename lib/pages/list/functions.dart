@@ -17,13 +17,38 @@ Future<void> refresh(BuildContext context, String name) async {
   }
 }
 
-Future<void> addNewRowDialog(BuildContext context) async {
-  showDialog(
+Future<void> addNewRowDialog({
+  required BuildContext context,
+  required String name,
+}) async {
+  DateTime dateNow = DateTime.now();
+
+  DateTime? date = await showDatePicker(
     context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: Text("WIP"),
-      );
-    },
+    initialDate: dateNow,
+    firstDate: DateTime(dateNow.year - 1),
+    lastDate: dateNow,
   );
+
+  if (date == null) return;
+
+  TimeOfDay timeNow = TimeOfDay.now();
+  
+  TimeOfDay? time = await showTimePicker(
+    context: context,
+    initialTime: timeNow,
+  );
+
+  if (time == null) return;
+
+  // ignore: use_build_context_synchronously
+  context.read<ListBloc>().add(InsertList(
+    timestamp: _dateToString(date, time),
+    name: name,
+  ));
+}
+
+String _dateToString(DateTime date, TimeOfDay time) {
+  DateTime d = date.add(Duration(hours: time.hour, minutes: time.minute));
+  return "${d.year}-${d.month}-${d.day} ${d.hour}:${d.minute}";
 }

@@ -23,9 +23,16 @@ Future<List<TableRow>> getTableRows(List serverConfig, String name) async {
   return rows;
 }
 
-Future<void> removeRow(String tableName, int rowId, List serverConfig) async {
+Future<void> removeRow(String table, int rowId, List serverConfig) async {
   await delete(
-    Uri.parse("https://lukawski.xyz/logs/rows/?row_id=$rowId&table_name=$tableName"),
+    Uri.parse("https://lukawski.xyz/logs/rows/?row_id=$rowId&table_name=$table"),
+    headers: getHeaders(serverConfig),
+  );
+}
+
+Future<void> addRow(String table, String timestamp, List serverConfig) async {
+  await post(
+    Uri.parse("https://lukawski.xyz/logs/rows/?timestamp=$timestamp&table_name=$table"),
     headers: getHeaders(serverConfig),
   );
 }

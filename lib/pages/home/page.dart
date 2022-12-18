@@ -24,14 +24,14 @@ class HomePage extends StatelessWidget {
           if (state.tables.isEmpty) {
             return EmptyList(
               title: Strings.appName,
-              press: addNewTableDialog,
+              press: () async => addNewTableDialog(context),
             );
           }
     
           return Scaffold(
             appBar: AppBar(title: Text(Strings.appName)),
             floatingActionButton: FloatingActionButton.extended(
-              onPressed: () => addNewTableDialog(context),
+              onPressed: () async => addNewTableDialog(context),
               icon: const Icon(Icons.add),
               label: Text(Strings.newItemFAB),
             ),

@@ -21,15 +21,20 @@ class ListPage extends StatelessWidget {
           if (state.rowList.isEmpty) {
             return EmptyList(
               title: state.title,
-              press: addNewRowDialog,
+              press: () async => addNewRowDialog(
+                context: context,
+                name: state.title,
+              ),
             );
           }
 
           return Scaffold(
             appBar: AppBar(title: Text(state.title)),
             floatingActionButton: FloatingActionButton.extended(
-              // onPressed: () => addNewRowDialog(context),
-              onPressed: () {}, // TODO: add
+              onPressed: () async => addNewRowDialog(
+                context: context,
+                name: state.title,
+              ),
               icon: const Icon(Icons.add),
               label: Text(Strings.newItemFAB),
             ),
@@ -44,7 +49,6 @@ class ListPage extends StatelessWidget {
                     background: const DismissBackground(),
                     onDismissed: (direction) {
                       context.read<ListBloc>().add(RemoveFromList(
-                        rowList: state.rowList,
                         row: state.rowList[index],
                         title: state.title,
                       ));

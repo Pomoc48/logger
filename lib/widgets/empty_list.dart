@@ -5,14 +5,14 @@ class EmptyList extends StatelessWidget {
   const EmptyList({super.key, required this.title, required this.press});
 
   final String title;
-  final Future<void> Function(BuildContext) press;
+  final Future<void> Function() press;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => press(context),
+        onPressed: () => press(),
         icon: const Icon(Icons.add),
         label: Text(Strings.newItemFAB),
       ),
