@@ -12,7 +12,7 @@ class EmptyList extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => addNewTableDialog(context),
         icon: const Icon(Icons.add),
-        label: Text(Strings.newLog),
+        label: Text(Strings.newItemFAB),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

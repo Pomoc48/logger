@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:log_app/pages/home/bloc/home_bloc.dart';
 import 'package:log_app/pages/home/functions.dart';
 import 'package:log_app/pages/home/widgets/chart.dart';
-import 'package:log_app/pages/home/widgets/dismiss_background.dart';
+import 'package:log_app/widgets/dismiss_background.dart';
 import 'package:log_app/pages/home/widgets/empty_list.dart';
-import 'package:log_app/pages/home/widgets/loading.dart';
+import 'package:log_app/widgets/loading.dart';
 import 'package:log_app/pages/home/widgets/network_error.dart';
 import 'package:log_app/pages/home/widgets/server_setup.dart';
 import 'package:log_app/pages/list/bloc/list_bloc.dart';
@@ -19,16 +19,16 @@ class HomePage extends StatelessWidget {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         ThemeData t = Theme.of(context);
-
+    
         if (state is HomeLoaded) {
           if (state.tables.isEmpty) return const EmptyList();
-
+    
           return Scaffold(
             appBar: AppBar(title: Text(Strings.appName)),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () => addNewTableDialog(context),
               icon: const Icon(Icons.add),
-              label: Text(Strings.newLog),
+              label: Text(Strings.newItemFAB),
             ),
             body: RefreshIndicator(
               onRefresh: () async => refresh(context),
@@ -51,6 +51,8 @@ class HomePage extends StatelessWidget {
                       onTap: () {
                         context.read<ListBloc>().add(LoadList(
                             state.tables[index]));
+
+                        Navigator.pushNamed(context, Routes.list);
                       },
                       trailing: SizedBox(
                         width: 120,
@@ -80,16 +82,16 @@ class HomePage extends StatelessWidget {
             ),
           );
         }
-
+    
         if (state is HomeServerSetup) {
           return const ServerSetup();
         }
-
+    
         if (state is HomeError) {
           return const NetworkError();
         }
-
-        return const PageLoading();
+    
+        return PageLoading(title: Strings.appName);
       },
     );
   }

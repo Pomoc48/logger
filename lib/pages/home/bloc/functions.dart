@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:log_app/functions.dart';
 import 'package:log_app/models/table.dart';
 
 
@@ -35,13 +36,4 @@ Future<void> removeTable(String name, List serverConfig) async {
     Uri.parse("https://lukawski.xyz/logs/tables/?table_name=$name"),
     headers: getHeaders(serverConfig),
   );
-}
-
-Map<String, String> getHeaders(List serverConfig) {
-  return {
-    "Hostname": serverConfig[0],
-    "Username": serverConfig[1],
-    "Password": serverConfig[2],
-    "Database": serverConfig[3],
-  };
 }

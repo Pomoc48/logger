@@ -22,7 +22,7 @@ Future<void> addNewTableDialog(BuildContext context) async {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text(Strings.newLog),
+        title: Text(Strings.newItemFAB),
         content: TextField(
           controller: controller,
           decoration: InputDecoration(
