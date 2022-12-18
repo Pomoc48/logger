@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:log_app/functions.dart';
-import 'package:log_app/pages/list/functions.dart';
-import 'package:log_app/pages/list/widgets/chart.dart';
-import 'package:log_app/widgets/dismiss_background.dart';
-import 'package:log_app/pages/list/bloc/list_bloc.dart';
-import 'package:log_app/strings.dart';
-import 'package:log_app/widgets/empty_list.dart';
-import 'package:log_app/widgets/leading.dart';
-import 'package:log_app/widgets/loading.dart';
+import 'package:logger_app/functions.dart';
+import 'package:logger_app/pages/list/functions.dart';
+import 'package:logger_app/pages/list/widgets/chart.dart';
+import 'package:logger_app/widgets/dismiss_background.dart';
+import 'package:logger_app/pages/list/bloc/list_bloc.dart';
+import 'package:logger_app/strings.dart';
+import 'package:logger_app/widgets/empty_list.dart';
+import 'package:logger_app/widgets/leading.dart';
+import 'package:logger_app/widgets/loading.dart';
 
 class ListPage extends StatelessWidget {
   const ListPage({super.key});

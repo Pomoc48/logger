@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:log_app/pages/home/bloc/home_bloc.dart';
-import 'package:log_app/pages/home/page.dart';
-import 'package:log_app/pages/list/bloc/list_bloc.dart';
-import 'package:log_app/pages/list/page.dart';
-import 'package:log_app/strings.dart';
+import 'package:logger_app/pages/home/bloc/home_bloc.dart';
+import 'package:logger_app/pages/home/page.dart';
+import 'package:logger_app/pages/list/bloc/list_bloc.dart';
+import 'package:logger_app/pages/list/page.dart';
+import 'package:logger_app/strings.dart';
 
 void main() async {
   await GetStorage.init();

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:log_app/strings.dart';
+import 'package:logger_app/strings.dart';
 
 class EmptyList extends StatelessWidget {
   const EmptyList({super.key, required this.title, required this.press});

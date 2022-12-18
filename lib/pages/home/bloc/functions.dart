@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:log_app/functions.dart';
-import 'package:log_app/models/table.dart';
+import 'package:logger_app/functions.dart';
+import 'package:logger_app/models/table.dart';
 
 
 Future<List<TableItem>> getTables(List serverConfig) async {

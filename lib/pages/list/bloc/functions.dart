@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:log_app/functions.dart';
-import 'package:log_app/models/row.dart';
+import 'package:logger_app/functions.dart';
+import 'package:logger_app/models/row.dart';
 
 Future<List<RowItem>> getTableRows(List serverConfig, String name) async {
   Response response = await get(

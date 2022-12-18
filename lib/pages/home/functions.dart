@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
-import 'package:log_app/pages/home/bloc/functions.dart';
-import 'package:log_app/pages/home/bloc/home_bloc.dart';
-import 'package:log_app/strings.dart';
+import 'package:logger_app/pages/home/bloc/functions.dart';
+import 'package:logger_app/pages/home/bloc/home_bloc.dart';
+import 'package:logger_app/strings.dart';
 
 Future<void> refresh(BuildContext context) async {
   try {

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:log_app/pages/home/bloc/home_bloc.dart';
-import 'package:log_app/pages/home/functions.dart';
-import 'package:log_app/pages/home/widgets/chart.dart';
-import 'package:log_app/widgets/dismiss_background.dart';
-import 'package:log_app/widgets/empty_list.dart';
-import 'package:log_app/widgets/leading.dart';
-import 'package:log_app/widgets/loading.dart';
-import 'package:log_app/pages/home/widgets/network_error.dart';
-import 'package:log_app/pages/home/widgets/server_setup.dart';
-import 'package:log_app/pages/list/bloc/list_bloc.dart';
-import 'package:log_app/strings.dart';
+import 'package:logger_app/pages/home/bloc/home_bloc.dart';
+import 'package:logger_app/pages/home/functions.dart';
+import 'package:logger_app/pages/home/widgets/chart.dart';
+import 'package:logger_app/widgets/dismiss_background.dart';
+import 'package:logger_app/widgets/empty_list.dart';
+import 'package:logger_app/widgets/leading.dart';
+import 'package:logger_app/widgets/loading.dart';
+import 'package:logger_app/pages/home/widgets/network_error.dart';
+import 'package:logger_app/pages/home/widgets/server_setup.dart';
+import 'package:logger_app/pages/list/bloc/list_bloc.dart';
+import 'package:logger_app/strings.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

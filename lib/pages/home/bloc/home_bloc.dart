@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:log_app/models/table.dart';
-import 'package:log_app/pages/home/bloc/functions.dart';
+import 'package:logger_app/models/table.dart';
+import 'package:logger_app/pages/home/bloc/functions.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
