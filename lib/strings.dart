@@ -12,7 +12,7 @@ class Strings {
   static String confirmation = "Confirmation";
   static String confirm = "Confirm";
   static String listName = "Name of the list";
-  static String newLog = "New List";
+  static String newItemFAB = "New";
   static String create = "Create";
   static String cancel = "Cancel";
   static String delete = "Delete";

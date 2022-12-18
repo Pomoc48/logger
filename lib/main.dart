@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:log_app/pages/home/bloc/home_bloc.dart';
 import 'package:log_app/pages/home/page.dart';
 import 'package:log_app/pages/list/bloc/list_bloc.dart';
+import 'package:log_app/pages/list/page.dart';
 import 'package:log_app/strings.dart';
 
 void main() async {
@@ -32,7 +33,7 @@ void main() async {
         ),
         routes: {
           Routes.home: (context) => const HomePage(),
-          // Routes.add: (context) => const AddElementPage(),
+          Routes.list: (context) => const ListPage(),
         },
         initialRoute: Routes.home,
       ),
