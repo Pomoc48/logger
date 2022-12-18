@@ -43,8 +43,11 @@ class ListPage extends StatelessWidget {
                     direction: DismissDirection.startToEnd,
                     background: const DismissBackground(),
                     onDismissed: (direction) {
-                      // context.read<ListBloc>().add(RemoveFromHome(
-                      //     state.tables[index], state.tables));
+                      context.read<ListBloc>().add(RemoveFromList(
+                        rowList: state.rowList,
+                        row: state.rowList[index],
+                        title: state.title,
+                      ));
                     },
                     child: ListTile(
                       leading: SizedBox(

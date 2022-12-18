@@ -26,4 +26,19 @@ class UpdateList extends ListEvent {
   List<Object> get props => [rowList, title];
 }
 
+class RemoveFromList extends ListEvent {
+  final List<TableRow> rowList;
+  final TableRow row;
+  final String title;
+
+  const RemoveFromList({
+    required this.row,
+    required this.rowList,
+    required this.title,
+  });
+
+  @override
+  List<Object> get props => [row, rowList, title];
+}
+
 class ReportListError extends ListEvent {}

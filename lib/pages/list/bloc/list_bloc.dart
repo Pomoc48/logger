@@ -10,7 +10,6 @@ part 'list_state.dart';
 
 class ListBloc extends Bloc<ListEvent, ListState> {
   ListBloc() : super(const ListInitial("")) {
-
     on<LoadList>((event, emit) async {
       emit(ListInitial(event.table.name));
 
@@ -20,6 +19,20 @@ class ListBloc extends Bloc<ListEvent, ListState> {
         emit(ListLoaded(
           rowList: await getTableRows(serverConfig, event.table.name),
           title: event.table.name,
+        ));
+      } catch (e) {
+        emit(ListError());
+      }
+    });
+
+    on<RemoveFromList>((event, emit) async {
+      try {
+        List serverConfig = GetStorage().read('serverConfig');
+        await removeRow(event.title, event.row.id, serverConfig);
+
+        emit(ListLoaded(
+          rowList: await getTableRows(serverConfig, event.title),
+          title: event.title,
         ));
       } catch (e) {
         emit(ListError());
