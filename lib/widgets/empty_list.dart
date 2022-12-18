@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:log_app/pages/home/functions.dart';
 import 'package:log_app/strings.dart';
 
 class EmptyList extends StatelessWidget {
-  const EmptyList({super.key});
+  const EmptyList({super.key, required this.title, required this.press});
+
+  final String title;
+  final Future<void> Function(BuildContext) press;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(Strings.appName)),
+      appBar: AppBar(title: Text(title)),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => addNewTableDialog(context),
+        onPressed: () => press(context),
         icon: const Icon(Icons.add),
         label: Text(Strings.newItemFAB),
       ),
