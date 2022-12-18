@@ -13,7 +13,12 @@ class ListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ListBloc, ListState>(
+    return BlocConsumer<ListBloc, ListState>(
+      listener: (context, state) {
+        if (state is ListError) {
+          Navigator.pop(context);
+        }
+      },
       builder: (context, state) {
         ThemeData t = Theme.of(context);
 
@@ -76,10 +81,6 @@ class ListPage extends StatelessWidget {
               ),
             ),
           );
-        }
-
-        if (state is ListError) {
-          return const SizedBox();
         }
 
         if (state is ListInitial) {

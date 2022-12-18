@@ -11,7 +11,7 @@ class NetworkError extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData t = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(Strings.appName)),
+      appBar: AppBar(title: Text(Strings.noConnection)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

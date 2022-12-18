@@ -2,6 +2,7 @@ class Strings {
   static String appName = "Logs";
   static String serverSetup = "MySQL server setup";
   static String newItem = "Add new list";
+  static String noConnection = "No connection";
 
   static String empty = "No lists to display";
   static String error = "Something went wrong";
