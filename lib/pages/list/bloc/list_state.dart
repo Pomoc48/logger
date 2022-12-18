@@ -16,13 +16,18 @@ class ListInitial extends ListState {
 }
 
 class ListLoaded extends ListState {
-  final List<TableRow> rowList;
+  final List<double> chartData;
+  final List<RowItem> rowList;
   final String title;
 
-  const ListLoaded({required this.rowList, required this.title});
+  const ListLoaded({
+    required this.rowList,
+    required this.title,
+    required this.chartData,
+  });
 
   @override
-  List<Object> get props => [rowList, title];
+  List<Object> get props => [rowList, title, chartData];
 }
 
 class ListError extends ListState {}

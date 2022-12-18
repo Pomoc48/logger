@@ -1,21 +1,24 @@
 import 'package:equatable/equatable.dart';
 
-class TableRow extends Equatable {
+class RowItem extends Equatable {
+  final int number;
   final int id;
   final DateTime date;
 
-  const TableRow({
+  const RowItem({
+    required this.number,
     required this.id,
     required this.date,
   });
 
-  factory TableRow.fromMap(dynamic map) {
-    return TableRow(
+  factory RowItem.fromMap(dynamic map) {
+    return RowItem(
+      number: map["number"],
       id: map["id"],
       date: DateTime.parse(map["date"]),
     );
   }
 
   @override
-  List<Object> get props => [id, date];
+  List<Object> get props => [id, date, number];
 }

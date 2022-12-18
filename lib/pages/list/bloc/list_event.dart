@@ -17,17 +17,22 @@ class LoadList extends ListEvent {
 }
 
 class UpdateList extends ListEvent {
-  final List<TableRow> rowList;
+  final List<RowItem> rowList;
+  final List<double> chartData;
   final String title;
 
-  const UpdateList({required this.rowList, required this.title});
+  const UpdateList({
+    required this.rowList,
+    required this.chartData,
+    required this.title,
+  });
 
   @override
-  List<Object> get props => [rowList, title];
+  List<Object> get props => [rowList, title, chartData];
 }
 
 class RemoveFromList extends ListEvent {
-  final TableRow row;
+  final RowItem row;
   final String title;
 
   const RemoveFromList({
