@@ -53,11 +53,13 @@ class HomePage extends StatelessWidget {
                           state.tables[index], state.tables));
                     },
                     child: ListTile(
-                      onTap: () {
+                      onTap: () async {
                         context.read<ListBloc>().add(LoadList(
                             state.tables[index]));
 
-                        Navigator.pushNamed(context, Routes.list);
+                        await Navigator.pushNamed(context, Routes.list);
+                        // ignore: use_build_context_synchronously
+                        refresh(context);
                       },
                       trailing: SizedBox(
                         width: 120,
