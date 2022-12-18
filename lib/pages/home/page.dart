@@ -5,6 +5,7 @@ import 'package:log_app/pages/home/functions.dart';
 import 'package:log_app/pages/home/widgets/chart.dart';
 import 'package:log_app/widgets/dismiss_background.dart';
 import 'package:log_app/widgets/empty_list.dart';
+import 'package:log_app/widgets/leading.dart';
 import 'package:log_app/widgets/loading.dart';
 import 'package:log_app/pages/home/widgets/network_error.dart';
 import 'package:log_app/pages/home/widgets/server_setup.dart';
@@ -18,8 +19,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        ThemeData t = Theme.of(context);
-    
         if (state is HomeLoaded) {
           if (state.tables.isEmpty) {
             return EmptyList(
@@ -66,19 +65,7 @@ class HomePage extends StatelessWidget {
                         height: 40,
                         child: LineChart(data: state.tables[index].chartData),
                       ),
-                      leading: SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: Center(
-                          child: Text(
-                            (index + 1).toString(),
-                            style: t.textTheme.titleLarge!.copyWith(
-                              color: t.colorScheme.primary,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
+                      leading: ListLeading(index + 1),
                       title: Text(state.tables[index].name),
                       subtitle: Text("${state.tables[index].rows} items"),
                     ),
@@ -103,4 +90,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-

@@ -15,10 +15,12 @@ class ListBloc extends Bloc<ListEvent, ListState> {
 
       try {
         List serverConfig = GetStorage().read('serverConfig');
+        List<RowItem> rowList = await getTableRows(serverConfig, event.table.name);
         
         emit(ListLoaded(
-          rowList: await getTableRows(serverConfig, event.table.name),
+          rowList: rowList,
           title: event.table.name,
+          chartData: getChartData(rowList),
         ));
       } catch (e) {
         emit(ListError());
@@ -30,9 +32,12 @@ class ListBloc extends Bloc<ListEvent, ListState> {
         List serverConfig = GetStorage().read('serverConfig');
         await addRow(event.name, event.timestamp, serverConfig);
 
+        List<RowItem> rowList = await getTableRows(serverConfig, event.name);
+
         emit(ListLoaded(
-          rowList: await getTableRows(serverConfig, event.name),
+          rowList: rowList,
           title: event.name,
+          chartData: getChartData(rowList),
         ));
       } catch (e) {
         emit(ListError());
@@ -44,9 +49,12 @@ class ListBloc extends Bloc<ListEvent, ListState> {
         List serverConfig = GetStorage().read('serverConfig');
         await removeRow(event.title, event.row.id, serverConfig);
 
+        List<RowItem> rowList = await getTableRows(serverConfig, event.title);
+
         emit(ListLoaded(
-          rowList: await getTableRows(serverConfig, event.title),
+          rowList: rowList,
           title: event.title,
+          chartData: getChartData(rowList),
         ));
       } catch (e) {
         emit(ListError());
@@ -57,6 +65,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       emit(ListLoaded(
         rowList: event.rowList,
         title: event.title,
+        chartData: event.chartData,
       ));
     });
 

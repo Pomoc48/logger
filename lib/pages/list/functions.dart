@@ -1,15 +1,21 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:log_app/models/row.dart';
 import 'package:log_app/pages/list/bloc/functions.dart';
 import 'package:log_app/pages/list/bloc/list_bloc.dart';
 
 Future<void> refresh(BuildContext context, String name) async {
   try {
     List serverConfig = GetStorage().read('serverConfig');
+    List<RowItem> rowList = await getTableRows(serverConfig, name);
+    
     context.read<ListBloc>().add(UpdateList(
-      rowList: await getTableRows(serverConfig, name),
+      rowList: rowList,
       title: name,
+      chartData: getChartData(rowList),
     ));
 
   } catch (e) {
@@ -33,7 +39,7 @@ Future<void> addNewRowDialog({
   if (date == null) return;
 
   TimeOfDay timeNow = TimeOfDay.now();
-  
+
   TimeOfDay? time = await showTimePicker(
     context: context,
     initialTime: timeNow,
@@ -41,7 +47,6 @@ Future<void> addNewRowDialog({
 
   if (time == null) return;
 
-  // ignore: use_build_context_synchronously
   context.read<ListBloc>().add(InsertList(
     timestamp: _dateToString(date, time),
     name: name,

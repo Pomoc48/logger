@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:log_app/functions.dart';
 import 'package:log_app/pages/list/functions.dart';
+import 'package:log_app/pages/list/widgets/chart.dart';
 import 'package:log_app/widgets/dismiss_background.dart';
 import 'package:log_app/pages/list/bloc/list_bloc.dart';
 import 'package:log_app/strings.dart';
 import 'package:log_app/widgets/empty_list.dart';
+import 'package:log_app/widgets/leading.dart';
 import 'package:log_app/widgets/loading.dart';
 
 class ListPage extends StatelessWidget {
@@ -20,8 +22,6 @@ class ListPage extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        ThemeData t = Theme.of(context);
-
         if (state is ListLoaded) {
           if (state.rowList.isEmpty) {
             return EmptyList(
@@ -34,7 +34,15 @@ class ListPage extends StatelessWidget {
           }
 
           return Scaffold(
-            appBar: AppBar(title: Text(state.title)),
+            appBar: AppBar(
+              flexibleSpace: LineChart(data: state.chartData),
+              title: Text(state.title),
+              scrolledUnderElevation: 0,
+              bottom: const PreferredSize(
+                preferredSize: Size.fromHeight(100),
+                child: SizedBox(),
+              ),
+            ),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () async => addNewRowDialog(
                 context: context,
@@ -59,19 +67,7 @@ class ListPage extends StatelessWidget {
                       ));
                     },
                     child: ListTile(
-                      leading: SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: Center(
-                          child: Text(
-                            (index + 1).toString(),
-                            style: t.textTheme.titleLarge!.copyWith(
-                              color: t.colorScheme.primary,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
+                      leading: ListLeading(state.rowList[index].number),
                       title: Text(dateTitle(state.rowList[index].date)),
                       subtitle: Text(dateSubtitle(state.rowList[index].date)),
                     ),
@@ -92,4 +88,3 @@ class ListPage extends StatelessWidget {
     );
   }
 }
-
