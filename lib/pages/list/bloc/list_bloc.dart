@@ -25,5 +25,16 @@ class ListBloc extends Bloc<ListEvent, ListState> {
         emit(ListError());
       }
     });
+
+    on<UpdateList>((event, emit) async {
+      emit(ListLoaded(
+        rowList: event.rowList,
+        title: event.title,
+      ));
+    });
+
+    on<ReportListError>((event, emit) {
+      emit(ListError());
+    });
   }
 }

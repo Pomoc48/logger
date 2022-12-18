@@ -4,7 +4,7 @@ import 'package:log_app/pages/home/bloc/home_bloc.dart';
 import 'package:log_app/pages/home/functions.dart';
 import 'package:log_app/pages/home/widgets/chart.dart';
 import 'package:log_app/widgets/dismiss_background.dart';
-import 'package:log_app/pages/home/widgets/empty_list.dart';
+import 'package:log_app/widgets/empty_list.dart';
 import 'package:log_app/widgets/loading.dart';
 import 'package:log_app/pages/home/widgets/network_error.dart';
 import 'package:log_app/pages/home/widgets/server_setup.dart';
@@ -21,7 +21,12 @@ class HomePage extends StatelessWidget {
         ThemeData t = Theme.of(context);
     
         if (state is HomeLoaded) {
-          if (state.tables.isEmpty) return const EmptyList();
+          if (state.tables.isEmpty) {
+            return EmptyList(
+              title: Strings.appName,
+              press: addNewTableDialog,
+            );
+          }
     
           return Scaffold(
             appBar: AppBar(title: Text(Strings.appName)),

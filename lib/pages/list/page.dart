@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:log_app/functions.dart';
+import 'package:log_app/pages/list/functions.dart';
 import 'package:log_app/widgets/dismiss_background.dart';
 import 'package:log_app/pages/list/bloc/list_bloc.dart';
 import 'package:log_app/strings.dart';
+import 'package:log_app/widgets/empty_list.dart';
 import 'package:log_app/widgets/loading.dart';
 
 class ListPage extends StatelessWidget {
@@ -16,7 +18,12 @@ class ListPage extends StatelessWidget {
         ThemeData t = Theme.of(context);
 
         if (state is ListLoaded) {
-          if (state.rowList.isEmpty) return const SizedBox();
+          if (state.rowList.isEmpty) {
+            return EmptyList(
+              title: state.title,
+              press: addNewRowDialog,
+            );
+          }
 
           return Scaffold(
             appBar: AppBar(title: Text(state.title)),
@@ -27,8 +34,7 @@ class ListPage extends StatelessWidget {
               label: Text(Strings.newItemFAB),
             ),
             body: RefreshIndicator(
-              // onRefresh: () async => refresh(context),
-              onRefresh: () async {}, //TODO: add
+              onRefresh: () async => refresh(context, state.title),
               child: ListView.separated(
                 separatorBuilder: (c, i) => const Divider(height: 0),
                 itemBuilder: (context, index) {

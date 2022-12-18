@@ -15,3 +15,15 @@ class LoadList extends ListEvent {
   @override
   List<Object> get props => [table];
 }
+
+class UpdateList extends ListEvent {
+  final List<TableRow> rowList;
+  final String title;
+
+  const UpdateList({required this.rowList, required this.title});
+
+  @override
+  List<Object> get props => [rowList, title];
+}
+
+class ReportListError extends ListEvent {}
