@@ -1,10 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="xyz.lukawski.logs">
+    package="xyz.lukawski.logger">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:label="Logs"
+        android:label="Logger"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -1,9 +1,9 @@
 name: log_app
-description: A new Flutter project.
+description: App for logging your life.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.3.7
+version: 1.3.8
 
 environment:
   sdk: '>=2.18.2 <3.0.0'

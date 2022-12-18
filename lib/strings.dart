@@ -1,10 +1,10 @@
 class Strings {
-  static String appName = "Logs";
+  static String appName = "Logger";
   static String serverSetup = "MySQL server setup";
   static String newItem = "Add new list";
   static String noConnection = "No connection";
 
-  static String empty = "No lists to display";
+  static String empty = "No items to display";
   static String error = "Something went wrong";
   static String allFields = "Please enter all the fields";
   static String areSure = "Are you sure you want to delete this list? All items inside will be permanently deleted.";
