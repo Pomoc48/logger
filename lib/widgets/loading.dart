@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:log_app/strings.dart';
 
 class PageLoading extends StatelessWidget {
   const PageLoading({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+    required this.title,
+  });
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(Strings.appName)),
+      appBar: AppBar(title: Text(title)),
       body: const Center(child: CircularProgressIndicator()),
     );
   }
