@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
               press: () async => addNewTableDialog(context),
             );
           }
-    
+
           return Scaffold(
             appBar: AppBar(title: Text(Strings.appName)),
             floatingActionButton: FloatingActionButton.extended(
@@ -38,9 +38,11 @@ class HomePage extends StatelessWidget {
               child: ListView.separated(
                 separatorBuilder: (c, i) => const Divider(height: 0),
                 itemBuilder: (context, index) {
+                  int rows = state.tables[index].rows;
+
                   return Padding(
                     padding: EdgeInsets.only(
-                      top: index == 0 ? 8 : 0, 
+                      top: index == 0 ? 8 : 0,
                       bottom: index == state.tables.length - 1 ? 88 : 0,
                     ),
                     child: Dismissible(
@@ -52,13 +54,14 @@ class HomePage extends StatelessWidget {
                         message: Strings.areSure,
                       ),
                       onDismissed: (direction) {
-                        context.read<HomeBloc>().add(RemoveFromHome(
-                            state.tables[index], state.tables));
+                        context.read<HomeBloc>().add(
+                            RemoveFromHome(state.tables[index], state.tables));
                       },
                       child: ListTile(
                         onTap: () async {
-                          context.read<ListBloc>().add(LoadList(
-                              state.tables[index]));
+                          context
+                              .read<ListBloc>()
+                              .add(LoadList(state.tables[index]));
 
                           await Navigator.pushNamed(context, Routes.list);
                           // ignore: use_build_context_synchronously
@@ -70,7 +73,14 @@ class HomePage extends StatelessWidget {
                           child: LineChart(data: state.tables[index].chartData),
                         ),
                         title: Text(state.tables[index].name),
-                        subtitle: Text("${state.tables[index].rows} items"),
+                        subtitle: Text(
+                          rows == 1
+                              ? "$rows time"
+                              : rows == 0
+                                  ? "List empty"
+                                  : "$rows times",
+                        ),
+                        isThreeLine: false,
                       ),
                     ),
                   );
@@ -80,15 +90,15 @@ class HomePage extends StatelessWidget {
             ),
           );
         }
-    
+
         if (state is HomeServerSetup) {
           return const ServerSetup();
         }
-    
+
         if (state is HomeError) {
           return const NetworkError();
         }
-    
+
         return PageLoading(title: Strings.appName);
       },
     );
