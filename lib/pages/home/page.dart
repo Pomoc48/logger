@@ -85,7 +85,6 @@ class HomePage extends StatelessWidget {
                                     ? "List empty"
                                     : "$rows times",
                           ),
-                          isThreeLine: false,
                         ),
                       ),
                     );
