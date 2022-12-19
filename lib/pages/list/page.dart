@@ -39,7 +39,7 @@ class ListPage extends StatelessWidget {
               title: Text(state.title),
               scrolledUnderElevation: 0,
               bottom: const PreferredSize(
-                preferredSize: Size.fromHeight(100),
+                preferredSize: Size.fromHeight(180),
                 child: SizedBox(),
               ),
             ),
@@ -56,20 +56,26 @@ class ListPage extends StatelessWidget {
               child: ListView.separated(
                 separatorBuilder: (c, i) => const Divider(height: 0),
                 itemBuilder: (context, index) {
-                  return Dismissible(
-                    key: Key(state.rowList[index].id.toString()),
-                    direction: DismissDirection.startToEnd,
-                    background: const DismissBackground(),
-                    onDismissed: (direction) {
-                      context.read<ListBloc>().add(RemoveFromList(
-                        row: state.rowList[index],
-                        title: state.title,
-                      ));
-                    },
-                    child: ListTile(
-                      leading: ListLeading(state.rowList[index].number),
-                      title: Text(dateTitle(state.rowList[index].date)),
-                      subtitle: Text(dateSubtitle(state.rowList[index].date)),
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      top: index == 0 ? 8 : 0,
+                      bottom: index == state.rowList.length - 1 ? 88 : 0,
+                    ),
+                    child: Dismissible(
+                      key: Key(state.rowList[index].id.toString()),
+                      direction: DismissDirection.startToEnd,
+                      background: const DismissBackground(),
+                      onDismissed: (direction) {
+                        context.read<ListBloc>().add(RemoveFromList(
+                          row: state.rowList[index],
+                          title: state.title,
+                        ));
+                      },
+                      child: ListTile(
+                        leading: ListLeading(state.rowList[index].number),
+                        title: Text(dateTitle(state.rowList[index].date)),
+                        subtitle: Text(dateSubtitle(state.rowList[index].date)),
+                      ),
                     ),
                   );
                 },

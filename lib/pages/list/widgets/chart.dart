@@ -18,7 +18,7 @@ class LineChart extends StatelessWidget {
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
           colors: [
-            Theme.of(context).colorScheme.primary.withOpacity(0.1),
+            Theme.of(context).colorScheme.primary.withOpacity(0.5),
             Theme.of(context).colorScheme.primary,
           ],
         ),
