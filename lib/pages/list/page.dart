@@ -6,6 +6,7 @@ import 'package:logger_app/pages/list/widgets/chart.dart';
 import 'package:logger_app/widgets/dismiss_background.dart';
 import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 import 'package:logger_app/strings.dart';
+import 'package:logger_app/widgets/divider.dart';
 import 'package:logger_app/widgets/empty_list.dart';
 import 'package:logger_app/widgets/fader.dart';
 import 'package:logger_app/widgets/leading.dart';
@@ -56,7 +57,7 @@ class ListPage extends StatelessWidget {
               body: RefreshIndicator(
                 onRefresh: () async => refresh(context, state.title),
                 child: ListView.separated(
-                  separatorBuilder: (c, i) => const Divider(height: 0),
+                  separatorBuilder: (c, i) => const ListDivider(),
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: EdgeInsets.only(

@@ -4,6 +4,7 @@ import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/pages/home/widgets/chart.dart';
 import 'package:logger_app/widgets/dismiss_background.dart';
+import 'package:logger_app/widgets/divider.dart';
 import 'package:logger_app/widgets/empty_list.dart';
 import 'package:logger_app/widgets/fader.dart';
 import 'package:logger_app/widgets/loading.dart';
@@ -38,7 +39,7 @@ class HomePage extends StatelessWidget {
               body: RefreshIndicator(
                 onRefresh: () async => refresh(context),
                 child: ListView.separated(
-                  separatorBuilder: (c, i) => const Divider(height: 0),
+                  separatorBuilder: (c, i) => const ListDivider(),
                   itemBuilder: (context, index) {
                     int rows = state.tables[index].rows;
 
@@ -71,7 +72,7 @@ class HomePage extends StatelessWidget {
                           },
                           trailing: SizedBox(
                             width: 120,
-                            height: 40,
+                            height: 28,
                             child: LineChart(
                               data: state.tables[index].chartData,
                             ),
