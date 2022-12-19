@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 Map<String, String> getHeaders() {
   List serverConfig = GetStorage().read('serverConfig');
-  
+
   return {
     "Hostname": serverConfig[0],
     "Username": serverConfig[1],

@@ -14,8 +14,10 @@ class DismissBackground extends StatelessWidget {
           children: [
             Icon(Icons.delete_forever, color: t.colorScheme.onError),
             const SizedBox(width: 16),
-            Text("Remove", style: t.textTheme.labelLarge!.copyWith(
-                color: t.colorScheme.onError),
+            Text(
+              "Remove",
+              style: t.textTheme.labelLarge!
+                  .copyWith(color: t.colorScheme.onError),
             ),
           ],
         ),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
@@ -35,9 +34,7 @@ Future<void> addNewTableDialog(BuildContext context) async {
           ),
           TextButton(
             onPressed: () {
-              context.read<HomeBloc>().add(
-                InsertHome(controller.text),
-              );
+              context.read<HomeBloc>().add(InsertHome(controller.text));
               Navigator.pop(context);
             },
             child: Text(Strings.create),
@@ -77,7 +74,7 @@ Future<bool> confirmDismiss({
       );
     },
   );
-  
+
   return dismiss;
 }
 

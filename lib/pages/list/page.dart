@@ -67,9 +67,7 @@ class ListPage extends StatelessWidget {
                       background: const DismissBackground(),
                       onDismissed: (direction) {
                         context.read<ListBloc>().add(RemoveFromList(
-                          row: state.rowList[index],
-                          title: state.title,
-                        ));
+                            row: state.rowList[index], title: state.title));
                       },
                       child: ListTile(
                         leading: ListLeading(state.rowList[index].number),

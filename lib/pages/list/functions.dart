@@ -9,13 +9,9 @@ import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 Future<void> refresh(BuildContext context, String name) async {
   try {
     List<RowItem> rowList = await getTableRows(name);
-    
-    context.read<ListBloc>().add(UpdateList(
-      rowList: rowList,
-      title: name,
-      chartData: getChartData(rowList),
-    ));
 
+    context.read<ListBloc>().add(UpdateList(
+        rowList: rowList, title: name, chartData: getChartData(rowList)));
   } catch (e) {
     context.read<ListBloc>().add(ReportListError());
   }
@@ -46,9 +42,9 @@ Future<void> addNewRowDialog({
   if (time == null) return;
 
   context.read<ListBloc>().add(InsertList(
-    timestamp: _dateToString(date, time),
-    name: name,
-  ));
+        timestamp: _dateToString(date, time),
+        name: name,
+      ));
 }
 
 String _dateToString(DateTime date, TimeOfDay time) {

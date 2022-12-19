@@ -25,14 +25,18 @@ Future<List<RowItem>> getTableRows(String table) async {
 
 Future<void> removeRow(String table, int rowId) async {
   await delete(
-    Uri.parse("https://lukawski.xyz/logs/rows/?row_id=$rowId&table_name=$table"),
+    Uri.parse(
+      "https://lukawski.xyz/logs/rows/?row_id=$rowId&table_name=$table",
+    ),
     headers: getHeaders(),
   );
 }
 
 Future<void> addRow(String table, String timestamp) async {
   await post(
-    Uri.parse("https://lukawski.xyz/logs/rows/?timestamp=$timestamp&table_name=$table"),
+    Uri.parse(
+      "https://lukawski.xyz/logs/rows/?timestamp=$timestamp&table_name=$table",
+    ),
     headers: getHeaders(),
   );
 }

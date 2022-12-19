@@ -31,7 +31,7 @@ class EmptyList extends StatelessWidget {
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
-          const SizedBox(height: 56+32),
+          const SizedBox(height: 56 + 32),
         ],
       ),
     );

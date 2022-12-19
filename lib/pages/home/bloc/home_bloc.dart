@@ -42,7 +42,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         emit(HomeError());
       }
     });
-    
+
     on<ReportHomeError>((event, emit) {
       emit(HomeError());
     });

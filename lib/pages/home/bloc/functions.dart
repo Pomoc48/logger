@@ -4,7 +4,6 @@ import 'package:http/http.dart';
 import 'package:logger_app/functions.dart';
 import 'package:logger_app/models/table.dart';
 
-
 Future<List<TableItem>> getTables() async {
   Response response = await get(
     Uri.parse("https://lukawski.xyz/logs/tables/"),

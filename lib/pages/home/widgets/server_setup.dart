@@ -19,8 +19,10 @@ class ServerSetup extends StatelessWidget {
       appBar: AppBar(title: Text(Strings.serverSetup)),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          if (hostnameC.text == "" || usernameC.text == ""
-              || passwordC.text == "" || databaseC.text == "") {
+          if (hostnameC.text == "" ||
+              usernameC.text == "" ||
+              passwordC.text == "" ||
+              databaseC.text == "") {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(Strings.allFields),

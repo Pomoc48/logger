@@ -8,7 +8,6 @@ class LineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: const EdgeInsets.only(top: 32, bottom: 16),
       child: Sparkline(
@@ -28,7 +27,7 @@ class LineChart extends StatelessWidget {
           colors: [
             Theme.of(context).colorScheme.primary.withOpacity(0.0),
             Theme.of(context).colorScheme.primary.withOpacity(0.2),
-          ]
+          ],
         ),
         fillMode: FillMode.below,
       ),

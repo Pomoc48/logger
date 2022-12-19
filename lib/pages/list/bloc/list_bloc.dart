@@ -14,7 +14,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
 
       try {
         List<RowItem> rowList = await getTableRows(event.table.name);
-        
+
         emit(ListLoaded(
           rowList: rowList,
           title: event.table.name,

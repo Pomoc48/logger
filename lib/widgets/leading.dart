@@ -14,9 +14,10 @@ class ListLeading extends StatelessWidget {
         child: Text(
           number.toString(),
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-            color: Theme.of(context).colorScheme.primary,
-          ),
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge!
+              .copyWith(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );
