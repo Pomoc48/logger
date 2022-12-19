@@ -7,13 +7,7 @@ abstract class ListState extends Equatable {
   List<Object> get props => [];
 }
 
-class ListInitial extends ListState {
-  final String title;
-  const ListInitial(this.title);
-
-  @override
-  List<Object> get props => [title];
-}
+class ListInitial extends ListState {}
 
 class ListLoaded extends ListState {
   final List<double> chartData;

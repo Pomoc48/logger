@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/strings.dart';
+import 'package:logger_app/widgets/fader.dart';
 
 class NetworkError extends StatelessWidget {
   const NetworkError({super.key});
@@ -10,35 +11,37 @@ class NetworkError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData t = Theme.of(context);
-    return Scaffold(
-      appBar: AppBar(title: Text(Strings.noConnection)),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 56),
-            Text(Strings.error, style: t.textTheme.titleLarge),
-            const SizedBox(height: 16),
-            Text(Strings.noNet, style: t.textTheme.bodyLarge),
-            const SizedBox(height: 32),
-            Row(
-              children: [
-                OutlinedButton.icon(
-                  onPressed: () async => refresh(context),
-                  icon: const Icon(Icons.refresh),
-                  label: Text(Strings.refresh),
-                ),
-                const SizedBox(width: 16),
-                TextButton(
-                  onPressed: () {
-                    context.read<HomeBloc>().add(ReportServerUpdate());
-                  },
-                  child: Text(Strings.updatePassword),
-                ),
-              ],
-            ),
-          ],
+    return Fader(
+      child: Scaffold(
+        appBar: AppBar(title: Text(Strings.noConnection)),
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 56),
+              Text(Strings.error, style: t.textTheme.titleLarge),
+              const SizedBox(height: 16),
+              Text(Strings.noNet, style: t.textTheme.bodyLarge),
+              const SizedBox(height: 32),
+              Row(
+                children: [
+                  OutlinedButton.icon(
+                    onPressed: () async => refresh(context),
+                    icon: const Icon(Icons.refresh),
+                    label: Text(Strings.refresh),
+                  ),
+                  const SizedBox(width: 16),
+                  TextButton(
+                    onPressed: () {
+                      context.read<HomeBloc>().add(ReportServerUpdate());
+                    },
+                    child: Text(Strings.updatePassword),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

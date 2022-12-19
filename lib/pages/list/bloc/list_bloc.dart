@@ -8,9 +8,9 @@ part 'list_event.dart';
 part 'list_state.dart';
 
 class ListBloc extends Bloc<ListEvent, ListState> {
-  ListBloc() : super(const ListInitial("")) {
+  ListBloc() : super(ListInitial()) {
     on<LoadList>((event, emit) async {
-      emit(ListInitial(event.table.name));
+      emit(ListInitial());
 
       try {
         List<RowItem> rowList = await getTableRows(event.table.name);

@@ -7,8 +7,10 @@ class Strings {
   static String empty = "No items to display";
   static String error = "Something went wrong";
   static String allFields = "Please enter all the fields";
-  static String areSure = "Are you sure you want to delete this list? All items inside will be permanently deleted.";
-  static String noNet = "Device has no internet connection or the server is not available.";
+  static String areSure =
+      "Are you sure you want to delete this list? All items inside will be permanently deleted.";
+  static String noNet =
+      "Device has no internet connection or the server is not available.";
 
   static String confirmation = "Confirmation";
   static String confirm = "Confirm";

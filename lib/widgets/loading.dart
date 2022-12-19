@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:logger_app/widgets/fader.dart';
 
 class PageLoading extends StatelessWidget {
-  const PageLoading({
-    super.key,
-    required this.title,
-  });
-
-  final String title;
+  const PageLoading({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: const Center(child: CircularProgressIndicator()),
+    return const Fader(
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }
