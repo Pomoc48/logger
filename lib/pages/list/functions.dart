@@ -2,15 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:logger_app/models/row.dart';
 import 'package:logger_app/pages/list/bloc/functions.dart';
 import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 
 Future<void> refresh(BuildContext context, String name) async {
   try {
-    List serverConfig = GetStorage().read('serverConfig');
-    List<RowItem> rowList = await getTableRows(serverConfig, name);
+    List<RowItem> rowList = await getTableRows(name);
     
     context.read<ListBloc>().add(UpdateList(
       rowList: rowList,

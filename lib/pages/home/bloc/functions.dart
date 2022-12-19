@@ -5,10 +5,10 @@ import 'package:logger_app/functions.dart';
 import 'package:logger_app/models/table.dart';
 
 
-Future<List<TableItem>> getTables(List serverConfig) async {
+Future<List<TableItem>> getTables() async {
   Response response = await get(
     Uri.parse("https://lukawski.xyz/logs/tables/"),
-    headers: getHeaders(serverConfig),
+    headers: getHeaders(),
   );
 
   dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
@@ -24,16 +24,16 @@ Future<List<TableItem>> getTables(List serverConfig) async {
   return tables;
 }
 
-Future<void> addTable(String name, List serverConfig) async {
+Future<void> addTable(String table) async {
   await post(
-    Uri.parse("https://lukawski.xyz/logs/tables/?table_name=$name"),
-    headers: getHeaders(serverConfig),
+    Uri.parse("https://lukawski.xyz/logs/tables/?table_name=$table"),
+    headers: getHeaders(),
   );
 }
 
-Future<void> removeTable(String name, List serverConfig) async {
+Future<void> removeTable(String table) async {
   await delete(
-    Uri.parse("https://lukawski.xyz/logs/tables/?table_name=$name"),
-    headers: getHeaders(serverConfig),
+    Uri.parse("https://lukawski.xyz/logs/tables/?table_name=$table"),
+    headers: getHeaders(),
   );
 }

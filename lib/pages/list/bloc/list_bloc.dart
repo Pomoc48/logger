@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:logger_app/models/row.dart';
 import 'package:logger_app/models/table.dart';
 import 'package:logger_app/pages/list/bloc/functions.dart';
@@ -14,8 +13,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       emit(ListInitial(event.table.name));
 
       try {
-        List serverConfig = GetStorage().read('serverConfig');
-        List<RowItem> rowList = await getTableRows(serverConfig, event.table.name);
+        List<RowItem> rowList = await getTableRows(event.table.name);
         
         emit(ListLoaded(
           rowList: rowList,
@@ -29,10 +27,8 @@ class ListBloc extends Bloc<ListEvent, ListState> {
 
     on<InsertList>((event, emit) async {
       try {
-        List serverConfig = GetStorage().read('serverConfig');
-        await addRow(event.name, event.timestamp, serverConfig);
-
-        List<RowItem> rowList = await getTableRows(serverConfig, event.name);
+        await addRow(event.name, event.timestamp);
+        List<RowItem> rowList = await getTableRows(event.name);
 
         emit(ListLoaded(
           rowList: rowList,
@@ -46,10 +42,8 @@ class ListBloc extends Bloc<ListEvent, ListState> {
 
     on<RemoveFromList>((event, emit) async {
       try {
-        List serverConfig = GetStorage().read('serverConfig');
-        await removeRow(event.title, event.row.id, serverConfig);
-
-        List<RowItem> rowList = await getTableRows(serverConfig, event.title);
+        await removeRow(event.title, event.row.id);
+        List<RowItem> rowList = await getTableRows(event.title);
 
         emit(ListLoaded(
           rowList: rowList,

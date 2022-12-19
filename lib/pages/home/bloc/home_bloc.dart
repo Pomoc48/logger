@@ -10,13 +10,11 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitial()) {
     on<LoadHome>((event, emit) async {
-      List? serverConfig = GetStorage().read('serverConfig');
-
-      if (serverConfig == null) {
+      if (GetStorage().read('serverConfig') == null) {
         emit(HomeServerSetup());
       } else {
         try {
-          emit(HomeLoaded(await getTables(serverConfig)));
+          emit(HomeLoaded(await getTables()));
         } catch (e) {
           emit(HomeError());
         }
@@ -29,10 +27,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<InsertHome>((event, emit) async {
       try {
-        List serverConfig = GetStorage().read('serverConfig');
-        
-        await addTable(event.newTable, serverConfig);
-        emit(HomeLoaded(await getTables(serverConfig)));
+        await addTable(event.newTable);
+        emit(HomeLoaded(await getTables()));
       } catch (e) {
         emit(HomeError());
       }
@@ -40,10 +36,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<RemoveFromHome>((event, emit) async {
       try {
-        List serverConfig = GetStorage().read('serverConfig');
-
-        await removeTable(event.table.name, serverConfig);
-        emit(HomeLoaded(await getTables(serverConfig)));
+        await removeTable(event.table.name);
+        emit(HomeLoaded(await getTables()));
       } catch (e) {
         emit(HomeError());
       }

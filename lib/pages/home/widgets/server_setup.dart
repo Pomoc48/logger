@@ -10,10 +10,10 @@ class ServerSetup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var hostnameC = TextEditingController();
-    var usernameC = TextEditingController();
-    var passwordC = TextEditingController();
-    var databaseC = TextEditingController();
+    final hostnameC = TextEditingController();
+    final usernameC = TextEditingController();
+    final passwordC = TextEditingController();
+    final databaseC = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(title: Text(Strings.serverSetup)),
@@ -29,17 +29,15 @@ class ServerSetup extends StatelessWidget {
             );
           }
 
-          if (await checkServerConnection(
-            hostname: hostnameC.text,
-            username: usernameC.text,
-            password: passwordC.text,
-            database: databaseC.text,
-          )) {
-            await GetStorage().write(
-              'serverConfig',
-              <String>[hostnameC.text, usernameC.text, passwordC.text, databaseC.text],
-            );
+          List<String> config = [
+            hostnameC.text,
+            usernameC.text,
+            passwordC.text,
+            databaseC.text,
+          ];
 
+          if (await checkServerConnection(config)) {
+            await GetStorage().write('serverConfig', config);
             // ignore: use_build_context_synchronously
             context.read<HomeBloc>().add(LoadHome());
           }
