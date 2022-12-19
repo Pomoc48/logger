@@ -5,7 +5,6 @@ import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/pages/home/widgets/chart.dart';
 import 'package:logger_app/widgets/dismiss_background.dart';
 import 'package:logger_app/widgets/empty_list.dart';
-import 'package:logger_app/widgets/leading.dart';
 import 'package:logger_app/widgets/loading.dart';
 import 'package:logger_app/pages/home/widgets/network_error.dart';
 import 'package:logger_app/pages/home/widgets/server_setup.dart';
@@ -39,35 +38,40 @@ class HomePage extends StatelessWidget {
               child: ListView.separated(
                 separatorBuilder: (c, i) => const Divider(height: 0),
                 itemBuilder: (context, index) {
-                  return Dismissible(
-                    key: Key(state.tables[index].name),
-                    direction: DismissDirection.startToEnd,
-                    background: const DismissBackground(),
-                    confirmDismiss: (d) async => confirmDismiss(
-                      context: context,
-                      message: Strings.areSure,
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      top: index == 0 ? 8 : 0, 
+                      bottom: index == state.tables.length - 1 ? 88 : 0,
                     ),
-                    onDismissed: (direction) {
-                      context.read<HomeBloc>().add(RemoveFromHome(
-                          state.tables[index], state.tables));
-                    },
-                    child: ListTile(
-                      onTap: () async {
-                        context.read<ListBloc>().add(LoadList(
-                            state.tables[index]));
-
-                        await Navigator.pushNamed(context, Routes.list);
-                        // ignore: use_build_context_synchronously
-                        refresh(context);
-                      },
-                      trailing: SizedBox(
-                        width: 120,
-                        height: 40,
-                        child: LineChart(data: state.tables[index].chartData),
+                    child: Dismissible(
+                      key: Key(state.tables[index].name),
+                      direction: DismissDirection.startToEnd,
+                      background: const DismissBackground(),
+                      confirmDismiss: (d) async => confirmDismiss(
+                        context: context,
+                        message: Strings.areSure,
                       ),
-                      leading: ListLeading(index + 1),
-                      title: Text(state.tables[index].name),
-                      subtitle: Text("${state.tables[index].rows} items"),
+                      onDismissed: (direction) {
+                        context.read<HomeBloc>().add(RemoveFromHome(
+                            state.tables[index], state.tables));
+                      },
+                      child: ListTile(
+                        onTap: () async {
+                          context.read<ListBloc>().add(LoadList(
+                              state.tables[index]));
+
+                          await Navigator.pushNamed(context, Routes.list);
+                          // ignore: use_build_context_synchronously
+                          refresh(context);
+                        },
+                        trailing: SizedBox(
+                          width: 120,
+                          height: 40,
+                          child: LineChart(data: state.tables[index].chartData),
+                        ),
+                        title: Text(state.tables[index].name),
+                        subtitle: Text("${state.tables[index].rows} items"),
+                      ),
                     ),
                   );
                 },

@@ -23,8 +23,17 @@ class LineChart extends StatelessWidget {
         colors: [
           Theme.of(context).colorScheme.primary.withOpacity(0.1),
           Theme.of(context).colorScheme.primary,
-        ]
+        ],
       ),
+      fillGradient: LinearGradient(
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
+          colors: [
+            Theme.of(context).colorScheme.primary.withOpacity(0.0),
+            Theme.of(context).colorScheme.primary.withOpacity(0.2),
+          ]
+        ),
+        fillMode: FillMode.below,
     );
   }
 }
