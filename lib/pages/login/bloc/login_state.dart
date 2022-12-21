@@ -19,3 +19,12 @@ class LoginAccepted extends LoginState {
   @override
   List<Object> get props => [token];
 }
+
+class LoginMessage extends LoginState {
+  final String message;
+
+  const LoginMessage(this.message);
+
+  @override
+  List<Object> get props => [message];
+}

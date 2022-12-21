@@ -9,4 +9,15 @@ abstract class LoginEvent extends Equatable {
 
 class AutoLogin extends LoginEvent {}
 
-class RequestLogin extends LoginEvent {}
+class RequestLogin extends LoginEvent {
+  final String username;
+  final String password;
+
+  const RequestLogin({
+    required this.username,
+    required this.password,
+  });
+
+  @override
+  List<Object> get props => [username, password];
+}

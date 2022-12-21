@@ -28,3 +28,31 @@ Future<Map> autoLoginResult() async {
 
   return {"success": false};
 }
+
+Future<Map> manualLoginResult({
+  required String username,
+  required String password,
+}) async {
+
+  Response response = await post(
+    Uri.parse("http://loggerapp.lukawski.xyz/login/"),
+    headers: {
+      "Username": username,
+      "Password": password,
+    },
+  );
+
+  Map map = jsonDecode(utf8.decode(response.bodyBytes));
+
+  if (response.statusCode == 200) {
+    return {
+      "success": true,
+      "token": map["token"],
+    };
+  }
+
+  return {
+    "success": false,
+    "message": map["message"],
+  };
+}

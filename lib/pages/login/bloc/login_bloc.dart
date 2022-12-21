@@ -17,5 +17,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(LoginRequired());
       }
     });
+
+    on<RequestLogin>((event, emit) async {
+      Map response = await manualLoginResult(
+        username: event.username,
+        password: event.password,
+      );
+
+      if (response["success"]) {
+        emit(LoginAccepted(response["token"]));
+      } else {
+        emit(LoginMessage(response["message"]));
+      }
+    });
   }
 }

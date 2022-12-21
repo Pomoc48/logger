@@ -19,14 +19,31 @@ class LoginPage extends StatelessWidget {
             arguments: state.token,
           );
         }
+
+        if (state is LoginMessage) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
       },
       builder:(context, state) {
-        if (state is LoginRequired) {
+        if (state is LoginRequired || state is LoginMessage) {
+          TextEditingController username = TextEditingController();
+          TextEditingController password = TextEditingController();
+
           return Fader(
             child: Scaffold(
               appBar: AppBar(title: Text(Strings.login)),
               floatingActionButton: FloatingActionButton.extended(
-                onPressed: () {},
+                onPressed: () {
+                  context.read<LoginBloc>().add(RequestLogin(
+                    username: username.text,
+                    password: password.text,
+                  ));
+                },
                 icon: const Icon(Icons.login),
                 label: Text(Strings.login),
               ),
@@ -36,12 +53,14 @@ class LoginPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextField(
+                      controller: username,
                       decoration: InputDecoration(
                         label: Text(Strings.username),
                       ),
                     ),
                     const SizedBox(height: 16),
                     TextField(
+                      controller: password,
                       obscureText: true,
                       decoration: InputDecoration(
                         label: Text(Strings.password),
