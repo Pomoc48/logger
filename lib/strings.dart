@@ -36,7 +36,7 @@ class Strings {
 }
 
 class Routes {
+  static String login = "/login";
   static String home = "/home";
   static String list = "/list";
-  static String add = "/add";
 }
