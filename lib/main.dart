@@ -5,6 +5,7 @@ import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/page.dart';
 import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 import 'package:logger_app/pages/list/page.dart';
+import 'package:logger_app/pages/login/bloc/login_bloc.dart';
 import 'package:logger_app/pages/login/page.dart';
 import 'package:logger_app/strings.dart';
 
@@ -14,8 +15,9 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => LoginBloc()..add(AutoLogin())),
         BlocProvider(create: (context) => HomeBloc()..add(LoadHome())),
-        BlocProvider(create: (context) => ListBloc())
+        BlocProvider(create: (context) => ListBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
