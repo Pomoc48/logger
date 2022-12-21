@@ -45,6 +45,9 @@ Future<Map> manualLoginResult({
   Map map = jsonDecode(utf8.decode(response.bodyBytes));
 
   if (response.statusCode == 200) {
+    await GetStorage().write("username", username);
+    await GetStorage().write("password", password);
+
     return {
       "success": true,
       "token": map["token"],
