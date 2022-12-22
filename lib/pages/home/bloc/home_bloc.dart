@@ -107,5 +107,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<ReportHomeError>((event, emit) {
       emit(HomeError(token: event.token));
     });
+    
+    on<ReportLogout>((event, emit) async {
+      await forgetLoginCredentials();
+      emit(HomeLoginRequired());
+    });
   }
 }

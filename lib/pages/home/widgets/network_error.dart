@@ -26,24 +26,13 @@ class NetworkError extends StatelessWidget {
               const SizedBox(height: 16),
               Text(Strings.noNet, style: t.textTheme.bodyLarge),
               const SizedBox(height: 32),
-              Row(
-                children: [
-                  OutlinedButton.icon(
-                    onPressed: () async => refresh(
-                      context: context,
-                      token: token,
-                    ),
-                    icon: const Icon(Icons.refresh),
-                    label: Text(Strings.refresh),
-                  ),
-                  const SizedBox(width: 16),
-                  TextButton(
-                    onPressed: () {
-                      context.read<HomeBloc>().add(ReportLogout());
-                    },
-                    child: Text(Strings.logout),
-                  ),
-                ],
+              OutlinedButton.icon(
+                onPressed: () async => refresh(
+                  context: context,
+                  token: token,
+                ),
+                icon: const Icon(Icons.refresh),
+                label: Text(Strings.refresh),
               ),
             ],
           ),

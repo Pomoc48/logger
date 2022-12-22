@@ -47,7 +47,32 @@ class HomePage extends StatelessWidget {
 
           return Fader(
             child: Scaffold(
-              appBar: AppBar(title: Text(Strings.appName)),
+              appBar: AppBar(
+                title: Text(Strings.appName),
+                actions: [
+                  PopupMenuButton<String>(
+                    itemBuilder: (BuildContext context) {
+                      return [
+                        PopupMenuItem<String>(
+                          value: "logout",
+                          child: Row(
+                            children: [
+                              const Icon(Icons.logout),
+                              const SizedBox(width: 8),
+                              Text(Strings.logout),
+                            ],
+                          ),
+                        ),
+                      ];
+                    },
+                    onSelected: (value) {
+                      if (value == "logout") {
+                        context.read<HomeBloc>().add(ReportLogout());
+                      }
+                    },
+                  ),
+                ],
+              ),
               floatingActionButton: FloatingActionButton.extended(
                 onPressed: () async => addNewTableDialog(
                   context: context,

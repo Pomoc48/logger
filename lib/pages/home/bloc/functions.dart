@@ -61,6 +61,11 @@ Future<Map> manualLoginResult({
   };
 }
 
+Future<void> forgetLoginCredentials() async {
+  await GetStorage().remove("username");
+  await GetStorage().remove("password");
+}
+
 Future<List<TableItem>> getTables({required String token}) async {
   Response response = await get(
     Uri.parse("http://loggerapp.lukawski.xyz/tables/"),
