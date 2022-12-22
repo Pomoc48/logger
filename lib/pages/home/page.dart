@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<HomeBloc, HomeState>(
       listener: (context, state) {
-        if (state is HomeLoginMessage) {
+        if (state is HomeMessage) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
@@ -30,10 +30,7 @@ class HomePage extends StatelessWidget {
         }
       },
       buildWhen: (previous, current) {
-        if (previous is HomeLoginRequired && current is HomeLoginMessage) {
-          return false;
-        }
-
+        if (current is HomeMessage) return false;
         return true;
       },
       builder: (context, state) {
@@ -91,10 +88,7 @@ class HomePage extends StatelessWidget {
                         },
                         child: ListTile(
                           onTap: () async {
-                            context
-                                .read<ListBloc>()
-                                .add(LoadList(state.tables[index]));
-                                // TODO: Replace later
+                            BlocProvider.of<ListBloc>(context).add(LoadList(state.tables[index]));
 
                             await Navigator.pushNamed(context, Routes.list);
                             // ignore: use_build_context_synchronously
@@ -126,7 +120,7 @@ class HomePage extends StatelessWidget {
           );
         }
 
-        if (state is HomeLoginRequired || state is HomeLoginMessage) {
+        if (state is HomeLoginRequired) {
           return const LoginView();
         }
 

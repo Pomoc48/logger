@@ -80,22 +80,50 @@ Future<List<TableItem>> getTables({required String token}) async {
   return tables;
 }
 
-Future<void> addTable({
+Future<Map> addTable({
   required String table,
   required String token,
 }) async {
-  await post(
+  Response response = await post(
     Uri.parse("http://loggerapp.lukawski.xyz/tables/?table_name=$table"),
     headers: {"Token": token},
   );
+
+  Map map = jsonDecode(utf8.decode(response.bodyBytes));
+
+  if (response.statusCode == 200) {
+    return {
+      "success": true,
+      "message": map["message"],
+    };
+  }
+
+  return {
+    "success": false,
+    "message": map["message"],
+  };
 }
 
-Future<void> removeTable({
+Future<Map> removeTable({
   required String table,
   required String token,
 }) async {
-  await delete(
+  Response response = await delete(
     Uri.parse("http://loggerapp.lukawski.xyz/tables/?table_name=$table"),
     headers: {"Token": token},
   );
+
+  Map map = jsonDecode(utf8.decode(response.bodyBytes));
+
+  if (response.statusCode == 200) {
+    return {
+      "success": true,
+      "message": map["message"],
+    };
+  }
+
+  return {
+    "success": false,
+    "message": map["message"],
+  };
 }

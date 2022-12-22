@@ -43,7 +43,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           emit(HomeError(token: token));
         }
       } else {
-        emit(HomeLoginMessage(response["message"]));
+        emit(HomeMessage(response["message"]));
       }
     });
 
@@ -64,11 +64,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<InsertHome>((event, emit) async {
       try {
-        await addTable(table: event.newTable, token: event.token);
-        emit(HomeLoaded(
-          tables: await getTables(token: event.token),
+        Map response = await addTable(
+          table: event.newTable,
           token: event.token,
-        ));
+        );
+
+        if (response["success"]) {
+          emit(HomeLoaded(
+            tables: await getTables(token: event.token),
+            token: event.token,
+          ));
+        } else {
+          emit(HomeMessage(response["message"]));
+        }
+
       } catch (e) {
         emit(HomeError(token: event.token));
       }
@@ -76,11 +85,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<RemoveFromHome>((event, emit) async {
       try {
-        await removeTable(table: event.table.name, token: event.token);
-        emit(HomeLoaded(
-          tables: await getTables(token: event.token),
+        Map response = await removeTable(
+          table: event.table.name,
           token: event.token,
-        ));
+        );
+
+        if (response["success"]) {
+          emit(HomeLoaded(
+            tables: await getTables(token: event.token),
+            token: event.token,
+          ));
+        } else {
+          emit(HomeMessage(response["message"]));
+        }
+
       } catch (e) {
         emit(HomeError(token: event.token));
       }
