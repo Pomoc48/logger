@@ -13,7 +13,10 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       emit(ListInitial());
 
       try {
-        List<RowItem> rowList = await getTableRows(table: event.table.name, token: event.token);
+        List<RowItem> rowList = await getTableRows(
+          table: event.table.name,
+          token: event.token,
+        );
 
         emit(ListLoaded(
           rowList: rowList,
@@ -46,7 +49,6 @@ class ListBloc extends Bloc<ListEvent, ListState> {
             chartData: getChartData(rowList),
             token: event.token,
           ));
-
         } else {
           emit(ListMessage(response["message"]));
         }
@@ -75,7 +77,6 @@ class ListBloc extends Bloc<ListEvent, ListState> {
             chartData: getChartData(rowList),
             token: event.token,
           ));
-
         } else {
           emit(ListMessage(response["message"]));
         }

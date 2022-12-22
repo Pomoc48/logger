@@ -22,7 +22,8 @@ class LoginView extends StatelessWidget {
               showSnack(context, Strings.allFields);
               return;
             }
-            context.read<HomeBloc>().add(RequestLogin(
+
+            BlocProvider.of<HomeBloc>(context).add(RequestLogin(
               username: username.text,
               password: password.text,
             ));

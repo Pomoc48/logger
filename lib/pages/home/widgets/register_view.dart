@@ -29,17 +29,19 @@ class RegisterView extends StatelessWidget {
           appBar: AppBar(title: Text(Strings.register)),
           floatingActionButton: FloatingActionButton.extended(
             onPressed: () {
-              if (username.text == "" || password.text == "" || repeatP.text == "") {
+              if (username.text == "" ||
+                  password.text == "" ||
+                  repeatP.text == "") {
                 showSnack(context, Strings.allFields);
                 return;
               }
-    
+
               if (password.text != repeatP.text) {
                 showSnack(context, Strings.passwordError);
                 return;
               }
-    
-              context.read<HomeBloc>().add(RequestRegister(
+
+              BlocProvider.of<HomeBloc>(context).add(RequestRegister(
                 username: username.text,
                 password: password.text,
               ));

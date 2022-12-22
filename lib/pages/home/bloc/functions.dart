@@ -34,7 +34,6 @@ Future<Map> manualLoginResult({
   required String username,
   required String password,
 }) async {
-
   Response response = await post(
     Uri.parse("http://loggerapp.lukawski.xyz/login/"),
     headers: {
@@ -65,7 +64,6 @@ Future<Map> registerResult({
   required String username,
   required String password,
 }) async {
-
   Response response = await post(
     Uri.parse("http://loggerapp.lukawski.xyz/register/"),
     headers: {

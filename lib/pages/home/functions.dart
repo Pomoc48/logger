@@ -9,9 +9,12 @@ Future<void> refresh({
   required String token,
 }) async {
   try {
-    context.read<HomeBloc>().add(UpdateHome(tables: await getTables(token: token), token: token));
+    BlocProvider.of<HomeBloc>(context).add(UpdateHome(
+      tables: await getTables(token: token),
+      token: token,
+    ));
   } catch (e) {
-    context.read<HomeBloc>().add(ReportHomeError(token));
+    BlocProvider.of<HomeBloc>(context).add(ReportHomeError(token));
   }
 }
 
@@ -39,7 +42,11 @@ Future<void> addNewTableDialog({
           ),
           TextButton(
             onPressed: () {
-              context.read<HomeBloc>().add(InsertHome(newTable:  controller.text, token: token)); // TODO: format when done
+              BlocProvider.of<HomeBloc>(context).add(InsertHome(
+                newTable: controller.text,
+                token: token,
+              ));
+
               Navigator.pop(context);
             },
             child: Text(Strings.create),

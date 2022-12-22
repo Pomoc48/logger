@@ -14,9 +14,14 @@ Future<void> refresh({
   try {
     List<RowItem> rowList = await getTableRows(table: name, token: token);
 
-    context.read<ListBloc>().add(UpdateList(rowList: rowList, title: name, chartData: getChartData(rowList), token: token));
+    BlocProvider.of<ListBloc>(context).add(UpdateList(
+      rowList: rowList,
+      title: name,
+      chartData: getChartData(rowList),
+      token: token,
+    ));
   } catch (e) {
-    context.read<ListBloc>().add(ReportListError());
+    BlocProvider.of<ListBloc>(context).add(ReportListError());
   }
 }
 
@@ -45,7 +50,9 @@ Future<void> addNewRowDialog({
 
   if (time == null) return;
 
-  context.read<ListBloc>().add(InsertList(timestamp: _dateToString(date, time), name: name, token: token));
+  BlocProvider.of<ListBloc>(context).add(
+    InsertList(timestamp: _dateToString(date, time), name: name, token: token),
+  );
 }
 
 String _dateToString(DateTime date, TimeOfDay time) {

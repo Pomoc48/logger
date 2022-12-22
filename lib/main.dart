@@ -35,7 +35,7 @@ void main() async {
         routes: {
           Routes.home: (context) => const HomePage(),
           Routes.list: (context) => const ListPage(),
-          Routes.register:(context) => const RegisterView(),
+          Routes.register: (context) => const RegisterView(),
         },
         initialRoute: Routes.home,
       ),

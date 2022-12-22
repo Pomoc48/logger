@@ -81,15 +81,20 @@ class HomePage extends StatelessWidget {
                           message: Strings.areSure,
                         ),
                         onDismissed: (direction) {
-                          context.read<HomeBloc>().add(RemoveFromHome(
-                            table: state.tables[index],
-                            tableList: state.tables,
-                            token: state.token,
-                          ));
+                          BlocProvider.of<HomeBloc>(context).add(
+                            RemoveFromHome(
+                              table: state.tables[index],
+                              tableList: state.tables,
+                              token: state.token,
+                            ),
+                          );
                         },
                         child: ListTile(
                           onTap: () async {
-                            BlocProvider.of<ListBloc>(context).add(LoadList(table: state.tables[index], token: state.token));
+                            BlocProvider.of<ListBloc>(context).add(LoadList(
+                              table: state.tables[index],
+                              token: state.token,
+                            ));
 
                             await Navigator.pushNamed(context, Routes.list);
                             // ignore: use_build_context_synchronously

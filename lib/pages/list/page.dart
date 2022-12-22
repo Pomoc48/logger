@@ -22,7 +22,7 @@ class ListPage extends StatelessWidget {
         if (state is ListMessage) {
           showSnack(context, state.message);
         }
-        
+
         if (state is ListError) {
           Navigator.pop(context);
         }
@@ -83,11 +83,13 @@ class ListPage extends StatelessWidget {
                         direction: DismissDirection.startToEnd,
                         background: const DismissBackground(),
                         onDismissed: (direction) {
-                          context.read<ListBloc>().add(RemoveFromList(
+                          BlocProvider.of<ListBloc>(context).add(
+                            RemoveFromList(
                               row: state.rowList[index],
                               title: state.title,
                               token: state.token,
-                            ));
+                            ),
+                          );
                         },
                         child: ListTile(
                           leading: ListLeading(state.rowList[index].number),

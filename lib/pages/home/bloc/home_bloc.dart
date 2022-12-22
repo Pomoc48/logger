@@ -89,7 +89,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         } else {
           emit(HomeMessage(response["message"]));
         }
-
       } catch (e) {
         emit(HomeError(token: event.token));
       }
@@ -110,7 +109,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         } else {
           emit(HomeMessage(response["message"]));
         }
-
       } catch (e) {
         emit(HomeError(token: event.token));
       }
@@ -119,7 +117,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<ReportHomeError>((event, emit) {
       emit(HomeError(token: event.token));
     });
-    
+
     on<ReportLogout>((event, emit) async {
       await forgetLoginCredentials();
       emit(HomeLoginRequired());
