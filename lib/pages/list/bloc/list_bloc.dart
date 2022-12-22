@@ -28,15 +28,28 @@ class ListBloc extends Bloc<ListEvent, ListState> {
 
     on<InsertList>((event, emit) async {
       try {
-        await addRow(table: event.name, timestamp: event.timestamp, token: event.token);
-        List<RowItem> rowList = await getTableRows(table: event.name, token: event.token);
-
-        emit(ListLoaded(
-          rowList: rowList,
-          title: event.name,
-          chartData: getChartData(rowList),
+        Map response = await addRow(
+          table: event.name,
+          timestamp: event.timestamp,
           token: event.token,
-        ));
+        );
+
+        if (response["success"]) {
+          List<RowItem> rowList = await getTableRows(
+            table: event.name,
+            token: event.token,
+          );
+
+          emit(ListLoaded(
+            rowList: rowList,
+            title: event.name,
+            chartData: getChartData(rowList),
+            token: event.token,
+          ));
+
+        } else {
+          emit(ListMessage(response["message"]));
+        }
       } catch (e) {
         emit(ListError());
       }
@@ -44,15 +57,28 @@ class ListBloc extends Bloc<ListEvent, ListState> {
 
     on<RemoveFromList>((event, emit) async {
       try {
-        await removeRow(table: event.title, rowId: event.row.id, token: event.token);
-        List<RowItem> rowList = await getTableRows(table: event.title, token: event.token);
-
-        emit(ListLoaded(
-          rowList: rowList,
-          title: event.title,
-          chartData: getChartData(rowList),
+        Map response = await removeRow(
+          table: event.title,
+          rowId: event.row.id,
           token: event.token,
-        ));
+        );
+
+        if (response["success"]) {
+          List<RowItem> rowList = await getTableRows(
+            table: event.title,
+            token: event.token,
+          );
+
+          emit(ListLoaded(
+            rowList: rowList,
+            title: event.title,
+            chartData: getChartData(rowList),
+            token: event.token,
+          ));
+
+        } else {
+          emit(ListMessage(response["message"]));
+        }
       } catch (e) {
         emit(ListError());
       }

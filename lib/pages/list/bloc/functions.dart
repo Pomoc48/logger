@@ -25,30 +25,58 @@ Future<List<RowItem>> getTableRows({
   return rows;
 }
 
-Future<void> removeRow({
+Future<Map> removeRow({
   required String table,
   required int rowId,
   required String token,
 }) async {
-  await delete(
+  Response response = await delete(
     Uri.parse(
       "http://loggerapp.lukawski.xyz/rows/?row_id=$rowId&table_name=$table",
     ),
     headers: {"Token": token},
   );
+
+  Map map = jsonDecode(utf8.decode(response.bodyBytes));
+
+  if (response.statusCode == 200) {
+    return {
+      "success": true,
+      "message": map["message"],
+    };
+  }
+
+  return {
+    "success": false,
+    "message": map["message"],
+  };
 }
 
-Future<void> addRow({
+Future<Map> addRow({
   required String table,
   required String timestamp,
   required String token,
 }) async {
-  await post(
+  Response response = await post(
     Uri.parse(
       "http://loggerapp.lukawski.xyz/rows/?timestamp=$timestamp&table_name=$table",
     ),
     headers: {"Token": token},
   );
+
+  Map map = jsonDecode(utf8.decode(response.bodyBytes));
+
+  if (response.statusCode == 200) {
+    return {
+      "success": true,
+      "message": map["message"],
+    };
+  }
+
+  return {
+    "success": false,
+    "message": map["message"],
+  };
 }
 
 List<double> getChartData(List<RowItem> rows) {

@@ -19,9 +19,22 @@ class ListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ListBloc, ListState>(
       listener: (context, state) {
+        if (state is ListMessage) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
+        
         if (state is ListError) {
           Navigator.pop(context);
         }
+      },
+      buildWhen: (previous, current) {
+        if (current is ListMessage) return false;
+        return true;
       },
       builder: (context, state) {
         if (state is ListLoaded) {

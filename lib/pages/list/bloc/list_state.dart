@@ -27,3 +27,12 @@ class ListLoaded extends ListState {
 }
 
 class ListError extends ListState {}
+
+class ListMessage extends ListState {
+  final String message;
+
+  const ListMessage(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
