@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logger_app/strings.dart';
+import 'package:logger_app/widgets/actions.dart';
 import 'package:logger_app/widgets/fader.dart';
 
 class EmptyList extends StatelessWidget {
@@ -12,7 +13,10 @@ class EmptyList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Fader(
       child: Scaffold(
-        appBar: AppBar(title: Text(title)),
+        appBar: AppBar(
+          title: Text(title),
+          actions: appBarActions(context),
+        ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () => press(),
           icon: const Icon(Icons.add),

@@ -38,3 +38,13 @@ class HomeMessage extends HomeState {
 }
 
 class HomeLoginRequired extends HomeState {}
+
+class RegisterResults extends HomeState {
+  final bool registered;
+  final String message;
+
+  const RegisterResults({required this.registered, required this.message});
+
+  @override
+  List<Object> get props => [registered, message];
+}

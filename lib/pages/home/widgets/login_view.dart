@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger_app/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/fader.dart';
@@ -17,6 +18,10 @@ class LoginView extends StatelessWidget {
         appBar: AppBar(title: Text(Strings.login)),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
+            if (username.text == "" || password.text == "") {
+              showSnack(context, Strings.allFields);
+              return;
+            }
             context.read<HomeBloc>().add(RequestLogin(
               username: username.text,
               password: password.text,

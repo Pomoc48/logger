@@ -20,12 +20,7 @@ class ListPage extends StatelessWidget {
     return BlocConsumer<ListBloc, ListState>(
       listener: (context, state) {
         if (state is ListMessage) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          showSnack(context, state.message);
         }
         
         if (state is ListError) {

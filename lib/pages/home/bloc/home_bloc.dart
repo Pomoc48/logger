@@ -47,6 +47,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }
     });
 
+    on<RequestRegister>((event, emit) async {
+      Map response = await registerResult(
+        username: event.username,
+        password: event.password,
+      );
+
+      emit(RegisterResults(
+        registered: response["success"],
+        message: response["message"],
+      ));
+    });
+
     on<LoadHome>((event, emit) async {
       try {
         emit(HomeLoaded(

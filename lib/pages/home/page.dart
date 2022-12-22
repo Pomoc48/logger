@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger_app/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/pages/home/widgets/chart.dart';
 import 'package:logger_app/pages/home/widgets/login_view.dart';
+import 'package:logger_app/widgets/actions.dart';
 import 'package:logger_app/widgets/dismiss_background.dart';
 import 'package:logger_app/widgets/divider.dart';
 import 'package:logger_app/widgets/empty_list.dart';
@@ -21,16 +23,12 @@ class HomePage extends StatelessWidget {
     return BlocConsumer<HomeBloc, HomeState>(
       listener: (context, state) {
         if (state is HomeMessage) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          showSnack(context, state.message);
         }
       },
       buildWhen: (previous, current) {
         if (current is HomeMessage) return false;
+        if (current is RegisterResults) return false;
         return true;
       },
       builder: (context, state) {
@@ -49,29 +47,7 @@ class HomePage extends StatelessWidget {
             child: Scaffold(
               appBar: AppBar(
                 title: Text(Strings.appName),
-                actions: [
-                  PopupMenuButton<String>(
-                    itemBuilder: (BuildContext context) {
-                      return [
-                        PopupMenuItem<String>(
-                          value: "logout",
-                          child: Row(
-                            children: [
-                              const Icon(Icons.logout),
-                              const SizedBox(width: 8),
-                              Text(Strings.logout),
-                            ],
-                          ),
-                        ),
-                      ];
-                    },
-                    onSelected: (value) {
-                      if (value == "logout") {
-                        context.read<HomeBloc>().add(ReportLogout());
-                      }
-                    },
-                  ),
-                ],
+                actions: appBarActions(context),
               ),
               floatingActionButton: FloatingActionButton.extended(
                 onPressed: () async => addNewTableDialog(
