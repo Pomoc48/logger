@@ -5,8 +5,6 @@ import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/page.dart';
 import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 import 'package:logger_app/pages/list/page.dart';
-import 'package:logger_app/pages/login/bloc/login_bloc.dart';
-import 'package:logger_app/pages/login/page.dart';
 import 'package:logger_app/strings.dart';
 
 void main() async {
@@ -15,8 +13,7 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => LoginBloc()..add(AutoLogin())),
-        BlocProvider(create: (context) => HomeBloc()),
+        BlocProvider(create: (context) => HomeBloc()..add(AutoLogin())),
         BlocProvider(create: (context) => ListBloc()),
       ],
       child: MaterialApp(
@@ -35,11 +32,10 @@ void main() async {
           physics: const BouncingScrollPhysics(),
         ),
         routes: {
-          Routes.login:(context) => const LoginPage(),
           Routes.home: (context) => const HomePage(),
           Routes.list: (context) => const ListPage(),
         },
-        initialRoute: Routes.login,
+        initialRoute: Routes.home,
       ),
     ),
   );

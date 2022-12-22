@@ -41,7 +41,7 @@ class NetworkError extends StatelessWidget {
                     onPressed: () {
                       context.read<HomeBloc>().add(ReportLogout());
                     },
-                    child: Text(Strings.updatePassword),
+                    child: Text(Strings.logout),
                   ),
                 ],
               ),

@@ -7,7 +7,6 @@ class Strings {
 
   static String empty = "No items to display";
   static String error = "Something went wrong";
-  static String allFields = "Please enter all the fields";
   static String areSure =
       "Are you sure you want to delete this list? All items inside will be permanently deleted.";
   static String noNet =
@@ -22,24 +21,15 @@ class Strings {
   static String cancel = "Cancel";
   static String delete = "Delete";
   static String refresh = "Refresh";
-  static String updatePassword = "MySQL setup";
+  static String logout = "Logout";
 
   static String newListHint = "Workout";
 
   static String username = "Username";
   static String password = "Password";
-
-  static String hostname = "Hostname";
-  static String database = "Database";
-
-  static String hostnameHint = "mysql.exmaple.com";
-  static String usernameHint = "something_log";
-  static String passwordHint = "HelloWorld123";
-  static String databaseHint = "something_log";
 }
 
 class Routes {
-  static String login = "/login";
   static String home = "/home";
   static String list = "/list";
 }

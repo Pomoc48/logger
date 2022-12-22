@@ -8,6 +8,45 @@ part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitial()) {
+    on<AutoLogin>((event, emit) async {
+      Map response = await autoLoginResult();
+
+      if (response["success"]) {
+        String token = response["token"];
+        try {
+          emit(HomeLoaded(
+            tables: await getTables(token: token),
+            token: token,
+          ));
+        } catch (e) {
+          emit(HomeError(token: token));
+        }
+      } else {
+        emit(HomeLoginRequired());
+      }
+    });
+
+    on<RequestLogin>((event, emit) async {
+      Map response = await manualLoginResult(
+        username: event.username,
+        password: event.password,
+      );
+
+      if (response["success"]) {
+        String token = response["token"];
+        try {
+          emit(HomeLoaded(
+            tables: await getTables(token: token),
+            token: token,
+          ));
+        } catch (e) {
+          emit(HomeError(token: token));
+        }
+      } else {
+        emit(HomeLoginMessage(response["message"]));
+      }
+    });
+
     on<LoadHome>((event, emit) async {
       try {
         emit(HomeLoaded(

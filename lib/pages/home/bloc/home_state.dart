@@ -27,3 +27,14 @@ class HomeLoaded extends HomeState {
   @override
   List<Object> get props => [tables, token];
 }
+
+class HomeLoginRequired extends HomeState {}
+
+class HomeLoginMessage extends HomeState {
+  final String message;
+
+  const HomeLoginMessage(this.message);
+
+  @override
+  List<Object> get props => [message];
+}

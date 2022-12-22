@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/pages/home/widgets/chart.dart';
+import 'package:logger_app/pages/home/widgets/login_view.dart';
 import 'package:logger_app/widgets/dismiss_background.dart';
 import 'package:logger_app/widgets/divider.dart';
 import 'package:logger_app/widgets/empty_list.dart';
@@ -17,7 +18,24 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
+    return BlocConsumer<HomeBloc, HomeState>(
+      listener: (context, state) {
+        if (state is HomeLoginMessage) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
+      },
+      buildWhen: (previous, current) {
+        if (previous is HomeLoginRequired && current is HomeLoginMessage) {
+          return false;
+        }
+
+        return true;
+      },
       builder: (context, state) {
         if (state is HomeLoaded) {
           if (state.tables.isEmpty) {
@@ -106,6 +124,10 @@ class HomePage extends StatelessWidget {
               ),
             ),
           );
+        }
+
+        if (state is HomeLoginRequired || state is HomeLoginMessage) {
+          return const LoginView();
         }
 
         if (state is HomeError) {
