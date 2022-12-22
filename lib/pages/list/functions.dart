@@ -6,20 +6,29 @@ import 'package:logger_app/models/row.dart';
 import 'package:logger_app/pages/list/bloc/functions.dart';
 import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 
-Future<void> refresh(BuildContext context, String name) async {
+Future<void> refresh({
+  required BuildContext context,
+  required String name,
+  required String token,
+}) async {
   try {
-    List<RowItem> rowList = await getTableRows(name);
+    List<RowItem> rowList = await getTableRows(table: name, token: token);
 
-    context.read<ListBloc>().add(UpdateList(
-        rowList: rowList, title: name, chartData: getChartData(rowList)));
+    BlocProvider.of<ListBloc>(context).add(UpdateList(
+      rowList: rowList,
+      title: name,
+      chartData: getChartData(rowList),
+      token: token,
+    ));
   } catch (e) {
-    context.read<ListBloc>().add(ReportListError());
+    BlocProvider.of<ListBloc>(context).add(ReportListError());
   }
 }
 
 Future<void> addNewRowDialog({
   required BuildContext context,
   required String name,
+  required String token,
 }) async {
   DateTime dateNow = DateTime.now();
 
@@ -41,10 +50,9 @@ Future<void> addNewRowDialog({
 
   if (time == null) return;
 
-  context.read<ListBloc>().add(InsertList(
-        timestamp: _dateToString(date, time),
-        name: name,
-      ));
+  BlocProvider.of<ListBloc>(context).add(
+    InsertList(timestamp: _dateToString(date, time), name: name, token: token),
+  );
 }
 
 String _dateToString(DateTime date, TimeOfDay time) {

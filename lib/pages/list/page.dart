@@ -19,9 +19,17 @@ class ListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ListBloc, ListState>(
       listener: (context, state) {
+        if (state is ListMessage) {
+          showSnack(context, state.message);
+        }
+
         if (state is ListError) {
           Navigator.pop(context);
         }
+      },
+      buildWhen: (previous, current) {
+        if (current is ListMessage) return false;
+        return true;
       },
       builder: (context, state) {
         if (state is ListLoaded) {
@@ -31,7 +39,9 @@ class ListPage extends StatelessWidget {
               press: () async => addNewRowDialog(
                 context: context,
                 name: state.title,
+                token: state.token,
               ),
+              disableActions: true,
             );
           }
 
@@ -50,12 +60,17 @@ class ListPage extends StatelessWidget {
                 onPressed: () async => addNewRowDialog(
                   context: context,
                   name: state.title,
+                  token: state.token,
                 ),
                 icon: const Icon(Icons.add),
                 label: Text(Strings.newItemFAB),
               ),
               body: RefreshIndicator(
-                onRefresh: () async => refresh(context, state.title),
+                onRefresh: () async => refresh(
+                  context: context,
+                  name: state.title,
+                  token: state.token,
+                ),
                 child: ListView.separated(
                   separatorBuilder: (c, i) => const ListDivider(),
                   itemBuilder: (context, index) {
@@ -69,8 +84,13 @@ class ListPage extends StatelessWidget {
                         direction: DismissDirection.startToEnd,
                         background: const DismissBackground(),
                         onDismissed: (direction) {
-                          context.read<ListBloc>().add(RemoveFromList(
-                              row: state.rowList[index], title: state.title));
+                          BlocProvider.of<ListBloc>(context).add(
+                            RemoveFromList(
+                              row: state.rowList[index],
+                              title: state.title,
+                              token: state.token,
+                            ),
+                          );
                         },
                         child: ListTile(
                           leading: ListLeading(state.rowList[index].number),

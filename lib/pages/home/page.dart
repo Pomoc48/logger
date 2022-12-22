@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger_app/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/pages/home/widgets/chart.dart';
+import 'package:logger_app/pages/home/widgets/login_view.dart';
+import 'package:logger_app/widgets/actions.dart';
 import 'package:logger_app/widgets/dismiss_background.dart';
 import 'package:logger_app/widgets/divider.dart';
 import 'package:logger_app/widgets/empty_list.dart';
 import 'package:logger_app/widgets/fader.dart';
 import 'package:logger_app/widgets/loading.dart';
 import 'package:logger_app/pages/home/widgets/network_error.dart';
-import 'package:logger_app/pages/home/widgets/server_setup.dart';
 import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 import 'package:logger_app/strings.dart';
 
@@ -18,26 +20,48 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
+    return BlocConsumer<HomeBloc, HomeState>(
+      listener: (context, state) {
+        if (state is HomeMessage) {
+          showSnack(context, state.message);
+        }
+      },
+      buildWhen: (previous, current) {
+        if (current is HomeMessage) return false;
+        if (current is RegisterResults) return false;
+        return true;
+      },
       builder: (context, state) {
         if (state is HomeLoaded) {
           if (state.tables.isEmpty) {
             return EmptyList(
               title: Strings.appName,
-              press: () async => addNewTableDialog(context),
+              press: () async => addNewTableDialog(
+                context: context,
+                token: state.token,
+              ),
             );
           }
 
           return Fader(
             child: Scaffold(
-              appBar: AppBar(title: Text(Strings.appName)),
+              appBar: AppBar(
+                title: Text(Strings.appName),
+                actions: appBarActions(context),
+              ),
               floatingActionButton: FloatingActionButton.extended(
-                onPressed: () async => addNewTableDialog(context),
+                onPressed: () async => addNewTableDialog(
+                  context: context,
+                  token: state.token,
+                ),
                 icon: const Icon(Icons.add),
                 label: Text(Strings.newItemFAB),
               ),
               body: RefreshIndicator(
-                onRefresh: () async => refresh(context),
+                onRefresh: () async => refresh(
+                  context: context,
+                  token: state.token,
+                ),
                 child: ListView.separated(
                   separatorBuilder: (c, i) => const ListDivider(),
                   itemBuilder: (context, index) {
@@ -57,18 +81,24 @@ class HomePage extends StatelessWidget {
                           message: Strings.areSure,
                         ),
                         onDismissed: (direction) {
-                          context.read<HomeBloc>().add(RemoveFromHome(
-                              state.tables[index], state.tables));
+                          BlocProvider.of<HomeBloc>(context).add(
+                            RemoveFromHome(
+                              table: state.tables[index],
+                              tableList: state.tables,
+                              token: state.token,
+                            ),
+                          );
                         },
                         child: ListTile(
                           onTap: () async {
-                            context
-                                .read<ListBloc>()
-                                .add(LoadList(state.tables[index]));
+                            BlocProvider.of<ListBloc>(context).add(LoadList(
+                              table: state.tables[index],
+                              token: state.token,
+                            ));
 
                             await Navigator.pushNamed(context, Routes.list);
                             // ignore: use_build_context_synchronously
-                            refresh(context);
+                            refresh(context: context, token: state.token);
                           },
                           trailing: SizedBox(
                             width: 120,
@@ -96,12 +126,12 @@ class HomePage extends StatelessWidget {
           );
         }
 
-        if (state is HomeServerSetup) {
-          return const ServerSetup();
+        if (state is HomeLoginRequired) {
+          return const LoginView();
         }
 
         if (state is HomeError) {
-          return const NetworkError();
+          return NetworkError(token: state.token);
         }
 
         return const PageLoading();

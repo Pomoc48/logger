@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/fader.dart';
 
 class NetworkError extends StatelessWidget {
-  const NetworkError({super.key});
+  const NetworkError({super.key, required this.token});
+
+  final String token;
 
   @override
   Widget build(BuildContext context) {
@@ -24,21 +24,13 @@ class NetworkError extends StatelessWidget {
               const SizedBox(height: 16),
               Text(Strings.noNet, style: t.textTheme.bodyLarge),
               const SizedBox(height: 32),
-              Row(
-                children: [
-                  OutlinedButton.icon(
-                    onPressed: () async => refresh(context),
-                    icon: const Icon(Icons.refresh),
-                    label: Text(Strings.refresh),
-                  ),
-                  const SizedBox(width: 16),
-                  TextButton(
-                    onPressed: () {
-                      context.read<HomeBloc>().add(ReportServerUpdate());
-                    },
-                    child: Text(Strings.updatePassword),
-                  ),
-                ],
+              OutlinedButton.icon(
+                onPressed: () async => refresh(
+                  context: context,
+                  token: token,
+                ),
+                icon: const Icon(Icons.refresh),
+                label: Text(Strings.refresh),
               ),
             ],
           ),

@@ -1,16 +1,5 @@
-import 'package:get_storage/get_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-Map<String, String> getHeaders() {
-  List serverConfig = GetStorage().read('serverConfig');
-
-  return {
-    "Hostname": serverConfig[0],
-    "Username": serverConfig[1],
-    "Password": serverConfig[2],
-    "Database": serverConfig[3],
-  };
-}
 
 String dateTitle(DateTime date) {
   return DateFormat('d MMMM yyyy').format(date);
@@ -18,4 +7,13 @@ String dateTitle(DateTime date) {
 
 String dateSubtitle(DateTime date) {
   return DateFormat('EEEE, HH:mm').format(date);
+}
+
+void showSnack(BuildContext context, String message) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message),
+      behavior: SnackBarBehavior.floating,
+    ),
+  );
 }

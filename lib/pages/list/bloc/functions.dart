@@ -1,13 +1,15 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:logger_app/functions.dart';
 import 'package:logger_app/models/row.dart';
 
-Future<List<RowItem>> getTableRows(String table) async {
+Future<List<RowItem>> getTableRows({
+  required String table,
+  required String token,
+}) async {
   Response response = await get(
-    Uri.parse("https://lukawski.xyz/logs/rows/?table_name=$table"),
-    headers: getHeaders(),
+    Uri.parse("http://loggerapp.lukawski.xyz/rows/?table_name=$table"),
+    headers: {"Token": token},
   );
 
   dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
@@ -23,22 +25,58 @@ Future<List<RowItem>> getTableRows(String table) async {
   return rows;
 }
 
-Future<void> removeRow(String table, int rowId) async {
-  await delete(
+Future<Map> removeRow({
+  required String table,
+  required int rowId,
+  required String token,
+}) async {
+  Response response = await delete(
     Uri.parse(
-      "https://lukawski.xyz/logs/rows/?row_id=$rowId&table_name=$table",
+      "http://loggerapp.lukawski.xyz/rows/?row_id=$rowId&table_name=$table",
     ),
-    headers: getHeaders(),
+    headers: {"Token": token},
   );
+
+  Map map = jsonDecode(utf8.decode(response.bodyBytes));
+
+  if (response.statusCode == 200) {
+    return {
+      "success": true,
+      "message": map["message"],
+    };
+  }
+
+  return {
+    "success": false,
+    "message": map["message"],
+  };
 }
 
-Future<void> addRow(String table, String timestamp) async {
-  await post(
+Future<Map> addRow({
+  required String table,
+  required String timestamp,
+  required String token,
+}) async {
+  Response response = await post(
     Uri.parse(
-      "https://lukawski.xyz/logs/rows/?timestamp=$timestamp&table_name=$table",
+      "http://loggerapp.lukawski.xyz/rows/?timestamp=$timestamp&table_name=$table",
     ),
-    headers: getHeaders(),
+    headers: {"Token": token},
   );
+
+  Map map = jsonDecode(utf8.decode(response.bodyBytes));
+
+  if (response.statusCode == 200) {
+    return {
+      "success": true,
+      "message": map["message"],
+    };
+  }
+
+  return {
+    "success": false,
+    "message": map["message"],
+  };
 }
 
 List<double> getChartData(List<RowItem> rows) {

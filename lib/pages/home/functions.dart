@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
 import 'package:logger_app/pages/home/bloc/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/strings.dart';
 
-Future<void> refresh(BuildContext context) async {
+Future<void> refresh({
+  required BuildContext context,
+  required String token,
+}) async {
   try {
-    context.read<HomeBloc>().add(UpdateHome(await getTables()));
+    BlocProvider.of<HomeBloc>(context).add(UpdateHome(
+      tables: await getTables(token: token),
+      token: token,
+    ));
   } catch (e) {
-    context.read<HomeBloc>().add(ReportHomeError());
+    BlocProvider.of<HomeBloc>(context).add(ReportHomeError(token));
   }
 }
 
-Future<void> addNewTableDialog(BuildContext context) async {
+Future<void> addNewTableDialog({
+  required BuildContext context,
+  required String token,
+}) async {
   TextEditingController controller = TextEditingController();
   showDialog(
     context: context,
@@ -34,7 +42,11 @@ Future<void> addNewTableDialog(BuildContext context) async {
           ),
           TextButton(
             onPressed: () {
-              context.read<HomeBloc>().add(InsertHome(controller.text));
+              BlocProvider.of<HomeBloc>(context).add(InsertHome(
+                newTable: controller.text,
+                token: token,
+              ));
+
               Navigator.pop(context);
             },
             child: Text(Strings.create),
@@ -76,22 +88,4 @@ Future<bool> confirmDismiss({
   );
 
   return dismiss;
-}
-
-Future<bool> checkServerConnection(List<String> serverConfig) async {
-  Response response = await post(
-    Uri.parse("https://lukawski.xyz/logs/test/"),
-    headers: {
-      "Hostname": serverConfig[0],
-      "Username": serverConfig[1],
-      "Password": serverConfig[2],
-      "Database": serverConfig[3],
-    },
-  );
-
-  if (response.statusCode == 200) {
-    return true;
-  }
-
-  return false;
 }
