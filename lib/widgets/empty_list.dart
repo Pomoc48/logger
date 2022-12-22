@@ -4,10 +4,16 @@ import 'package:logger_app/widgets/actions.dart';
 import 'package:logger_app/widgets/fader.dart';
 
 class EmptyList extends StatelessWidget {
-  const EmptyList({super.key, required this.title, required this.press});
+  const EmptyList({
+    super.key,
+    required this.title,
+    required this.press,
+    this.disableActions = false,
+  });
 
   final String title;
   final Future<void> Function() press;
+  final bool disableActions;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +21,7 @@ class EmptyList extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(title),
-          actions: appBarActions(context),
+          actions: disableActions? null : appBarActions(context),
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () => press(),

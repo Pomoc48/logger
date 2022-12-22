@@ -41,6 +41,7 @@ class ListPage extends StatelessWidget {
                 name: state.title,
                 token: state.token,
               ),
+              disableActions: true,
             );
           }
 
