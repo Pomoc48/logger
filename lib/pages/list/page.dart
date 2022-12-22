@@ -31,6 +31,7 @@ class ListPage extends StatelessWidget {
               press: () async => addNewRowDialog(
                 context: context,
                 name: state.title,
+                token: state.token,
               ),
             );
           }
@@ -50,12 +51,17 @@ class ListPage extends StatelessWidget {
                 onPressed: () async => addNewRowDialog(
                   context: context,
                   name: state.title,
+                  token: state.token,
                 ),
                 icon: const Icon(Icons.add),
                 label: Text(Strings.newItemFAB),
               ),
               body: RefreshIndicator(
-                onRefresh: () async => refresh(context, state.title),
+                onRefresh: () async => refresh(
+                  context: context,
+                  name: state.title,
+                  token: state.token,
+                ),
                 child: ListView.separated(
                   separatorBuilder: (c, i) => const ListDivider(),
                   itemBuilder: (context, index) {
@@ -70,7 +76,10 @@ class ListPage extends StatelessWidget {
                         background: const DismissBackground(),
                         onDismissed: (direction) {
                           context.read<ListBloc>().add(RemoveFromList(
-                              row: state.rowList[index], title: state.title));
+                              row: state.rowList[index],
+                              title: state.title,
+                              token: state.token,
+                            ));
                         },
                         child: ListTile(
                           leading: ListLeading(state.rowList[index].number),

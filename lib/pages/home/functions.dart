@@ -39,7 +39,7 @@ Future<void> addNewTableDialog({
           ),
           TextButton(
             onPressed: () {
-              context.read<HomeBloc>().add(InsertHome(newTable:  controller.text, token: token));
+              context.read<HomeBloc>().add(InsertHome(newTable:  controller.text, token: token)); // TODO: format when done
               Navigator.pop(context);
             },
             child: Text(Strings.create),

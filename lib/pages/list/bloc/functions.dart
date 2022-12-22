@@ -3,10 +3,13 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:logger_app/models/row.dart';
 
-Future<List<RowItem>> getTableRows(String table) async {
+Future<List<RowItem>> getTableRows({
+  required String table,
+  required String token,
+}) async {
   Response response = await get(
-    Uri.parse("https://lukawski.xyz/logs/rows/?table_name=$table"),
-    // headers: getHeaders(),
+    Uri.parse("http://loggerapp.lukawski.xyz/rows/?table_name=$table"),
+    headers: {"Token": token},
   );
 
   dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
@@ -22,21 +25,29 @@ Future<List<RowItem>> getTableRows(String table) async {
   return rows;
 }
 
-Future<void> removeRow(String table, int rowId) async {
+Future<void> removeRow({
+  required String table,
+  required int rowId,
+  required String token,
+}) async {
   await delete(
     Uri.parse(
-      "https://lukawski.xyz/logs/rows/?row_id=$rowId&table_name=$table",
+      "http://loggerapp.lukawski.xyz/rows/?row_id=$rowId&table_name=$table",
     ),
-    // headers: getHeaders(),
+    headers: {"Token": token},
   );
 }
 
-Future<void> addRow(String table, String timestamp) async {
+Future<void> addRow({
+  required String table,
+  required String timestamp,
+  required String token,
+}) async {
   await post(
     Uri.parse(
-      "https://lukawski.xyz/logs/rows/?timestamp=$timestamp&table_name=$table",
+      "http://loggerapp.lukawski.xyz/rows/?timestamp=$timestamp&table_name=$table",
     ),
-    // headers: getHeaders(),
+    headers: {"Token": token},
   );
 }
 

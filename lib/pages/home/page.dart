@@ -88,7 +88,7 @@ class HomePage extends StatelessWidget {
                         },
                         child: ListTile(
                           onTap: () async {
-                            BlocProvider.of<ListBloc>(context).add(LoadList(state.tables[index]));
+                            BlocProvider.of<ListBloc>(context).add(LoadList(table: state.tables[index], token: state.token));
 
                             await Navigator.pushNamed(context, Routes.list);
                             // ignore: use_build_context_synchronously
