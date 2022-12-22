@@ -4,26 +4,45 @@ import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/fader.dart';
 
-class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+class RegisterView extends StatelessWidget {
+  const RegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {
     TextEditingController username = TextEditingController();
     TextEditingController password = TextEditingController();
+    TextEditingController repeatP = TextEditingController();
 
     return Fader(
       child: Scaffold(
-        appBar: AppBar(title: Text(Strings.login)),
+        appBar: AppBar(title: Text(Strings.register)),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            context.read<HomeBloc>().add(RequestLogin(
+            if (username.text == "" || password.text == "" || repeatP.text == "") {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(Strings.allFields),
+                behavior: SnackBarBehavior.floating,
+              ));
+
+              return;
+            }
+
+            if (password.text != repeatP.text) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(Strings.passwordError),
+                behavior: SnackBarBehavior.floating,
+              ));
+
+              return;
+            }
+
+            context.read<HomeBloc>().add(RequestRegister(
               username: username.text,
               password: password.text,
             ));
           },
-          icon: const Icon(Icons.login),
-          label: Text(Strings.login),
+          icon: const Icon(Icons.person_add),
+          label: Text(Strings.register),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16),
@@ -41,9 +60,10 @@ class LoginView extends StatelessWidget {
                 decoration: InputDecoration(label: Text(Strings.password)),
               ),
               const SizedBox(height: 16),
-              TextButton(
-                onPressed: () => Navigator.pushNamed(context, Routes.register),
-                child: Text(Strings.createUser),
+              TextField(
+                controller: repeatP,
+                obscureText: true,
+                decoration: InputDecoration(label: Text(Strings.passwordR)),
               ),
             ],
           ),

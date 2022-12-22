@@ -22,6 +22,19 @@ class RequestLogin extends HomeEvent {
   List<Object> get props => [username, password];
 }
 
+class RequestRegister extends HomeEvent {
+  final String username;
+  final String password;
+
+  const RequestRegister({
+    required this.username,
+    required this.password,
+  });
+
+  @override
+  List<Object> get props => [username, password];
+}
+
 class LoadHome extends HomeEvent {
   final String token;
 

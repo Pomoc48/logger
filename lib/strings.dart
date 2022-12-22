@@ -3,10 +3,13 @@ class Strings {
   static String serverSetup = "MySQL server setup";
   static String newItem = "Add new list";
   static String login = "Login";
+  static String register = "Register";
   static String noConnection = "No connection";
 
   static String empty = "No items to display";
   static String error = "Something went wrong";
+  static String allFields = "Fill in all fields";
+  static String passwordError = "The passwords don't match";
   static String areSure =
       "Are you sure you want to delete this list? All items inside will be permanently deleted.";
   static String noNet =
@@ -27,9 +30,11 @@ class Strings {
 
   static String username = "Username";
   static String password = "Password";
+  static String passwordR = "Password repeat";
 }
 
 class Routes {
   static String home = "/home";
   static String list = "/list";
+  static String register = "/register";
 }
