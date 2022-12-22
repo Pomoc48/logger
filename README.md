@@ -12,12 +12,7 @@ Simple Flutter application for logging your life.
 - Date and time picker for adding items
 - Swipe to remove items
 - Confirmation of item list deletion
-
-## Setup
-
-1. Create new, empty MySQL database with the `utf8mb4_bin` collation.
-2. Enter your database connection details in the app setup.
-3. Use the app.
+- Accout creation
 
 ## License
 
