@@ -16,7 +16,7 @@ void main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => LoginBloc()..add(AutoLogin())),
-        BlocProvider(create: (context) => HomeBloc()..add(LoadHome())),
+        BlocProvider(create: (context) => HomeBloc()),
         BlocProvider(create: (context) => ListBloc()),
       ],
       child: MaterialApp(

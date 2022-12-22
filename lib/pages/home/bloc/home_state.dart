@@ -9,15 +9,21 @@ abstract class HomeState extends Equatable {
 
 class HomeInitial extends HomeState {}
 
-class HomeError extends HomeState {}
+class HomeError extends HomeState {
+  final String token;
 
-class HomeLoaded extends HomeState {
-  final List<TableItem> tables;
-
-  const HomeLoaded(this.tables);
+  const HomeError({required this.token});
 
   @override
-  List<Object> get props => [tables];
+  List<Object> get props => [token];
 }
 
-class HomeServerSetup extends HomeState {}
+class HomeLoaded extends HomeState {
+  final String token;
+  final List<TableItem> tables;
+
+  const HomeLoaded({required this.tables, required this.token});
+
+  @override
+  List<Object> get props => [tables, token];
+}

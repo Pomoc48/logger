@@ -6,7 +6,9 @@ import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/fader.dart';
 
 class NetworkError extends StatelessWidget {
-  const NetworkError({super.key});
+  const NetworkError({super.key, required this.token});
+
+  final String token;
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +29,17 @@ class NetworkError extends StatelessWidget {
               Row(
                 children: [
                   OutlinedButton.icon(
-                    onPressed: () async => refresh(context),
+                    onPressed: () async => refresh(
+                      context: context,
+                      token: token,
+                    ),
                     icon: const Icon(Icons.refresh),
                     label: Text(Strings.refresh),
                   ),
                   const SizedBox(width: 16),
                   TextButton(
                     onPressed: () {
-                      context.read<HomeBloc>().add(ReportServerUpdate());
+                      context.read<HomeBloc>().add(ReportLogout());
                     },
                     child: Text(Strings.updatePassword),
                   ),

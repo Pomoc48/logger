@@ -9,7 +9,6 @@ import 'package:logger_app/widgets/empty_list.dart';
 import 'package:logger_app/widgets/fader.dart';
 import 'package:logger_app/widgets/loading.dart';
 import 'package:logger_app/pages/home/widgets/network_error.dart';
-import 'package:logger_app/pages/home/widgets/server_setup.dart';
 import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 import 'package:logger_app/strings.dart';
 
@@ -24,7 +23,10 @@ class HomePage extends StatelessWidget {
           if (state.tables.isEmpty) {
             return EmptyList(
               title: Strings.appName,
-              press: () async => addNewTableDialog(context),
+              press: () async => addNewTableDialog(
+                context: context,
+                token: state.token,
+              ),
             );
           }
 
@@ -32,12 +34,18 @@ class HomePage extends StatelessWidget {
             child: Scaffold(
               appBar: AppBar(title: Text(Strings.appName)),
               floatingActionButton: FloatingActionButton.extended(
-                onPressed: () async => addNewTableDialog(context),
+                onPressed: () async => addNewTableDialog(
+                  context: context,
+                  token: state.token,
+                ),
                 icon: const Icon(Icons.add),
                 label: Text(Strings.newItemFAB),
               ),
               body: RefreshIndicator(
-                onRefresh: () async => refresh(context),
+                onRefresh: () async => refresh(
+                  context: context,
+                  token: state.token,
+                ),
                 child: ListView.separated(
                   separatorBuilder: (c, i) => const ListDivider(),
                   itemBuilder: (context, index) {
@@ -58,17 +66,21 @@ class HomePage extends StatelessWidget {
                         ),
                         onDismissed: (direction) {
                           context.read<HomeBloc>().add(RemoveFromHome(
-                              state.tables[index], state.tables));
+                            table: state.tables[index],
+                            tableList: state.tables,
+                            token: state.token,
+                          ));
                         },
                         child: ListTile(
                           onTap: () async {
                             context
                                 .read<ListBloc>()
                                 .add(LoadList(state.tables[index]));
+                                // TODO: Replace later
 
                             await Navigator.pushNamed(context, Routes.list);
                             // ignore: use_build_context_synchronously
-                            refresh(context);
+                            refresh(context: context, token: state.token);
                           },
                           trailing: SizedBox(
                             width: 120,
@@ -96,12 +108,8 @@ class HomePage extends StatelessWidget {
           );
         }
 
-        if (state is HomeServerSetup) {
-          return const ServerSetup();
-        }
-
         if (state is HomeError) {
-          return const NetworkError();
+          return NetworkError(token: state.token);
         }
 
         return const PageLoading();

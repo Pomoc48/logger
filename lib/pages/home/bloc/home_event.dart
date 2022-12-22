@@ -7,36 +7,57 @@ abstract class HomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadHome extends HomeEvent {}
+class LoadHome extends HomeEvent {
+  final String token;
+
+  const LoadHome(this.token);
+
+  @override
+  List<Object> get props => [token];
+}
 
 class UpdateHome extends HomeEvent {
   final List<TableItem> tables;
+  final String token;
 
-  const UpdateHome(this.tables);
+  const UpdateHome({required this.tables, required this.token});
 
   @override
-  List<Object> get props => [tables];
+  List<Object> get props => [tables, token];
 }
 
 class InsertHome extends HomeEvent {
   final String newTable;
+  final String token;
 
-  const InsertHome(this.newTable);
+  const InsertHome({required this.newTable, required this.token});
 
   @override
-  List<Object> get props => [newTable];
+  List<Object> get props => [newTable, token];
 }
 
 class RemoveFromHome extends HomeEvent {
   final List<TableItem> tableList;
   final TableItem table;
+  final String token;
 
-  const RemoveFromHome(this.table, this.tableList);
+  const RemoveFromHome({
+    required this.table,
+    required this.tableList,
+    required this.token,
+  });
 
   @override
-  List<Object> get props => [table, tableList];
+  List<Object> get props => [table, tableList, token];
 }
 
-class ReportHomeError extends HomeEvent {}
+class ReportHomeError extends HomeEvent {
+  final String token;
 
-class ReportServerUpdate extends HomeEvent {}
+  const ReportHomeError(this.token);
+
+  @override
+  List<Object> get props => [token];
+}
+
+class ReportLogout extends HomeEvent {}
