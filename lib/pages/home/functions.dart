@@ -9,7 +9,7 @@ Future<void> refresh({
   required String token,
 }) async {
   try {
-    context.read<HomeBloc>().add(UpdateHome(tables: await getTables(token), token: token));
+    context.read<HomeBloc>().add(UpdateHome(tables: await getTables(token: token), token: token));
   } catch (e) {
     context.read<HomeBloc>().add(ReportHomeError(token));
   }

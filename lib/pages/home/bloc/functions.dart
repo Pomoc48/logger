@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:logger_app/models/table.dart';
 
-Future<List<TableItem>> getTables(String token) async {
+Future<List<TableItem>> getTables({required String token}) async {
   Response response = await get(
     Uri.parse("http://loggerapp.lukawski.xyz/tables/"),
     headers: {"Token": token},
@@ -22,16 +22,22 @@ Future<List<TableItem>> getTables(String token) async {
   return tables;
 }
 
-Future<void> addTable(String table) async {
+Future<void> addTable({
+  required String table,
+  required String token,
+}) async {
   await post(
-    Uri.parse("https://lukawski.xyz/logs/tables/?table_name=$table"),
-    // headers: getHeaders(), //TODO: add this
+    Uri.parse("http://loggerapp.lukawski.xyz/tables/?table_name=$table"),
+    headers: {"Token": token},
   );
 }
 
-Future<void> removeTable(String table) async {
+Future<void> removeTable({
+  required String table,
+  required String token,
+}) async {
   await delete(
-    Uri.parse("https://lukawski.xyz/logs/tables/?table_name=$table"),
-    // headers: getHeaders()/, //TODO: add this
+    Uri.parse("http://loggerapp.lukawski.xyz/tables/?table_name=$table"),
+    headers: {"Token": token},
   );
 }

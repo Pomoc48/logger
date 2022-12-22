@@ -11,7 +11,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<LoadHome>((event, emit) async {
       try {
         emit(HomeLoaded(
-          tables: await getTables(event.token),
+          tables: await getTables(token: event.token),
           token: event.token,
         ));
       } catch (e) {
@@ -25,9 +25,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<InsertHome>((event, emit) async {
       try {
-        await addTable(event.newTable);
+        await addTable(table: event.newTable, token: event.token);
         emit(HomeLoaded(
-          tables: await getTables(event.token),
+          tables: await getTables(token: event.token),
           token: event.token,
         ));
       } catch (e) {
@@ -37,9 +37,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<RemoveFromHome>((event, emit) async {
       try {
-        await removeTable(event.table.name);
+        await removeTable(table: event.table.name, token: event.token);
         emit(HomeLoaded(
-          tables: await getTables(event.token),
+          tables: await getTables(token: event.token),
           token: event.token,
         ));
       } catch (e) {
