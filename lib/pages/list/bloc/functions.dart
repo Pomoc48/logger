@@ -8,7 +8,7 @@ Future<List<RowItem>> getTableRows({
   required String token,
 }) async {
   Response response = await get(
-    Uri.parse("http://loggerapp.lukawski.xyz/rows/?table_name=$table"),
+    Uri.parse("https://loggerapp.lukawski.xyz/rows/?table_name=$table"),
     headers: {"Token": token},
   );
 
@@ -32,7 +32,7 @@ Future<Map> removeRow({
 }) async {
   Response response = await delete(
     Uri.parse(
-      "http://loggerapp.lukawski.xyz/rows/?row_id=$rowId&table_name=$table",
+      "https://loggerapp.lukawski.xyz/rows/?row_id=$rowId&table_name=$table",
     ),
     headers: {"Token": token},
   );
@@ -59,7 +59,7 @@ Future<Map> addRow({
 }) async {
   Response response = await post(
     Uri.parse(
-      "http://loggerapp.lukawski.xyz/rows/?timestamp=$timestamp&table_name=$table",
+      "https://loggerapp.lukawski.xyz/rows/?timestamp=$timestamp&table_name=$table",
     ),
     headers: {"Token": token},
   );

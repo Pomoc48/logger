@@ -13,7 +13,7 @@ Future<Map> autoLoginResult() async {
   }
 
   Response response = await post(
-    Uri.parse("http://loggerapp.lukawski.xyz/login/"),
+    Uri.parse("https://loggerapp.lukawski.xyz/login/"),
     headers: {
       "Username": username!,
       "Password": password!,
@@ -35,7 +35,7 @@ Future<Map> manualLoginResult({
   required String password,
 }) async {
   Response response = await post(
-    Uri.parse("http://loggerapp.lukawski.xyz/login/"),
+    Uri.parse("https://loggerapp.lukawski.xyz/login/"),
     headers: {
       "Username": username,
       "Password": password,
@@ -65,7 +65,7 @@ Future<Map> registerResult({
   required String password,
 }) async {
   Response response = await post(
-    Uri.parse("http://loggerapp.lukawski.xyz/register/"),
+    Uri.parse("https://loggerapp.lukawski.xyz/register/"),
     headers: {
       "Username": username,
       "Password": password,
@@ -94,7 +94,7 @@ Future<void> forgetLoginCredentials() async {
 
 Future<List<TableItem>> getTables({required String token}) async {
   Response response = await get(
-    Uri.parse("http://loggerapp.lukawski.xyz/tables/"),
+    Uri.parse("https://loggerapp.lukawski.xyz/tables/"),
     headers: {"Token": token},
   );
 
@@ -116,7 +116,7 @@ Future<Map> addTable({
   required String token,
 }) async {
   Response response = await post(
-    Uri.parse("http://loggerapp.lukawski.xyz/tables/?table_name=$table"),
+    Uri.parse("https://loggerapp.lukawski.xyz/tables/?table_name=$table"),
     headers: {"Token": token},
   );
 
@@ -140,7 +140,7 @@ Future<Map> removeTable({
   required String token,
 }) async {
   Response response = await delete(
-    Uri.parse("http://loggerapp.lukawski.xyz/tables/?table_name=$table"),
+    Uri.parse("https://loggerapp.lukawski.xyz/tables/?table_name=$table"),
     headers: {"Token": token},
   );
 
