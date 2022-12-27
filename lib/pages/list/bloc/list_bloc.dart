@@ -18,10 +18,12 @@ class ListBloc extends Bloc<ListEvent, ListState> {
           token: event.token,
         );
 
+        var rows = List<RowItem>.from(map["data"]);
+
         emit(ListLoaded(
-          rowList: map["data"],
+          rowList: rows,
           title: event.table.name,
-          chartData: getChartData(map["data"]),
+          chartData: getChartData(rows),
           token: map["token"],
         ));
       } catch (e) {
@@ -43,10 +45,12 @@ class ListBloc extends Bloc<ListEvent, ListState> {
             token: response["token"],
           );
 
+          var rows = List<RowItem>.from(map["data"]);
+
           emit(ListLoaded(
-            rowList: map["data"],
+            rowList: rows,
             title: event.name,
-            chartData: getChartData(map["data"]),
+            chartData: getChartData(rows),
             token: map["token"],
           ));
         } else {
@@ -71,10 +75,12 @@ class ListBloc extends Bloc<ListEvent, ListState> {
             token: response["token"],
           );
 
+          var rows = List<RowItem>.from(map["data"]);
+
           emit(ListLoaded(
-            rowList: map["data"],
+            rowList: rows,
             title: event.title,
-            chartData: getChartData(map["data"]),
+            chartData: getChartData(rows),
             token: map["token"],
           ));
         } else {

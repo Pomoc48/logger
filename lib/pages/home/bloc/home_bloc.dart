@@ -17,7 +17,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           Map map = await getTables(token: token);
 
           emit(HomeLoaded(
-            tables: map["data"],
+            tables: List<TableItem>.from(map["data"]),
             token: map["token"],
           ));
         } catch (e) {
@@ -40,7 +40,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           Map map = await getTables(token: token);
 
           emit(HomeLoaded(
-            tables: map["data"],
+            tables: List<TableItem>.from(map["data"]),
             token: map["token"],
           ));
         } catch (e) {
@@ -78,7 +78,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           Map map = await getTables(token: response["token"]);
 
           emit(HomeLoaded(
-            tables: map["data"],
+            tables: List<TableItem>.from(map["data"]),
             token: map["token"],
           ));
         } else {
@@ -100,7 +100,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           Map map = await getTables(token: response["token"]);
 
           emit(HomeLoaded(
-            tables: map["data"],
+            tables: List<TableItem>.from(map["data"]),
             token: map["token"],
           ));
         } else {
