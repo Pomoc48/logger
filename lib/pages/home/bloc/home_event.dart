@@ -35,15 +35,6 @@ class RequestRegister extends HomeEvent {
   List<Object> get props => [username, password];
 }
 
-class LoadHome extends HomeEvent {
-  final String token;
-
-  const LoadHome(this.token);
-
-  @override
-  List<Object> get props => [token];
-}
-
 class UpdateHome extends HomeEvent {
   final List<TableItem> tables;
   final String token;

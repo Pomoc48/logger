@@ -59,17 +59,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       ));
     });
 
-    on<LoadHome>((event, emit) async {
-      try {
-        emit(HomeLoaded(
-          tables: await getTables(token: event.token),
-          token: event.token,
-        ));
-      } catch (e) {
-        emit(HomeError(token: event.token));
-      }
-    });
-
     on<UpdateHome>((event, emit) {
       emit(HomeLoaded(tables: event.tables, token: event.token));
     });

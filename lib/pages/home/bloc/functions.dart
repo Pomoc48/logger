@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
+import 'package:logger_app/functions.dart';
 import 'package:logger_app/models/table.dart';
 
 Future<Map> autoLoginResult() async {
@@ -29,7 +30,7 @@ Future<Map> manualLoginResult({
     headers: {"Username": username, "Password": password},
   );
 
-  return loginResult(
+  return await loginResult(
     response: response,
     save: () async {
       await GetStorage().write("username", username);
@@ -42,30 +43,28 @@ Future<Map> registerResult({
   required String username,
   required String password,
 }) async {
-  Response response = await post(
-    Uri.parse("https://loggerapp.lukawski.xyz/register/"),
-    headers: {
-      "Username": username,
-      "Password": password,
-    },
+  return await makeRequest(
+    url: "https://loggerapp.lukawski.xyz/register/",
+    headers: {"Username": username, "Password": password},
+    type: RequestType.post,
   );
-
-  Map map = jsonDecode(utf8.decode(response.bodyBytes));
-  return result(response.statusCode, map["message"]);
-}
-
-Future<void> forgetLoginCredentials() async {
-  await GetStorage().remove("username");
-  await GetStorage().remove("password");
 }
 
 Future<List<TableItem>> getTables({required String token}) async {
-  Response response = await get(
-    Uri.parse("https://loggerapp.lukawski.xyz/tables/"),
+  Response response = await makeRequest(
+    url: "https://loggerapp.lukawski.xyz/tables/",
     headers: {"Token": token},
+    type: RequestType.get,
   );
 
+  if (response.statusCode == 403) {
+    return await getTables(
+      token: await renewToken({"Token": token}),
+    );
+  }
+
   dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
+
   if (decoded == null) return [];
 
   List<TableItem> tables = [];
@@ -81,26 +80,22 @@ Future<Map> addTable({
   required String table,
   required String token,
 }) async {
-  Response response = await post(
-    Uri.parse("https://loggerapp.lukawski.xyz/tables/?table_name=$table"),
+  return await makeRequest(
+    url: "https://loggerapp.lukawski.xyz/tables/?table_name=$table",
     headers: {"Token": token},
+    type: RequestType.post,
   );
-
-  Map map = jsonDecode(utf8.decode(response.bodyBytes));
-  return result(response.statusCode, map["message"]);
 }
 
 Future<Map> removeTable({
   required String table,
   required String token,
 }) async {
-  Response response = await delete(
-    Uri.parse("https://loggerapp.lukawski.xyz/tables/?table_name=$table"),
+  return await makeRequest(
+    url: "https://loggerapp.lukawski.xyz/tables/?table_name=$table",
     headers: {"Token": token},
+    type: RequestType.delete,
   );
-
-  Map map = jsonDecode(utf8.decode(response.bodyBytes));
-  return result(response.statusCode, map["message"]);
 }
 
 Future<Map> loginResult({
@@ -117,10 +112,7 @@ Future<Map> loginResult({
   return {"success": false, "message": map["message"]};
 }
 
-Map result(int code, String message) {
-  if (code == 200) {
-    return {"success": true, "message": message};
-  }
-
-  return {"success": false, "message": message};
+Future<void> forgetLoginCredentials() async {
+  await GetStorage().remove("username");
+  await GetStorage().remove("password");
 }
