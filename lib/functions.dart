@@ -44,7 +44,11 @@ Future<dynamic> makeRequest({
   Map map = jsonDecode(utf8.decode(response.bodyBytes));
 
   if (response.statusCode == 200) {
-    return {"success": true, "message": map["message"]};
+    return {
+      "success": true,
+      "message": map["message"],
+      "token": headers["Token"],
+    };
   }
 
   if (response.statusCode == 403) {
@@ -55,7 +59,11 @@ Future<dynamic> makeRequest({
     );
   }
 
-  return {"success": false, "message": map["message"]};
+  return {
+    "success": false,
+    "message": map["message"],
+    "token": headers["Token"],
+  };
 }
 
 Future<String> renewToken(Map<String, String> headers) async {

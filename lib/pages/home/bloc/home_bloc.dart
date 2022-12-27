@@ -14,9 +14,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (response["success"]) {
         String token = response["token"];
         try {
+          Map map = await getTables(token: token);
+
           emit(HomeLoaded(
-            tables: await getTables(token: token),
-            token: token,
+            tables: map["data"],
+            token: map["token"],
           ));
         } catch (e) {
           emit(HomeError(token: token));
@@ -35,9 +37,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (response["success"]) {
         String token = response["token"];
         try {
+          Map map = await getTables(token: token);
+
           emit(HomeLoaded(
-            tables: await getTables(token: token),
-            token: token,
+            tables: map["data"],
+            token: map["token"],
           ));
         } catch (e) {
           emit(HomeError(token: token));
@@ -71,9 +75,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         );
 
         if (response["success"]) {
+          Map map = await getTables(token: response["token"]);
+
           emit(HomeLoaded(
-            tables: await getTables(token: event.token),
-            token: event.token,
+            tables: map["data"],
+            token: map["token"],
           ));
         } else {
           emit(HomeMessage(response["message"]));
@@ -91,9 +97,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         );
 
         if (response["success"]) {
+          Map map = await getTables(token: response["token"]);
+
           emit(HomeLoaded(
-            tables: await getTables(token: event.token),
-            token: event.token,
+            tables: map["data"],
+            token: map["token"],
           ));
         } else {
           emit(HomeMessage(response["message"]));

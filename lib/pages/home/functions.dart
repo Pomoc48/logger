@@ -9,9 +9,11 @@ Future<void> refresh({
   required String token,
 }) async {
   try {
+    Map map = await getTables(token: token);
+    // ignore: use_build_context_synchronously
     BlocProvider.of<HomeBloc>(context).add(UpdateHome(
-      tables: await getTables(token: token),
-      token: token,
+      tables: map["data"],
+      token: map["token"],
     ));
   } catch (e) {
     BlocProvider.of<HomeBloc>(context).add(ReportHomeError(token));

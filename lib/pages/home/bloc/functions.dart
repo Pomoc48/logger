@@ -50,7 +50,7 @@ Future<Map> registerResult({
   );
 }
 
-Future<List<TableItem>> getTables({required String token}) async {
+Future<Map> getTables({required String token}) async {
   Response response = await makeRequest(
     url: "https://loggerapp.lukawski.xyz/tables/",
     headers: {"Token": token},
@@ -65,7 +65,7 @@ Future<List<TableItem>> getTables({required String token}) async {
 
   dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
 
-  if (decoded == null) return [];
+  if (decoded == null) return {"data": [], "token": token};
 
   List<TableItem> tables = [];
 
@@ -73,7 +73,7 @@ Future<List<TableItem>> getTables({required String token}) async {
     tables.add(TableItem.fromMap(element));
   }
 
-  return tables;
+  return {"data": tables, "token": token};
 }
 
 Future<Map> addTable({
