@@ -14,20 +14,10 @@ Future<Map> autoLoginResult() async {
 
   Response response = await post(
     Uri.parse("https://loggerapp.lukawski.xyz/login/"),
-    headers: {
-      "Username": username!,
-      "Password": password!,
-    },
+    headers: {"Username": username!, "Password": password!},
   );
 
-  if (response.statusCode == 200) {
-    return {
-      "success": true,
-      "token": jsonDecode(utf8.decode(response.bodyBytes))["token"],
-    };
-  }
-
-  return {"success": false};
+  return loginResult(response: response);
 }
 
 Future<Map> manualLoginResult({
@@ -36,28 +26,16 @@ Future<Map> manualLoginResult({
 }) async {
   Response response = await post(
     Uri.parse("https://loggerapp.lukawski.xyz/login/"),
-    headers: {
-      "Username": username,
-      "Password": password,
-    },
+    headers: {"Username": username, "Password": password},
   );
 
-  Map map = jsonDecode(utf8.decode(response.bodyBytes));
-
-  if (response.statusCode == 200) {
-    await GetStorage().write("username", username);
-    await GetStorage().write("password", password);
-
-    return {
-      "success": true,
-      "token": map["token"],
-    };
-  }
-
-  return {
-    "success": false,
-    "message": map["message"],
-  };
+  return loginResult(
+    response: response,
+    save: () async {
+      await GetStorage().write("username", username);
+      await GetStorage().write("password", password);
+    },
+  );
 }
 
 Future<Map> registerResult({
@@ -73,18 +51,7 @@ Future<Map> registerResult({
   );
 
   Map map = jsonDecode(utf8.decode(response.bodyBytes));
-
-  if (response.statusCode == 200) {
-    return {
-      "success": true,
-      "message": map["message"],
-    };
-  }
-
-  return {
-    "success": false,
-    "message": map["message"],
-  };
+  return result(response.statusCode, map["message"]);
 }
 
 Future<void> forgetLoginCredentials() async {
@@ -99,7 +66,6 @@ Future<List<TableItem>> getTables({required String token}) async {
   );
 
   dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
-
   if (decoded == null) return [];
 
   List<TableItem> tables = [];
@@ -121,18 +87,7 @@ Future<Map> addTable({
   );
 
   Map map = jsonDecode(utf8.decode(response.bodyBytes));
-
-  if (response.statusCode == 200) {
-    return {
-      "success": true,
-      "message": map["message"],
-    };
-  }
-
-  return {
-    "success": false,
-    "message": map["message"],
-  };
+  return result(response.statusCode, map["message"]);
 }
 
 Future<Map> removeTable({
@@ -145,16 +100,27 @@ Future<Map> removeTable({
   );
 
   Map map = jsonDecode(utf8.decode(response.bodyBytes));
+  return result(response.statusCode, map["message"]);
+}
+
+Future<Map> loginResult({
+  required Response response,
+  Future<void> Function()? save,
+}) async {
+  Map map = jsonDecode(utf8.decode(response.bodyBytes));
 
   if (response.statusCode == 200) {
-    return {
-      "success": true,
-      "message": map["message"],
-    };
+    if (save != null) await save();
+    return {"success": true, "token": map["token"]};
   }
 
-  return {
-    "success": false,
-    "message": map["message"],
-  };
+  return {"success": false, "message": map["message"]};
+}
+
+Map result(int code, String message) {
+  if (code == 200) {
+    return {"success": true, "message": message};
+  }
+
+  return {"success": false, "message": message};
 }

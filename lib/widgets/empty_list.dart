@@ -21,7 +21,7 @@ class EmptyList extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(title),
-          actions: disableActions? null : appBarActions(context),
+          actions: disableActions ? null : appBarActions(context),
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () => press(),
