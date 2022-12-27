@@ -62,11 +62,9 @@ Future<Map> getTables({required String token}) async {
   }
 
   dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
-
   if (decoded == null) return {"data": [], "token": token};
 
   List<TableItem> tables = [];
-
   for (Map element in decoded) {
     tables.add(TableItem.fromMap(element));
   }

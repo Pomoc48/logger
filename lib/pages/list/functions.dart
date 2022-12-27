@@ -12,13 +12,14 @@ Future<void> refresh({
   required String token,
 }) async {
   try {
-    List<RowItem> rowList = await getTableRows(table: name, token: token);
+    Map map = await getTableRows(table: name, token: token);
+    List<RowItem> rowList = map["data"];
 
     BlocProvider.of<ListBloc>(context).add(UpdateList(
       rowList: rowList,
       title: name,
       chartData: getChartData(rowList),
-      token: token,
+      token: map["token"],
     ));
   } catch (e) {
     BlocProvider.of<ListBloc>(context).add(ReportListError());

@@ -13,16 +13,16 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       emit(ListInitial());
 
       try {
-        List<RowItem> rowList = await getTableRows(
+        Map map = await getTableRows(
           table: event.table.name,
           token: event.token,
         );
 
         emit(ListLoaded(
-          rowList: rowList,
+          rowList: map["data"],
           title: event.table.name,
-          chartData: getChartData(rowList),
-          token: event.token,
+          chartData: getChartData(map["data"]),
+          token: map["token"],
         ));
       } catch (e) {
         emit(ListError());
@@ -38,16 +38,16 @@ class ListBloc extends Bloc<ListEvent, ListState> {
         );
 
         if (response["success"]) {
-          List<RowItem> rowList = await getTableRows(
+          Map map = await getTableRows(
             table: event.name,
-            token: event.token,
+            token: response["token"],
           );
 
           emit(ListLoaded(
-            rowList: rowList,
+            rowList: map["data"],
             title: event.name,
-            chartData: getChartData(rowList),
-            token: event.token,
+            chartData: getChartData(map["data"]),
+            token: map["token"],
           ));
         } else {
           emit(ListMessage(response["message"]));
@@ -66,16 +66,16 @@ class ListBloc extends Bloc<ListEvent, ListState> {
         );
 
         if (response["success"]) {
-          List<RowItem> rowList = await getTableRows(
+          Map map = await getTableRows(
             table: event.title,
-            token: event.token,
+            token: response["token"],
           );
 
           emit(ListLoaded(
-            rowList: rowList,
+            rowList: map["data"],
             title: event.title,
-            chartData: getChartData(rowList),
-            token: event.token,
+            chartData: getChartData(map["data"]),
+            token: map["token"],
           ));
         } else {
           emit(ListMessage(response["message"]));

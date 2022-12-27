@@ -1,28 +1,35 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:logger_app/functions.dart';
 import 'package:logger_app/models/row.dart';
 
-Future<List<RowItem>> getTableRows({
+Future<Map> getTableRows({
   required String table,
   required String token,
 }) async {
-  Response response = await get(
-    Uri.parse("https://loggerapp.lukawski.xyz/rows/?table_name=$table"),
+  Response response = await makeRequest(
+    url: "https://loggerapp.lukawski.xyz/rows/?table_name=$table",
     headers: {"Token": token},
+    type: RequestType.get,
   );
 
-  dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
+  if (response.statusCode == 403) {
+    return await getTableRows(
+      table: table,
+      token: await renewToken(),
+    );
+  }
 
-  if (decoded == null) return [];
+  dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
+  if (decoded == null) return {"data": [], "token": token};
 
   List<RowItem> rows = [];
-
   for (Map element in decoded) {
     rows.add(RowItem.fromMap(element));
   }
 
-  return rows;
+  return {"data": rows, "token": token};
 }
 
 Future<Map> removeRow({
@@ -30,26 +37,11 @@ Future<Map> removeRow({
   required int rowId,
   required String token,
 }) async {
-  Response response = await delete(
-    Uri.parse(
-      "https://loggerapp.lukawski.xyz/rows/?row_id=$rowId&table_name=$table",
-    ),
+  return await makeRequest(
+    url: "https://loggerapp.lukawski.xyz/rows/?row_id=$rowId&table_name=$table",
     headers: {"Token": token},
+    type: RequestType.delete,
   );
-
-  Map map = jsonDecode(utf8.decode(response.bodyBytes));
-
-  if (response.statusCode == 200) {
-    return {
-      "success": true,
-      "message": map["message"],
-    };
-  }
-
-  return {
-    "success": false,
-    "message": map["message"],
-  };
 }
 
 Future<Map> addRow({
@@ -57,26 +49,11 @@ Future<Map> addRow({
   required String timestamp,
   required String token,
 }) async {
-  Response response = await post(
-    Uri.parse(
-      "https://loggerapp.lukawski.xyz/rows/?timestamp=$timestamp&table_name=$table",
-    ),
+  return await makeRequest(
+    url: "https://loggerapp.lukawski.xyz/rows/?timestamp=$timestamp&table_name=$table",
     headers: {"Token": token},
+    type: RequestType.post,
   );
-
-  Map map = jsonDecode(utf8.decode(response.bodyBytes));
-
-  if (response.statusCode == 200) {
-    return {
-      "success": true,
-      "message": map["message"],
-    };
-  }
-
-  return {
-    "success": false,
-    "message": map["message"],
-  };
 }
 
 List<double> getChartData(List<RowItem> rows) {
