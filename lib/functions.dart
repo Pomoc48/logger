@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
+import 'package:logger_app/pages/home/bloc/functions.dart';
 
 String dateTitle(DateTime date) {
   return DateFormat('d MMMM yyyy').format(date);
@@ -54,7 +55,7 @@ Future<dynamic> makeRequest({
   if (response.statusCode == 403) {
     return await makeRequest(
       url: url,
-      headers: {"Token": await renewToken(headers)},
+      headers: {"Token": await renewToken()},
       type: type,
     );
   }
@@ -66,12 +67,7 @@ Future<dynamic> makeRequest({
   };
 }
 
-Future<String> renewToken(Map<String, String> headers) async {
-  Response response = await post(
-    Uri.parse("https://loggerapp.lukawski.xyz/renew/"),
-    headers: headers,
-  );
-
-  return jsonDecode(utf8.decode(response.bodyBytes))["token"];
+Future<String> renewToken() async {
+  Map response = await autoLoginResult();
+  return response["token"];
 }
-

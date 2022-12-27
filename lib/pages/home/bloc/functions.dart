@@ -58,9 +58,7 @@ Future<Map> getTables({required String token}) async {
   );
 
   if (response.statusCode == 403) {
-    return await getTables(
-      token: await renewToken({"Token": token}),
-    );
+    return await getTables(token: await renewToken());
   }
 
   dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
