@@ -39,13 +39,14 @@ class DesktopHome extends StatelessWidget {
             crossAxisSpacing: padding,
             mainAxisSpacing: padding,
           ),
-          itemBuilder: (context, index) {
-            if (index == state.tables.length) {
+          itemBuilder: (context, i) {
+            if (i == state.tables.length) {
               return Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: Theme.of(context).colorScheme.primary.withOpacity(0.25),
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.25),
                     width: 2,
                   ),
                 ),
@@ -69,20 +70,20 @@ class DesktopHome extends StatelessWidget {
                 ),
               );
             }
-        
+
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.25),
+                  color:
+                      Theme.of(context).colorScheme.primary.withOpacity(0.25),
                   width: 2,
                 ),
               ),
-              
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Dismissible(
-                  key: Key(state.tables[index].name),
+                  key: Key(state.tables[i].name),
                   direction: DismissDirection.startToEnd,
                   background: const DismissBackground(),
                   confirmDismiss: (d) async => confirmDismiss(
@@ -92,7 +93,7 @@ class DesktopHome extends StatelessWidget {
                   onDismissed: (direction) {
                     BlocProvider.of<HomeBloc>(context).add(
                       RemoveFromHome(
-                        table: state.tables[index],
+                        table: state.tables[i],
                         tableList: state.tables,
                         token: state.token,
                       ),
@@ -101,10 +102,10 @@ class DesktopHome extends StatelessWidget {
                   child: InkWell(
                     onTap: () async {
                       BlocProvider.of<ListBloc>(context).add(LoadList(
-                        table: state.tables[index],
+                        table: state.tables[i],
                         token: state.token,
                       ));
-                
+
                       await Navigator.pushNamed(context, Routes.list);
                       // ignore: use_build_context_synchronously
                       refresh(context: context, token: state.token);
@@ -112,22 +113,21 @@ class DesktopHome extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     child: Container(
                       padding: const EdgeInsets.all(16),
-                      
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
                             height: 70,
-                            child: LineChart(data: state.tables[index].chartData),
+                            child: LineChart(data: state.tables[i].chartData),
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            state.tables[index].name,
+                            state.tables[i].name,
                             style: Theme.of(context).textTheme.titleMedium,
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            subtitleCount(state.tables[index].rows),
+                            subtitleCount(state.tables[i].rows),
                             style: Theme.of(context).textTheme.labelMedium,
                           ),
                         ],

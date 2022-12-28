@@ -50,14 +50,14 @@ class MobileHome extends StatelessWidget {
           ),
           child: ListView.separated(
             separatorBuilder: (c, i) => const ListDivider(),
-            itemBuilder: (context, index) {
+            itemBuilder: (context, i) {
               return Padding(
                 padding: EdgeInsets.only(
-                  top: index == 0 ? 8 : 0,
-                  bottom: index == state.tables.length - 1 ? 88 : 0,
+                  top: i == 0 ? 8 : 0,
+                  bottom: i == state.tables.length - 1 ? 88 : 0,
                 ),
                 child: Dismissible(
-                  key: Key(state.tables[index].name),
+                  key: Key(state.tables[i].name),
                   direction: DismissDirection.startToEnd,
                   background: const DismissBackground(),
                   confirmDismiss: (d) async => confirmDismiss(
@@ -67,7 +67,7 @@ class MobileHome extends StatelessWidget {
                   onDismissed: (direction) {
                     BlocProvider.of<HomeBloc>(context).add(
                       RemoveFromHome(
-                        table: state.tables[index],
+                        table: state.tables[i],
                         tableList: state.tables,
                         token: state.token,
                       ),
@@ -76,15 +76,14 @@ class MobileHome extends StatelessWidget {
                   child: SizedBox(
                     height: 64 + 8,
                     child: ListTile(
-                      contentPadding: const EdgeInsets.only(
-                        left: 16, right: 16, top: 4,
-                      ),
+                      contentPadding:
+                          const EdgeInsets.only(left: 16, right: 16, top: 4),
                       onTap: () async {
                         BlocProvider.of<ListBloc>(context).add(LoadList(
-                          table: state.tables[index],
+                          table: state.tables[i],
                           token: state.token,
                         ));
-          
+
                         await Navigator.pushNamed(context, Routes.list);
                         // ignore: use_build_context_synchronously
                         refresh(context: context, token: state.token);
@@ -92,15 +91,13 @@ class MobileHome extends StatelessWidget {
                       trailing: SizedBox(
                         width: 120,
                         height: 28,
-                        child: LineChart(
-                          data: state.tables[index].chartData,
-                        ),
+                        child: LineChart(data: state.tables[i].chartData),
                       ),
                       title: Text(
-                        state.tables[index].name,
+                        state.tables[i].name,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      subtitle: Text(subtitleCount(state.tables[index].rows)),
+                      subtitle: Text(subtitleCount(state.tables[i].rows)),
                     ),
                   ),
                 ),

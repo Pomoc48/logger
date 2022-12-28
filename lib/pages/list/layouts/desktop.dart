@@ -57,8 +57,7 @@ class DesktopList extends StatelessWidget {
                           child: ListTile(
                             leading: ListLeading(state.rowList[i].number),
                             title: Text(dateTitle(state.rowList[i].date)),
-                            subtitle:
-                                Text(dateSubtitle(state.rowList[i].date)),
+                            subtitle: Text(dateSubtitle(state.rowList[i].date)),
                           ),
                         );
                       },

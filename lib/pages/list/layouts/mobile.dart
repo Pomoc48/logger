@@ -57,30 +57,29 @@ class MobileList extends StatelessWidget {
           ),
           child: ListView.separated(
             separatorBuilder: (c, i) => const ListDivider(),
-            itemBuilder: (context, index) {
+            itemBuilder: (context, i) {
               return Padding(
                 padding: EdgeInsets.only(
-                  top: index == 0 ? 8 : 0,
-                  bottom: index == state.rowList.length - 1 ? 88 : 0,
+                  top: i == 0 ? 8 : 0,
+                  bottom: i == state.rowList.length - 1 ? 88 : 0,
                 ),
                 child: Dismissible(
-                  key: Key(state.rowList[index].id.toString()),
+                  key: Key(state.rowList[i].id.toString()),
                   direction: DismissDirection.startToEnd,
                   background: const DismissBackground(),
                   onDismissed: (direction) {
                     BlocProvider.of<ListBloc>(context).add(
                       RemoveFromList(
-                        row: state.rowList[index],
+                        row: state.rowList[i],
                         title: state.title,
                         token: state.token,
                       ),
                     );
                   },
                   child: ListTile(
-                    leading: ListLeading(state.rowList[index].number),
-                    title: Text(dateTitle(state.rowList[index].date)),
-                    subtitle:
-                        Text(dateSubtitle(state.rowList[index].date)),
+                    leading: ListLeading(state.rowList[i].number),
+                    title: Text(dateTitle(state.rowList[i].date)),
+                    subtitle: Text(dateSubtitle(state.rowList[i].date)),
                   ),
                 ),
               );

@@ -43,7 +43,7 @@ class ListPage extends StatelessWidget {
             return const PageLoading();
           },
         );
-      }
+      },
     );
   }
 }

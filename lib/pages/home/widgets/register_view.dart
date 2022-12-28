@@ -15,9 +15,7 @@ class RegisterView extends StatelessWidget {
     TextEditingController repeatP = TextEditingController();
 
     void register() {
-      if (username.text == "" ||
-          password.text == "" ||
-          repeatP.text == "") {
+      if (username.text == "" || password.text == "" || repeatP.text == "") {
         showSnack(context, Strings.allFields);
         return;
       }

@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         bool mobile = constraints.maxWidth < 600;
-        
+
         return BlocConsumer<HomeBloc, HomeState>(
           listener: (context, state) {
             if (state is HomeMessage) {
@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
           builder: (context, state) {
             if (state is HomeLoaded) {
               if (mobile) return MobileHome(state: state);
-              
+
               return DesktopHome(
                 state: state,
                 width: constraints.maxWidth,
@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
             return const PageLoading();
           },
         );
-      }
+      },
     );
   }
 }
