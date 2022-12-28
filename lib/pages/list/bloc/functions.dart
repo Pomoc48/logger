@@ -50,7 +50,8 @@ Future<Map> addRow({
   required String token,
 }) async {
   return await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/rows/?timestamp=$timestamp&table_name=$table",
+    url:
+        "https://loggerapp.lukawski.xyz/rows/?timestamp=$timestamp&table_name=$table",
     headers: {"Token": token},
     type: RequestType.post,
   );

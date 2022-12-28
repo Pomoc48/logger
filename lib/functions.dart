@@ -22,7 +22,7 @@ void showSnack(BuildContext context, String message) {
   );
 }
 
-enum RequestType {post, get, delete}
+enum RequestType { post, get, delete }
 
 Future<dynamic> makeRequest({
   required String url,
