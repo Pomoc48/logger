@@ -21,6 +21,7 @@ class Strings {
   static String confirm = "Confirm";
   static String listName = "Name of the list";
   static String addNewList = "Add new list";
+  static String addNewItem = "Add new item";
   static String newItemFAB = "New";
   static String create = "Create";
   static String cancel = "Cancel";
