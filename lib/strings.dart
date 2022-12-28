@@ -16,6 +16,7 @@ class Strings {
       "Device has no internet connection or the server is not available.";
 
   static String createUser = "Create new account";
+  static String haveAccount = "Already have an account";
   static String confirmation = "Confirmation";
   static String confirm = "Confirm";
   static String listName = "Name of the list";

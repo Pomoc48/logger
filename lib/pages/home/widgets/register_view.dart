@@ -37,7 +37,9 @@ class RegisterView extends StatelessWidget {
       listener: (context, state) {
         if (state is RegisterResults) {
           showSnack(context, state.message);
-          if (state.registered) Navigator.pop(context);
+          if (state.registered) {
+            Navigator.pushReplacementNamed(context, Routes.home);
+          }
         }
       },
       child: Material(
@@ -80,6 +82,14 @@ class RegisterView extends StatelessWidget {
                           ElevatedButton(
                             onPressed: register,
                             child: Text(Strings.register),
+                          ),
+                          const SizedBox(height: 8),
+                          TextButton(
+                            onPressed: () => Navigator.pushReplacementNamed(
+                              context,
+                              Routes.home,
+                            ),
+                            child: Text(Strings.haveAccount),
                           ),
                         ],
                       ),
