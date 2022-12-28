@@ -11,7 +11,7 @@ class Strings {
   static String allFields = "Fill in all fields";
   static String passwordError = "The passwords don't match";
   static String areSure =
-      "Are you sure you want to delete this list? All items inside will be permanently deleted.";
+      "Are you sure you want to delete this list?\nAll items inside will be permanently deleted.";
   static String noNet =
       "Device has no internet connection or the server is not available.";
 
