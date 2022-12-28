@@ -92,3 +92,7 @@ Future<bool> confirmDismiss({
 
   return dismiss;
 }
+
+String subtitleCount(int rows) {
+  return rows == 1 ? "$rows time" : rows == 0 ? "List empty" : "$rows times";
+}

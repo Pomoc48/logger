@@ -23,8 +23,6 @@ class MobileHome extends StatelessWidget {
       child: ListView.separated(
         separatorBuilder: (c, i) => const ListDivider(),
         itemBuilder: (context, index) {
-          int rows = state.tables[index].rows;
-
           return Padding(
             padding: EdgeInsets.only(
               top: index == 0 ? 8 : 0,
@@ -74,13 +72,7 @@ class MobileHome extends StatelessWidget {
                     state.tables[index].name,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  subtitle: Text(
-                    rows == 1
-                        ? "$rows time"
-                        : rows == 0
-                            ? "List empty"
-                            : "$rows times",
-                  ),
+                  subtitle: Text(subtitleCount(state.tables[index].rows)),
                 ),
               ),
             ),
