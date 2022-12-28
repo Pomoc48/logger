@@ -3,7 +3,7 @@ description: App for logging your life.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.7.5
+version: 1.7.6
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
