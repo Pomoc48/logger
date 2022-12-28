@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/actions.dart';
 import 'package:logger_app/widgets/fader.dart';
@@ -8,12 +9,12 @@ class EmptyList extends StatelessWidget {
     super.key,
     required this.title,
     required this.press,
-    this.disableActions = false,
+    this.state,
   });
 
   final String title;
   final Future<void> Function() press;
-  final bool disableActions;
+  final HomeLoaded? state;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class EmptyList extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(title),
-          actions: disableActions ? null : appBarActions(context),
+          actions: state == null ? null : appBarActions(context, state!),
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () => press(),
