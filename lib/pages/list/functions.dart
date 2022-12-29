@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger_app/models/row.dart';
+import 'package:logger_app/models/item.dart';
 import 'package:logger_app/pages/list/bloc/functions.dart';
 import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 
@@ -13,7 +13,7 @@ Future<void> refresh({
 }) async {
   try {
     Map map = await getTableRows(table: name, token: token);
-    var rows = List<RowItem>.from(map["data"]);
+    var rows = List<ListItem>.from(map["data"]);
 
     BlocProvider.of<ListBloc>(context).add(UpdateList(
       rowList: rows,

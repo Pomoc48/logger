@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:logger_app/models/row.dart';
+import 'package:logger_app/models/item.dart';
 import 'package:logger_app/models/list.dart';
 import 'package:logger_app/pages/list/bloc/functions.dart';
 
@@ -18,7 +18,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
           token: event.token,
         );
 
-        var rows = List<RowItem>.from(map["data"]);
+        var rows = List<ListItem>.from(map["data"]);
 
         emit(ListLoaded(
           rowList: rows,
@@ -45,7 +45,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
             token: response["token"],
           );
 
-          var rows = List<RowItem>.from(map["data"]);
+          var rows = List<ListItem>.from(map["data"]);
 
           emit(ListLoaded(
             rowList: rows,
@@ -75,7 +75,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
             token: response["token"],
           );
 
-          var rows = List<RowItem>.from(map["data"]);
+          var rows = List<ListItem>.from(map["data"]);
 
           emit(ListLoaded(
             rowList: rows,

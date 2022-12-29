@@ -78,8 +78,8 @@ class MobileList extends StatelessWidget {
                   },
                   child: ListTile(
                     leading: ListLeading(state.rowList[i].number),
-                    title: Text(dateTitle(state.rowList[i].date)),
-                    subtitle: Text(dateSubtitle(state.rowList[i].date)),
+                    title: Text(dateTitle(state.rowList[i].timestamp)),
+                    subtitle: Text(dateSubtitle(state.rowList[i].timestamp)),
                   ),
                 ),
               );

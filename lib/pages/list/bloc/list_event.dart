@@ -18,7 +18,7 @@ class LoadList extends ListEvent {
 }
 
 class UpdateList extends ListEvent {
-  final List<RowItem> rowList;
+  final List<ListItem> rowList;
   final List<double> chartData;
   final String title;
   final String token;
@@ -35,7 +35,7 @@ class UpdateList extends ListEvent {
 }
 
 class RemoveFromList extends ListEvent {
-  final RowItem row;
+  final ListItem row;
   final String title;
   final String token;
 

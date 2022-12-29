@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:logger_app/functions.dart';
-import 'package:logger_app/models/row.dart';
+import 'package:logger_app/models/item.dart';
 
 Future<Map> getTableRows({
   required String table,
@@ -24,9 +24,9 @@ Future<Map> getTableRows({
   dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
   if (decoded == null) return {"data": [], "token": token};
 
-  List<RowItem> rows = [];
+  List<ListItem> rows = [];
   for (Map element in decoded) {
-    rows.add(RowItem.fromMap(element));
+    rows.add(ListItem.fromMap(element));
   }
 
   return {"data": rows, "token": token};
@@ -57,7 +57,7 @@ Future<Map> addRow({
   );
 }
 
-List<double> getChartData(List<RowItem> rows) {
+List<double> getChartData(List<ListItem> rows) {
   int rowCount = rows.length;
   List<double> doubleList = [];
 
@@ -65,7 +65,7 @@ List<double> getChartData(List<RowItem> rows) {
     DateTime now = DateTime.now().subtract(Duration(days: a));
     doubleList.add(rowCount.toDouble());
 
-    if (rows.any((item) => _matchDates(item.date, now))) {
+    if (rows.any((item) => _matchDates(item.timestamp, now))) {
       rowCount -= _countItemsInOneDay(now, rows);
     }
   }
@@ -73,11 +73,11 @@ List<double> getChartData(List<RowItem> rows) {
   return List.from(doubleList.reversed);
 }
 
-int _countItemsInOneDay(DateTime date, List<RowItem> rows) {
+int _countItemsInOneDay(DateTime date, List<ListItem> rows) {
   int count = 0;
 
-  for (RowItem element in rows) {
-    if (_matchDates(element.date, date)) count++;
+  for (ListItem element in rows) {
+    if (_matchDates(element.timestamp, date)) count++;
   }
 
   return count;

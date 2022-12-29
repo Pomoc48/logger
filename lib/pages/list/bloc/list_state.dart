@@ -11,7 +11,7 @@ class ListInitial extends ListState {}
 
 class ListLoaded extends ListState {
   final List<double> chartData;
-  final List<RowItem> rowList;
+  final List<ListItem> rowList;
   final String title;
   final String token;
 
