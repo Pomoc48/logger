@@ -17,7 +17,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           Map map = await getLists(token: token);
 
           emit(HomeLoaded(
-            tables: List<ListOfItems>.from(map["data"]),
+            lists: List<ListOfItems>.from(map["data"]),
             token: map["token"],
           ));
         } catch (e) {
@@ -40,7 +40,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           Map map = await getLists(token: token);
 
           emit(HomeLoaded(
-            tables: List<ListOfItems>.from(map["data"]),
+            lists: List<ListOfItems>.from(map["data"]),
             token: map["token"],
           ));
         } catch (e) {
@@ -64,7 +64,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
 
     on<UpdateHome>((event, emit) {
-      emit(HomeLoaded(tables: event.tables, token: event.token));
+      emit(HomeLoaded(lists: event.lists, token: event.token));
     });
 
     on<InsertHome>((event, emit) async {
@@ -78,7 +78,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           Map map = await getLists(token: response["token"]);
 
           emit(HomeLoaded(
-            tables: List<ListOfItems>.from(map["data"]),
+            lists: List<ListOfItems>.from(map["data"]),
             token: map["token"],
           ));
         } else {
@@ -92,7 +92,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<RemoveFromHome>((event, emit) async {
       try {
         Map response = await removeList(
-          id: event.list.id,
+          id: event.id,
           token: event.token,
         );
 
@@ -100,7 +100,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           Map map = await getLists(token: response["token"]);
 
           emit(HomeLoaded(
-            tables: List<ListOfItems>.from(map["data"]),
+            lists: List<ListOfItems>.from(map["data"]),
             token: map["token"],
           ));
         } else {

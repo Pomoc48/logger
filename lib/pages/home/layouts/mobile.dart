@@ -18,7 +18,7 @@ class MobileHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (state.tables.isEmpty) {
+    if (state.lists.isEmpty) {
       return EmptyList(
         title: Strings.appName,
         state: state,
@@ -54,10 +54,10 @@ class MobileHome extends StatelessWidget {
               return Padding(
                 padding: EdgeInsets.only(
                   top: i == 0 ? 8 : 0,
-                  bottom: i == state.tables.length - 1 ? 88 : 0,
+                  bottom: i == state.lists.length - 1 ? 88 : 0,
                 ),
                 child: Dismissible(
-                  key: Key(state.tables[i].name),
+                  key: Key(state.lists[i].name),
                   direction: DismissDirection.startToEnd,
                   background: const DismissBackground(),
                   confirmDismiss: (d) async => confirmDismiss(
@@ -67,8 +67,8 @@ class MobileHome extends StatelessWidget {
                   onDismissed: (direction) {
                     BlocProvider.of<HomeBloc>(context).add(
                       RemoveFromHome(
-                        list: state.tables[i],
-                        tableList: state.tables,
+                        id: state.lists[i].id,
+                        lists: state.lists,
                         token: state.token,
                       ),
                     );
@@ -80,7 +80,7 @@ class MobileHome extends StatelessWidget {
                           const EdgeInsets.only(left: 16, right: 16, top: 4),
                       onTap: () async {
                         BlocProvider.of<ListBloc>(context).add(LoadList(
-                          table: state.tables[i],
+                          table: state.lists[i],
                           token: state.token,
                         ));
 
@@ -91,19 +91,19 @@ class MobileHome extends StatelessWidget {
                       trailing: SizedBox(
                         width: 120,
                         height: 28,
-                        child: LineChart(data: state.tables[i].chartData),
+                        child: LineChart(data: state.lists[i].chartData),
                       ),
                       title: Text(
-                        state.tables[i].name,
+                        state.lists[i].name,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      subtitle: Text(subtitleCount(state.tables[i].count)),
+                      subtitle: Text(subtitleCount(state.lists[i].count)),
                     ),
                   ),
                 ),
               );
             },
-            itemCount: state.tables.length,
+            itemCount: state.lists.length,
           ),
         ),
       ),

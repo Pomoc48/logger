@@ -40,7 +40,7 @@ class DesktopHome extends StatelessWidget {
             mainAxisSpacing: padding,
           ),
           itemBuilder: (context, i) {
-            if (i == state.tables.length) {
+            if (i == state.lists.length) {
               return Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
@@ -83,7 +83,7 @@ class DesktopHome extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Dismissible(
-                  key: Key(state.tables[i].name),
+                  key: Key(state.lists[i].name),
                   direction: DismissDirection.startToEnd,
                   background: const DismissBackground(),
                   confirmDismiss: (d) async => confirmDismiss(
@@ -93,8 +93,8 @@ class DesktopHome extends StatelessWidget {
                   onDismissed: (direction) {
                     BlocProvider.of<HomeBloc>(context).add(
                       RemoveFromHome(
-                        list: state.tables[i],
-                        tableList: state.tables,
+                        id: state.lists[i].id,
+                        lists: state.lists,
                         token: state.token,
                       ),
                     );
@@ -102,7 +102,7 @@ class DesktopHome extends StatelessWidget {
                   child: InkWell(
                     onTap: () async {
                       BlocProvider.of<ListBloc>(context).add(LoadList(
-                        table: state.tables[i],
+                        table: state.lists[i],
                         token: state.token,
                       ));
 
@@ -118,16 +118,16 @@ class DesktopHome extends StatelessWidget {
                         children: [
                           SizedBox(
                             height: 70,
-                            child: LineChart(data: state.tables[i].chartData),
+                            child: LineChart(data: state.lists[i].chartData),
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            state.tables[i].name,
+                            state.lists[i].name,
                             style: Theme.of(context).textTheme.titleMedium,
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            subtitleCount(state.tables[i].count),
+                            subtitleCount(state.lists[i].count),
                             style: Theme.of(context).textTheme.labelMedium,
                           ),
                         ],
@@ -138,7 +138,7 @@ class DesktopHome extends StatelessWidget {
               ),
             );
           },
-          itemCount: state.tables.length + 1,
+          itemCount: state.lists.length + 1,
         ),
       ),
     );

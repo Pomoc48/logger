@@ -64,12 +64,12 @@ Future<Map> getLists({required String token}) async {
   dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
   if (decoded == null) return {"data": [], "token": token};
 
-  List<ListOfItems> tables = [];
+  List<ListOfItems> lists = [];
   for (Map element in decoded) {
-    tables.add(ListOfItems.fromMap(element));
+    lists.add(ListOfItems.fromMap(element));
   }
 
-  return {"data": tables, "token": token};
+  return {"data": lists, "token": token};
 }
 
 Future<Map> addList({
