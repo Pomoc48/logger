@@ -97,7 +97,7 @@ class MobileHome extends StatelessWidget {
                         state.tables[i].name,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      subtitle: Text(subtitleCount(state.tables[i].rows)),
+                      subtitle: Text(subtitleCount(state.tables[i].count)),
                     ),
                   ),
                 ),

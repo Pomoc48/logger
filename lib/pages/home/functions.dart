@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger_app/models/table.dart';
+import 'package:logger_app/models/list.dart';
 import 'package:logger_app/pages/home/bloc/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/strings.dart';
@@ -13,7 +13,7 @@ Future<void> refresh({
     Map map = await getTables(token: token);
     // ignore: use_build_context_synchronously
     BlocProvider.of<HomeBloc>(context).add(UpdateHome(
-      tables: List<TableItem>.from(map["data"]),
+      tables: List<ListOfItems>.from(map["data"]),
       token: map["token"],
     ));
   } catch (e) {

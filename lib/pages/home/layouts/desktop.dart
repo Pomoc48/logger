@@ -127,7 +127,7 @@ class DesktopHome extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            subtitleCount(state.tables[i].rows),
+                            subtitleCount(state.tables[i].count),
                             style: Theme.of(context).textTheme.labelMedium,
                           ),
                         ],

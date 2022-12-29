@@ -36,7 +36,7 @@ class RequestRegister extends HomeEvent {
 }
 
 class UpdateHome extends HomeEvent {
-  final List<TableItem> tables;
+  final List<ListOfItems> tables;
   final String token;
 
   const UpdateHome({required this.tables, required this.token});
@@ -56,8 +56,8 @@ class InsertHome extends HomeEvent {
 }
 
 class RemoveFromHome extends HomeEvent {
-  final List<TableItem> tableList;
-  final TableItem table;
+  final List<ListOfItems> tableList;
+  final ListOfItems table;
   final String token;
 
   const RemoveFromHome({

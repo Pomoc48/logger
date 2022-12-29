@@ -8,7 +8,7 @@ abstract class ListEvent extends Equatable {
 }
 
 class LoadList extends ListEvent {
-  final TableItem table;
+  final ListOfItems table;
   final String token;
 
   const LoadList({required this.table, required this.token});

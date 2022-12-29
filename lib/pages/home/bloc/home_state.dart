@@ -20,7 +20,7 @@ class HomeError extends HomeState {
 
 class HomeLoaded extends HomeState {
   final String token;
-  final List<TableItem> tables;
+  final List<ListOfItems> tables;
 
   const HomeLoaded({required this.tables, required this.token});
 

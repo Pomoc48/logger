@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:logger_app/models/row.dart';
-import 'package:logger_app/models/table.dart';
+import 'package:logger_app/models/list.dart';
 import 'package:logger_app/pages/list/bloc/functions.dart';
 
 part 'list_event.dart';

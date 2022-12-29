@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:logger_app/models/table.dart';
+import 'package:logger_app/models/list.dart';
 import 'package:logger_app/pages/home/bloc/functions.dart';
 
 part 'home_event.dart';
@@ -17,7 +17,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           Map map = await getTables(token: token);
 
           emit(HomeLoaded(
-            tables: List<TableItem>.from(map["data"]),
+            tables: List<ListOfItems>.from(map["data"]),
             token: map["token"],
           ));
         } catch (e) {
@@ -40,7 +40,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           Map map = await getTables(token: token);
 
           emit(HomeLoaded(
-            tables: List<TableItem>.from(map["data"]),
+            tables: List<ListOfItems>.from(map["data"]),
             token: map["token"],
           ));
         } catch (e) {
@@ -78,7 +78,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           Map map = await getTables(token: response["token"]);
 
           emit(HomeLoaded(
-            tables: List<TableItem>.from(map["data"]),
+            tables: List<ListOfItems>.from(map["data"]),
             token: map["token"],
           ));
         } else {
@@ -100,7 +100,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           Map map = await getTables(token: response["token"]);
 
           emit(HomeLoaded(
-            tables: List<TableItem>.from(map["data"]),
+            tables: List<ListOfItems>.from(map["data"]),
             token: map["token"],
           ));
         } else {

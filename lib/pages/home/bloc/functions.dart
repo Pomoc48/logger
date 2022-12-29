@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
 import 'package:logger_app/functions.dart';
-import 'package:logger_app/models/table.dart';
+import 'package:logger_app/models/list.dart';
 
 Future<Map> autoLoginResult() async {
   String? username = GetStorage().read("username");
@@ -52,7 +52,7 @@ Future<Map> registerResult({
 
 Future<Map> getTables({required String token}) async {
   Response response = await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/tables/",
+    url: "https://loggerapp.lukawski.xyz/lists/",
     headers: {"Token": token},
     type: RequestType.get,
   );
@@ -64,9 +64,9 @@ Future<Map> getTables({required String token}) async {
   dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
   if (decoded == null) return {"data": [], "token": token};
 
-  List<TableItem> tables = [];
+  List<ListOfItems> tables = [];
   for (Map element in decoded) {
-    tables.add(TableItem.fromMap(element));
+    tables.add(ListOfItems.fromMap(element));
   }
 
   return {"data": tables, "token": token};
