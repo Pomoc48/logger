@@ -21,7 +21,7 @@ Future<void> refresh({
   }
 }
 
-Future<void> addNewTableDialog({
+Future<void> addNewListDialog({
   required BuildContext context,
   required String token,
 }) async {
@@ -93,10 +93,6 @@ Future<bool> confirmDismiss({
   return dismiss;
 }
 
-String subtitleCount(int rows) {
-  return rows == 1
-      ? "$rows time"
-      : rows == 0
-          ? "List empty"
-          : "$rows times";
+String subtitleCount(int count) {
+  return count == 1 ? "$count item" : "$count items";
 }

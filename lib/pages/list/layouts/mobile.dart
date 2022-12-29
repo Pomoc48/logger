@@ -21,7 +21,7 @@ class MobileList extends StatelessWidget {
     if (state.itemList.isEmpty) {
       return EmptyList(
         title: state.list.name,
-        press: () async => addNewRowDialog(
+        press: () async => addNewItemDialog(
           context: context,
           list: state.list,
           token: state.token,
@@ -41,7 +41,7 @@ class MobileList extends StatelessWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () async => addNewRowDialog(
+          onPressed: () async => addNewItemDialog(
             context: context,
             list: state.list,
             token: state.token,

@@ -51,7 +51,7 @@ class DesktopHome extends StatelessWidget {
                   ),
                 ),
                 child: InkWell(
-                  onTap: () async => addNewTableDialog(
+                  onTap: () async => addNewListDialog(
                     context: context,
                     token: state.token,
                   ),

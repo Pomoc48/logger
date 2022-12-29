@@ -75,7 +75,7 @@ class DesktopList extends StatelessWidget {
                       child: LineChart(data: state.chartData),
                     ),
                     FloatingActionButton.extended(
-                      onPressed: () => addNewRowDialog(
+                      onPressed: () => addNewItemDialog(
                         context: context,
                         list: state.list,
                         token: state.token,

@@ -22,7 +22,7 @@ class MobileHome extends StatelessWidget {
       return EmptyList(
         title: Strings.appName,
         state: state,
-        press: () async => addNewTableDialog(
+        press: () async => addNewListDialog(
           context: context,
           token: state.token,
         ),
@@ -36,7 +36,7 @@ class MobileHome extends StatelessWidget {
           actions: appBarActions(context, state),
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () async => addNewTableDialog(
+          onPressed: () async => addNewListDialog(
             context: context,
             token: state.token,
           ),

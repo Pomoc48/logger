@@ -14,12 +14,12 @@ Future<void> refresh({
 }) async {
   try {
     Map map = await getItems(listId: list.id, token: token);
-    var rows = List<ListItem>.from(map["data"]);
+    var items = List<ListItem>.from(map["data"]);
 
     BlocProvider.of<ListBloc>(context).add(UpdateList(
-      itemList: rows,
+      itemList: items,
       list: list,
-      chartData: getChartData(rows),
+      chartData: getChartData(items),
       token: map["token"],
     ));
   } catch (e) {
@@ -27,7 +27,7 @@ Future<void> refresh({
   }
 }
 
-Future<void> addNewRowDialog({
+Future<void> addNewItemDialog({
   required BuildContext context,
   required ListOfItems list,
   required String token,

@@ -68,10 +68,10 @@ List<double> getChartData(List<ListItem> items) {
   return List.from(doubleList.reversed);
 }
 
-int _countItemsInOneDay(DateTime date, List<ListItem> rows) {
+int _countItemsInOneDay(DateTime date, List<ListItem> items) {
   int count = 0;
 
-  for (ListItem element in rows) {
+  for (ListItem element in items) {
     if (_matchDates(element.timestamp, date)) count++;
   }
 
