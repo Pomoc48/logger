@@ -46,13 +46,13 @@ class UpdateHome extends HomeEvent {
 }
 
 class InsertHome extends HomeEvent {
-  final String newTable;
+  final String name;
   final String token;
 
-  const InsertHome({required this.newTable, required this.token});
+  const InsertHome({required this.name, required this.token});
 
   @override
-  List<Object> get props => [newTable, token];
+  List<Object> get props => [name, token];
 }
 
 class RemoveFromHome extends HomeEvent {

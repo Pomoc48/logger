@@ -46,7 +46,7 @@ Future<void> addNewTableDialog({
           TextButton(
             onPressed: () {
               BlocProvider.of<HomeBloc>(context).add(InsertHome(
-                newTable: controller.text,
+                name: controller.text,
                 token: token,
               ));
 

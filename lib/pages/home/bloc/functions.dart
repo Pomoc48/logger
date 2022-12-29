@@ -72,12 +72,12 @@ Future<Map> getTables({required String token}) async {
   return {"data": tables, "token": token};
 }
 
-Future<Map> addTable({
-  required String table,
+Future<Map> addList({
+  required String name,
   required String token,
 }) async {
   return await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/tables/?table_name=$table",
+    url: "https://loggerapp.lukawski.xyz/lists/?list_name=$name",
     headers: {"Token": token},
     type: RequestType.post,
   );

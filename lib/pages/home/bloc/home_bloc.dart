@@ -69,8 +69,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<InsertHome>((event, emit) async {
       try {
-        Map response = await addTable(
-          table: event.newTable,
+        Map response = await addList(
+          name: event.name,
           token: event.token,
         );
 
