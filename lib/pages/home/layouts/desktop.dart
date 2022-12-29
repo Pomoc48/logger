@@ -102,7 +102,7 @@ class DesktopHome extends StatelessWidget {
                   child: InkWell(
                     onTap: () async {
                       BlocProvider.of<ListBloc>(context).add(LoadList(
-                        table: state.lists[i],
+                        list: state.lists[i],
                         token: state.token,
                       ));
 

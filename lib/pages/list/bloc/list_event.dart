@@ -8,60 +8,60 @@ abstract class ListEvent extends Equatable {
 }
 
 class LoadList extends ListEvent {
-  final ListOfItems table;
+  final ListOfItems list;
   final String token;
 
-  const LoadList({required this.table, required this.token});
+  const LoadList({required this.list, required this.token});
 
   @override
-  List<Object> get props => [table, token];
+  List<Object> get props => [list, token];
 }
 
 class UpdateList extends ListEvent {
-  final List<ListItem> rowList;
+  final List<ListItem> itemList;
   final List<double> chartData;
-  final String title;
+  final ListOfItems list;
   final String token;
 
   const UpdateList({
-    required this.rowList,
+    required this.itemList,
     required this.chartData,
-    required this.title,
+    required this.list,
     required this.token,
   });
 
   @override
-  List<Object> get props => [rowList, title, chartData, token];
+  List<Object> get props => [itemList, list, chartData, token];
 }
 
 class RemoveFromList extends ListEvent {
-  final ListItem row;
-  final String title;
+  final ListItem item;
+  final ListOfItems list;
   final String token;
 
   const RemoveFromList({
-    required this.row,
-    required this.title,
+    required this.item,
+    required this.list,
     required this.token,
   });
 
   @override
-  List<Object> get props => [row, title, token];
+  List<Object> get props => [item, list, token];
 }
 
 class ReportListError extends ListEvent {}
 
 class InsertList extends ListEvent {
-  final String timestamp;
-  final String name;
+  final int timestamp;
+  final ListOfItems list;
   final String token;
 
   const InsertList({
     required this.timestamp,
-    required this.name,
+    required this.list,
     required this.token,
   });
 
   @override
-  List<Object> get props => [timestamp, name, token];
+  List<Object> get props => [timestamp, list, token];
 }

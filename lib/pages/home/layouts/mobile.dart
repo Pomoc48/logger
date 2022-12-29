@@ -80,7 +80,7 @@ class MobileHome extends StatelessWidget {
                           const EdgeInsets.only(left: 16, right: 16, top: 4),
                       onTap: () async {
                         BlocProvider.of<ListBloc>(context).add(LoadList(
-                          table: state.lists[i],
+                          list: state.lists[i],
                           token: state.token,
                         ));
 

@@ -22,9 +22,7 @@ class DesktopList extends StatelessWidget {
 
     return Fader(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(state.title),
-        ),
+        appBar: AppBar(title: Text(state.list.name)),
         body: Padding(
           padding: EdgeInsets.symmetric(vertical: padding),
           child: Center(
@@ -42,26 +40,26 @@ class DesktopList extends StatelessWidget {
                       separatorBuilder: (c, i) => const ListDivider(),
                       itemBuilder: (context, i) {
                         return Dismissible(
-                          key: Key(state.rowList[i].id.toString()),
+                          key: Key(state.itemList[i].id.toString()),
                           direction: DismissDirection.startToEnd,
                           background: const DismissBackground(),
                           onDismissed: (direction) {
                             BlocProvider.of<ListBloc>(context).add(
                               RemoveFromList(
-                                row: state.rowList[i],
-                                title: state.title,
+                                item: state.itemList[i],
+                                list: state.list,
                                 token: state.token,
                               ),
                             );
                           },
                           child: ListTile(
-                            leading: ListLeading(state.rowList[i].number),
-                            title: Text(dateTitle(state.rowList[i].timestamp)),
-                            subtitle: Text(dateSubtitle(state.rowList[i].timestamp)),
+                            leading: ListLeading(state.itemList[i].number),
+                            title: Text(dateTitle(state.itemList[i].timestamp)),
+                            subtitle: Text(dateSubtitle(state.itemList[i].timestamp)),
                           ),
                         );
                       },
-                      itemCount: state.rowList.length,
+                      itemCount: state.itemList.length,
                     ),
                   ),
                 ),
@@ -79,7 +77,7 @@ class DesktopList extends StatelessWidget {
                     FloatingActionButton.extended(
                       onPressed: () => addNewRowDialog(
                         context: context,
-                        name: state.title,
+                        list: state.list,
                         token: state.token,
                       ),
                       icon: const Icon(Icons.add),
