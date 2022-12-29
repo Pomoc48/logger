@@ -50,7 +50,7 @@ Future<Map> registerResult({
   );
 }
 
-Future<Map> getTables({required String token}) async {
+Future<Map> getLists({required String token}) async {
   Response response = await makeRequest(
     url: "https://loggerapp.lukawski.xyz/lists/",
     headers: {"Token": token},
@@ -58,7 +58,7 @@ Future<Map> getTables({required String token}) async {
   );
 
   if (response.statusCode == 403) {
-    return await getTables(token: await renewToken());
+    return await getLists(token: await renewToken());
   }
 
   dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
@@ -83,12 +83,12 @@ Future<Map> addList({
   );
 }
 
-Future<Map> removeTable({
-  required String table,
+Future<Map> removeList({
+  required int id,
   required String token,
 }) async {
   return await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/tables/?table_name=$table",
+    url: "https://loggerapp.lukawski.xyz/lists/?list_id=$id",
     headers: {"Token": token},
     type: RequestType.delete,
   );

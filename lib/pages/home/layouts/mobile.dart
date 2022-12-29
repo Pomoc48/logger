@@ -67,7 +67,7 @@ class MobileHome extends StatelessWidget {
                   onDismissed: (direction) {
                     BlocProvider.of<HomeBloc>(context).add(
                       RemoveFromHome(
-                        table: state.tables[i],
+                        list: state.tables[i],
                         tableList: state.tables,
                         token: state.token,
                       ),

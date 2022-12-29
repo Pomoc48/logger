@@ -10,7 +10,7 @@ Future<void> refresh({
   required String token,
 }) async {
   try {
-    Map map = await getTables(token: token);
+    Map map = await getLists(token: token);
     // ignore: use_build_context_synchronously
     BlocProvider.of<HomeBloc>(context).add(UpdateHome(
       tables: List<ListOfItems>.from(map["data"]),

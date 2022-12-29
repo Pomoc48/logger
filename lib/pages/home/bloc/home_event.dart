@@ -57,17 +57,17 @@ class InsertHome extends HomeEvent {
 
 class RemoveFromHome extends HomeEvent {
   final List<ListOfItems> tableList;
-  final ListOfItems table;
+  final ListOfItems list;
   final String token;
 
   const RemoveFromHome({
-    required this.table,
+    required this.list,
     required this.tableList,
     required this.token,
   });
 
   @override
-  List<Object> get props => [table, tableList, token];
+  List<Object> get props => [list, tableList, token];
 }
 
 class ReportHomeError extends HomeEvent {
