@@ -6,7 +6,6 @@ import 'package:logger_app/pages/home/widgets/chart.dart';
 import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/actions.dart';
-import 'package:logger_app/widgets/dismiss_background.dart';
 import 'package:logger_app/widgets/fader.dart';
 
 class DesktopHome extends StatelessWidget {
@@ -27,12 +26,7 @@ class DesktopHome extends StatelessWidget {
           actions: appBarActions(context, state),
         ),
         body: GridView.builder(
-          padding: EdgeInsets.only(
-            top: padding,
-            left: padding,
-            right: padding,
-            bottom: padding + 72,
-          ),
+          padding: EdgeInsets.all(padding),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: axis,
             mainAxisExtent: 162,
@@ -80,59 +74,80 @@ class DesktopHome extends StatelessWidget {
                   width: 2,
                 ),
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Dismissible(
-                  key: Key(state.lists[i].name),
-                  direction: DismissDirection.startToEnd,
-                  background: const DismissBackground(),
-                  confirmDismiss: (d) async => confirmDismiss(
-                    context: context,
-                    message: Strings.areSure,
-                  ),
-                  onDismissed: (direction) {
-                    BlocProvider.of<HomeBloc>(context).add(
-                      RemoveFromHome(
-                        id: state.lists[i].id,
-                        lists: state.lists,
-                        token: state.token,
-                      ),
-                    );
-                  },
-                  child: InkWell(
-                    onTap: () async {
-                      BlocProvider.of<ListBloc>(context).add(LoadList(
-                        list: state.lists[i],
-                        token: state.token,
-                      ));
+              child: InkWell(
+                onTap: () async {
+                  BlocProvider.of<ListBloc>(context).add(LoadList(
+                    list: state.lists[i],
+                    token: state.token,
+                  ));
 
-                      await Navigator.pushNamed(context, Routes.list);
-                      // ignore: use_build_context_synchronously
-                      refresh(context: context, token: state.token);
-                    },
-                    borderRadius: BorderRadius.circular(12),
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
+                  await Navigator.pushNamed(context, Routes.list);
+                  // ignore: use_build_context_synchronously
+                  refresh(context: context, token: state.token);
+                },
+                borderRadius: BorderRadius.circular(12),
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 70,
+                        child: LineChart(data: state.lists[i].chartData),
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            height: 70,
-                            child: LineChart(data: state.lists[i].chartData),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  state.lists[i].name,
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  subtitleCount(state.lists[i].count),
+                                  style: Theme.of(context).textTheme.labelMedium,
+                                ),
+                              ],
+                            ),
                           ),
-                          const SizedBox(height: 16),
-                          Text(
-                            state.lists[i].name,
-                            style: Theme.of(context).textTheme.titleMedium,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            subtitleCount(state.lists[i].count),
-                            style: Theme.of(context).textTheme.labelMedium,
+                          PopupMenuButton<String>(
+                            color: Theme.of(context).colorScheme.secondaryContainer,
+                            itemBuilder: (BuildContext context) {
+                              return [
+                                PopupMenuItem<String>(
+                                  value: "delete",
+                                  child: Text(Strings.delete),
+                                ),
+                              ];
+                            },
+                            onSelected: (value) async {
+                              if (value == "delete")  {
+                                bool delete = await confirmDismiss(
+                                  context: context,
+                                  message: Strings.areSure,
+                                );
+
+                                if (delete) {
+                                  // ignore: use_build_context_synchronously
+                                  BlocProvider.of<HomeBloc>(context).add(
+                                    RemoveFromHome(
+                                      id: state.lists[i].id,
+                                      lists: state.lists,
+                                      token: state.token,
+                                    ),
+                                  );
+                                }
+                              }
+                            },
                           ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ),
