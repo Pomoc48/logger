@@ -4,12 +4,11 @@ import 'package:http/http.dart';
 import 'package:logger_app/functions.dart';
 import 'package:logger_app/models/item.dart';
 
-Future<Map> getItems({
-  required int listId,
-  required String token,
-}) async {
+String backend = "https://loggerapp.lukawski.xyz/items/";
+
+Future<Map> getItems({required int listId, required String token}) async {
   Response response = await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/items/?list_id=$listId",
+    url: "$backend?list_id=$listId",
     headers: {"Token": token},
     type: RequestType.get,
   );
@@ -29,12 +28,9 @@ Future<Map> getItems({
   return {"data": items, "token": token};
 }
 
-Future<Map> removeItem({
-  required int itemId,
-  required String token,
-}) async {
+Future<Map> removeItem({required int itemId, required String token}) async {
   return await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/items/?item_id=$itemId",
+    url: "$backend?item_id=$itemId",
     headers: {"Token": token},
     type: RequestType.delete,
   );
@@ -46,7 +42,7 @@ Future<Map> addItem({
   required String token,
 }) async {
   return await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/items/?timestamp=$timestamp&list_id=$listId",
+    url: "$backend?timestamp=$timestamp&list_id=$listId",
     headers: {"Token": token},
     type: RequestType.post,
   );

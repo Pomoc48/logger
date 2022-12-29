@@ -19,6 +19,9 @@ class DesktopHome extends StatelessWidget {
     double padding = width > 1200 ? 32 : 24;
     int axis = width > 1200 ? 3 : 2;
 
+    TextTheme tTheme = Theme.of(context).textTheme;
+    ColorScheme cScheme = Theme.of(context).colorScheme;
+
     return Fader(
       child: Scaffold(
         appBar: AppBar(
@@ -33,14 +36,14 @@ class DesktopHome extends StatelessWidget {
             crossAxisSpacing: padding,
             mainAxisSpacing: padding,
           ),
+          itemCount: state.lists.length + 1,
           itemBuilder: (context, i) {
             if (i == state.lists.length) {
               return Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.25),
+                    color: cScheme.primary.withOpacity(0.25),
                     width: 2,
                   ),
                 ),
@@ -57,7 +60,7 @@ class DesktopHome extends StatelessWidget {
                       const SizedBox(width: 8),
                       Text(
                         Strings.addNewList,
-                        style: Theme.of(context).textTheme.titleMedium,
+                        style: tTheme.titleMedium,
                       ),
                     ],
                   ),
@@ -69,8 +72,7 @@ class DesktopHome extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color:
-                      Theme.of(context).colorScheme.primary.withOpacity(0.25),
+                  color: cScheme.primary.withOpacity(0.25),
                   width: 2,
                 ),
               ),
@@ -105,18 +107,18 @@ class DesktopHome extends StatelessWidget {
                               children: [
                                 Text(
                                   state.lists[i].name,
-                                  style: Theme.of(context).textTheme.titleMedium,
+                                  style: tTheme.titleMedium,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 Text(
                                   subtitleCount(state.lists[i].count),
-                                  style: Theme.of(context).textTheme.labelMedium,
+                                  style: tTheme.labelMedium,
                                 ),
                               ],
                             ),
                           ),
                           PopupMenuButton<String>(
-                            color: Theme.of(context).colorScheme.secondaryContainer,
+                            color: cScheme.secondaryContainer,
                             itemBuilder: (BuildContext context) {
                               return [
                                 PopupMenuItem<String>(
@@ -126,7 +128,7 @@ class DesktopHome extends StatelessWidget {
                               ];
                             },
                             onSelected: (value) async {
-                              if (value == "delete")  {
+                              if (value == "delete") {
                                 bool delete = await confirmDismiss(
                                   context: context,
                                   message: Strings.areSure,
@@ -153,7 +155,6 @@ class DesktopHome extends StatelessWidget {
               ),
             );
           },
-          itemCount: state.lists.length + 1,
         ),
       ),
     );

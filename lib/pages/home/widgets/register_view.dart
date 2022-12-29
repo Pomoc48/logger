@@ -36,6 +36,7 @@ class RegisterView extends StatelessWidget {
         if (state is RegisterResults) {
           showSnack(context, state.message);
           if (state.registered) {
+            BlocProvider.of<HomeBloc>(context).add(ReportLogout());
             Navigator.pushReplacementNamed(context, Routes.home);
           }
         }
@@ -83,10 +84,15 @@ class RegisterView extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           TextButton(
-                            onPressed: () => Navigator.pushReplacementNamed(
-                              context,
-                              Routes.home,
-                            ),
+                            onPressed: () {
+                              BlocProvider.of<HomeBloc>(context).add(
+                                ReportLogout(),
+                              );
+                              Navigator.pushReplacementNamed(
+                                context,
+                                Routes.home,
+                              );
+                            },
                             child: Text(Strings.haveAccount),
                           ),
                         ],

@@ -79,7 +79,7 @@ class DesktopList extends StatelessWidget {
                           ];
                         },
                         onSelected: (value) {
-                          if (value == "delete")  {
+                          if (value == "delete") {
                             BlocProvider.of<ListBloc>(context).add(
                               RemoveFromList(
                                 item: state.itemList[i],
