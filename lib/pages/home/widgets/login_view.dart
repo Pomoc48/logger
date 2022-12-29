@@ -16,7 +16,7 @@ class LoginView extends StatelessWidget {
 
     void login() {
       if (username.text == "" || password.text == "") {
-        showSnack(context, Strings.allFields);
+        showSnack(context, Strings.allFields, mobile);
         return;
       }
 

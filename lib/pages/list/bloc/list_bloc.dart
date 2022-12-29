@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:logger_app/models/row.dart';
-import 'package:logger_app/models/table.dart';
+import 'package:logger_app/models/item.dart';
+import 'package:logger_app/models/list.dart';
 import 'package:logger_app/pages/list/bloc/functions.dart';
 
 part 'list_event.dart';
@@ -13,17 +13,17 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       emit(ListInitial());
 
       try {
-        Map map = await getTableRows(
-          table: event.table.name,
+        Map map = await getItems(
+          listId: event.list.id,
           token: event.token,
         );
 
-        var rows = List<RowItem>.from(map["data"]);
+        var items = List<ListItem>.from(map["data"]);
 
         emit(ListLoaded(
-          rowList: rows,
-          title: event.table.name,
-          chartData: getChartData(rows),
+          itemList: items,
+          list: event.list,
+          chartData: getChartData(items),
           token: map["token"],
         ));
       } catch (e) {
@@ -33,24 +33,24 @@ class ListBloc extends Bloc<ListEvent, ListState> {
 
     on<InsertList>((event, emit) async {
       try {
-        Map response = await addRow(
-          table: event.name,
+        Map response = await addItem(
+          listId: event.list.id,
           timestamp: event.timestamp,
           token: event.token,
         );
 
         if (response["success"]) {
-          Map map = await getTableRows(
-            table: event.name,
+          Map map = await getItems(
+            listId: event.list.id,
             token: response["token"],
           );
 
-          var rows = List<RowItem>.from(map["data"]);
+          var items = List<ListItem>.from(map["data"]);
 
           emit(ListLoaded(
-            rowList: rows,
-            title: event.name,
-            chartData: getChartData(rows),
+            itemList: items,
+            list: event.list,
+            chartData: getChartData(items),
             token: map["token"],
           ));
         } else {
@@ -63,24 +63,23 @@ class ListBloc extends Bloc<ListEvent, ListState> {
 
     on<RemoveFromList>((event, emit) async {
       try {
-        Map response = await removeRow(
-          table: event.title,
-          rowId: event.row.id,
+        Map response = await removeItem(
+          itemId: event.item.id,
           token: event.token,
         );
 
         if (response["success"]) {
-          Map map = await getTableRows(
-            table: event.title,
+          Map map = await getItems(
+            listId: event.list.id,
             token: response["token"],
           );
 
-          var rows = List<RowItem>.from(map["data"]);
+          var items = List<ListItem>.from(map["data"]);
 
           emit(ListLoaded(
-            rowList: rows,
-            title: event.title,
-            chartData: getChartData(rows),
+            itemList: items,
+            list: event.list,
+            chartData: getChartData(items),
             token: map["token"],
           ));
         } else {
@@ -93,8 +92,8 @@ class ListBloc extends Bloc<ListEvent, ListState> {
 
     on<UpdateList>((event, emit) async {
       emit(ListLoaded(
-        rowList: event.rowList,
-        title: event.title,
+        itemList: event.itemList,
+        list: event.list,
         chartData: event.chartData,
         token: event.token,
       ));

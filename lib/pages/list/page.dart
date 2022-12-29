@@ -18,7 +18,7 @@ class ListPage extends StatelessWidget {
         return BlocConsumer<ListBloc, ListState>(
           listener: (context, state) {
             if (state is ListMessage) {
-              showSnack(context, state.message);
+              showSnack(context, state.message, mobile);
             }
 
             if (state is ListError) {

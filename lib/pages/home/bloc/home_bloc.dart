@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:logger_app/models/table.dart';
+import 'package:logger_app/models/list.dart';
 import 'package:logger_app/pages/home/bloc/functions.dart';
 
 part 'home_event.dart';
@@ -14,10 +14,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (response["success"]) {
         String token = response["token"];
         try {
-          Map map = await getTables(token: token);
+          Map map = await getLists(token: token);
 
           emit(HomeLoaded(
-            tables: List<TableItem>.from(map["data"]),
+            lists: List<ListOfItems>.from(map["data"]),
             token: map["token"],
           ));
         } catch (e) {
@@ -37,10 +37,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (response["success"]) {
         String token = response["token"];
         try {
-          Map map = await getTables(token: token);
+          Map map = await getLists(token: token);
 
           emit(HomeLoaded(
-            tables: List<TableItem>.from(map["data"]),
+            lists: List<ListOfItems>.from(map["data"]),
             token: map["token"],
           ));
         } catch (e) {
@@ -64,21 +64,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
 
     on<UpdateHome>((event, emit) {
-      emit(HomeLoaded(tables: event.tables, token: event.token));
+      emit(HomeLoaded(lists: event.lists, token: event.token));
     });
 
     on<InsertHome>((event, emit) async {
       try {
-        Map response = await addTable(
-          table: event.newTable,
+        Map response = await addList(
+          name: event.name,
           token: event.token,
         );
 
         if (response["success"]) {
-          Map map = await getTables(token: response["token"]);
+          Map map = await getLists(token: response["token"]);
 
           emit(HomeLoaded(
-            tables: List<TableItem>.from(map["data"]),
+            lists: List<ListOfItems>.from(map["data"]),
             token: map["token"],
           ));
         } else {
@@ -91,16 +91,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<RemoveFromHome>((event, emit) async {
       try {
-        Map response = await removeTable(
-          table: event.table.name,
+        Map response = await removeList(
+          id: event.id,
           token: event.token,
         );
 
         if (response["success"]) {
-          Map map = await getTables(token: response["token"]);
+          Map map = await getLists(token: response["token"]);
 
           emit(HomeLoaded(
-            tables: List<TableItem>.from(map["data"]),
+            lists: List<ListOfItems>.from(map["data"]),
             token: map["token"],
           ));
         } else {

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
 import 'package:logger_app/functions.dart';
-import 'package:logger_app/models/table.dart';
+import 'package:logger_app/models/list.dart';
 
 Future<Map> autoLoginResult() async {
   String? username = GetStorage().read("username");
@@ -50,45 +50,45 @@ Future<Map> registerResult({
   );
 }
 
-Future<Map> getTables({required String token}) async {
+Future<Map> getLists({required String token}) async {
   Response response = await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/tables/",
+    url: "https://loggerapp.lukawski.xyz/lists/",
     headers: {"Token": token},
     type: RequestType.get,
   );
 
   if (response.statusCode == 403) {
-    return await getTables(token: await renewToken());
+    return await getLists(token: await renewToken());
   }
 
   dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
   if (decoded == null) return {"data": [], "token": token};
 
-  List<TableItem> tables = [];
+  List<ListOfItems> lists = [];
   for (Map element in decoded) {
-    tables.add(TableItem.fromMap(element));
+    lists.add(ListOfItems.fromMap(element));
   }
 
-  return {"data": tables, "token": token};
+  return {"data": lists, "token": token};
 }
 
-Future<Map> addTable({
-  required String table,
+Future<Map> addList({
+  required String name,
   required String token,
 }) async {
   return await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/tables/?table_name=$table",
+    url: "https://loggerapp.lukawski.xyz/lists/?list_name=$name",
     headers: {"Token": token},
     type: RequestType.post,
   );
 }
 
-Future<Map> removeTable({
-  required String table,
+Future<Map> removeList({
+  required int id,
   required String token,
 }) async {
   return await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/tables/?table_name=$table",
+    url: "https://loggerapp.lukawski.xyz/lists/?list_id=$id",
     headers: {"Token": token},
     type: RequestType.delete,
   );

@@ -2,23 +2,24 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger_app/models/row.dart';
+import 'package:logger_app/models/item.dart';
+import 'package:logger_app/models/list.dart';
 import 'package:logger_app/pages/list/bloc/functions.dart';
 import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 
 Future<void> refresh({
   required BuildContext context,
-  required String name,
+  required ListOfItems list,
   required String token,
 }) async {
   try {
-    Map map = await getTableRows(table: name, token: token);
-    var rows = List<RowItem>.from(map["data"]);
+    Map map = await getItems(listId: list.id, token: token);
+    var items = List<ListItem>.from(map["data"]);
 
     BlocProvider.of<ListBloc>(context).add(UpdateList(
-      rowList: rows,
-      title: name,
-      chartData: getChartData(rows),
+      itemList: items,
+      list: list,
+      chartData: getChartData(items),
       token: map["token"],
     ));
   } catch (e) {
@@ -26,9 +27,9 @@ Future<void> refresh({
   }
 }
 
-Future<void> addNewRowDialog({
+Future<void> addNewItemDialog({
   required BuildContext context,
-  required String name,
+  required ListOfItems list,
   required String token,
 }) async {
   DateTime dateNow = DateTime.now();
@@ -52,11 +53,15 @@ Future<void> addNewRowDialog({
   if (time == null) return;
 
   BlocProvider.of<ListBloc>(context).add(
-    InsertList(timestamp: _dateToString(date, time), name: name, token: token),
+    InsertList(
+      timestamp: _dateToTimestamp(date, time),
+      list: list,
+      token: token,
+    ),
   );
 }
 
-String _dateToString(DateTime date, TimeOfDay time) {
+int _dateToTimestamp(DateTime date, TimeOfDay time) {
   DateTime d = date.add(Duration(hours: time.hour, minutes: time.minute));
-  return "${d.year}-${d.month}-${d.day} ${d.hour}:${d.minute}";
+  return d.millisecondsSinceEpoch ~/ 1000;
 }

@@ -2,82 +2,73 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:logger_app/functions.dart';
-import 'package:logger_app/models/row.dart';
+import 'package:logger_app/models/item.dart';
 
-Future<Map> getTableRows({
-  required String table,
-  required String token,
-}) async {
+String backend = "https://loggerapp.lukawski.xyz/items/";
+
+Future<Map> getItems({required int listId, required String token}) async {
   Response response = await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/rows/?table_name=$table",
+    url: "$backend?list_id=$listId",
     headers: {"Token": token},
     type: RequestType.get,
   );
 
   if (response.statusCode == 403) {
-    return await getTableRows(
-      table: table,
-      token: await renewToken(),
-    );
+    return await getItems(listId: listId, token: await renewToken());
   }
 
   dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
   if (decoded == null) return {"data": [], "token": token};
 
-  List<RowItem> rows = [];
+  List<ListItem> items = [];
   for (Map element in decoded) {
-    rows.add(RowItem.fromMap(element));
+    items.add(ListItem.fromMap(element));
   }
 
-  return {"data": rows, "token": token};
+  return {"data": items, "token": token};
 }
 
-Future<Map> removeRow({
-  required String table,
-  required int rowId,
-  required String token,
-}) async {
+Future<Map> removeItem({required int itemId, required String token}) async {
   return await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/rows/?row_id=$rowId&table_name=$table",
+    url: "$backend?item_id=$itemId",
     headers: {"Token": token},
     type: RequestType.delete,
   );
 }
 
-Future<Map> addRow({
-  required String table,
-  required String timestamp,
+Future<Map> addItem({
+  required int listId,
+  required int timestamp,
   required String token,
 }) async {
   return await makeRequest(
-    url:
-        "https://loggerapp.lukawski.xyz/rows/?timestamp=$timestamp&table_name=$table",
+    url: "$backend?timestamp=$timestamp&list_id=$listId",
     headers: {"Token": token},
     type: RequestType.post,
   );
 }
 
-List<double> getChartData(List<RowItem> rows) {
-  int rowCount = rows.length;
+List<double> getChartData(List<ListItem> items) {
+  int itemCount = items.length;
   List<double> doubleList = [];
 
   for (int a = 0; a < 30; a++) {
     DateTime now = DateTime.now().subtract(Duration(days: a));
-    doubleList.add(rowCount.toDouble());
+    doubleList.add(itemCount.toDouble());
 
-    if (rows.any((item) => _matchDates(item.date, now))) {
-      rowCount -= _countItemsInOneDay(now, rows);
+    if (items.any((item) => _matchDates(item.timestamp, now))) {
+      itemCount -= _countItemsInOneDay(now, items);
     }
   }
 
   return List.from(doubleList.reversed);
 }
 
-int _countItemsInOneDay(DateTime date, List<RowItem> rows) {
+int _countItemsInOneDay(DateTime date, List<ListItem> items) {
   int count = 0;
 
-  for (RowItem element in rows) {
-    if (_matchDates(element.date, date)) count++;
+  for (ListItem element in items) {
+    if (_matchDates(element.timestamp, date)) count++;
   }
 
   return count;

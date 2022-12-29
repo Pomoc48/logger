@@ -14,14 +14,14 @@ class RegisterView extends StatelessWidget {
     TextEditingController password = TextEditingController();
     TextEditingController repeatP = TextEditingController();
 
-    void register() {
+    void register(bool mobile) {
       if (username.text == "" || password.text == "" || repeatP.text == "") {
-        showSnack(context, Strings.allFields);
+        showSnack(context, Strings.allFields, mobile);
         return;
       }
 
       if (password.text != repeatP.text) {
-        showSnack(context, Strings.passwordError);
+        showSnack(context, Strings.passwordError, mobile);
         return;
       }
 
@@ -31,113 +31,104 @@ class RegisterView extends StatelessWidget {
       ));
     }
 
-    return BlocListener<HomeBloc, HomeState>(
-      listener: (context, state) {
-        if (state is RegisterResults) {
-          showSnack(context, state.message);
-          if (state.registered) {
-            Navigator.pushReplacementNamed(context, Routes.home);
-          }
-        }
-      },
-      child: Material(
-        child: Fader(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              if (constraints.maxWidth > 600) {
-                return Scaffold(
-                  body: Center(
-                    child: Container(
-                      width: 500,
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          TextField(
-                            controller: username,
-                            decoration: InputDecoration(
-                              label: Text(Strings.username),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          TextField(
-                            controller: password,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              label: Text(Strings.password),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          TextField(
-                            controller: repeatP,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              label: Text(Strings.passwordR),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          ElevatedButton(
-                            onPressed: register,
-                            child: Text(Strings.register),
-                          ),
-                          const SizedBox(height: 8),
-                          TextButton(
-                            onPressed: () => Navigator.pushReplacementNamed(
-                              context,
-                              Routes.home,
-                            ),
-                            child: Text(Strings.haveAccount),
-                          ),
-                        ],
-                      ),
-                    ),
+    Widget getLayout(bool mobile) {
+      if (!mobile) {
+        return Scaffold(
+          body: Center(
+            child: Container(
+              width: 500,
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: username,
+                    decoration: InputDecoration(label: Text(Strings.username)),
                   ),
-                );
-              }
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: password,
+                    obscureText: true,
+                    decoration: InputDecoration(label: Text(Strings.password)),
+                  ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: repeatP,
+                    obscureText: true,
+                    decoration: InputDecoration(label: Text(Strings.passwordR)),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () => register(mobile),
+                    child: Text(Strings.register),
+                  ),
+                  const SizedBox(height: 8),
+                  TextButton(
+                    onPressed: () {
+                      BlocProvider.of<HomeBloc>(context).add(ReportLogout());
+                      Navigator.pushReplacementNamed(context, Routes.home);
+                    },
+                    child: Text(Strings.haveAccount),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }
 
-              return Scaffold(
-                appBar: AppBar(title: Text(Strings.register)),
-                floatingActionButton: FloatingActionButton.extended(
-                  onPressed: register,
-                  icon: const Icon(Icons.person_add),
-                  label: Text(Strings.register),
-                ),
-                body: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextField(
-                        controller: username,
-                        decoration: InputDecoration(
-                          label: Text(Strings.username),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      TextField(
-                        controller: password,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          label: Text(Strings.password),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      TextField(
-                        controller: repeatP,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          label: Text(Strings.passwordR),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
+      return Scaffold(
+        appBar: AppBar(title: Text(Strings.register)),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () => register(mobile),
+          icon: const Icon(Icons.person_add),
+          label: Text(Strings.register),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
+                controller: username,
+                decoration: InputDecoration(label: Text(Strings.username)),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: password,
+                obscureText: true,
+                decoration: InputDecoration(label: Text(Strings.password)),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: repeatP,
+                obscureText: true,
+                decoration: InputDecoration(label: Text(Strings.passwordR)),
+              ),
+            ],
           ),
         ),
-      ),
+      );
+    }
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        bool mobile = constraints.maxWidth < 600;
+
+        return BlocListener<HomeBloc, HomeState>(
+          listener: (context, state) {
+            if (state is RegisterResults) {
+              showSnack(context, state.message, mobile);
+              if (state.registered) {
+                BlocProvider.of<HomeBloc>(context).add(ReportLogout());
+                Navigator.pushReplacementNamed(context, Routes.home);
+              }
+            }
+          },
+          child: Fader(child: getLayout(mobile)),
+        );
+      },
     );
   }
 }

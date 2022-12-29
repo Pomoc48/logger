@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
         return BlocConsumer<HomeBloc, HomeState>(
           listener: (context, state) {
             if (state is HomeMessage) {
-              showSnack(context, state.message);
+              showSnack(context, state.message, mobile);
             }
           },
           buildWhen: (previous, current) {

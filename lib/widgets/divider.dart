@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ListDivider extends StatelessWidget {
-  const ListDivider({
-    Key? key,
-  }) : super(key: key);
+  const ListDivider({super.key, this.height = 0});
+
+  final double height;
 
   @override
   Widget build(BuildContext context) {
-    return const Divider(
-      height: 0,
+    return Divider(
+      height: height,
       endIndent: 16,
       indent: 16,
     );

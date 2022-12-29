@@ -13,9 +13,10 @@ String dateSubtitle(DateTime date) {
   return DateFormat('EEEE, HH:mm').format(date);
 }
 
-void showSnack(BuildContext context, String message) {
+void showSnack(BuildContext context, String message, bool mobile) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
+      width: mobile ? null : 500,
       content: Text(message),
       behavior: SnackBarBehavior.floating,
     ),

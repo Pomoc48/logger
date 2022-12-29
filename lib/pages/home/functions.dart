@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger_app/models/table.dart';
+import 'package:logger_app/models/list.dart';
 import 'package:logger_app/pages/home/bloc/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/strings.dart';
@@ -10,10 +10,10 @@ Future<void> refresh({
   required String token,
 }) async {
   try {
-    Map map = await getTables(token: token);
+    Map map = await getLists(token: token);
     // ignore: use_build_context_synchronously
     BlocProvider.of<HomeBloc>(context).add(UpdateHome(
-      tables: List<TableItem>.from(map["data"]),
+      lists: List<ListOfItems>.from(map["data"]),
       token: map["token"],
     ));
   } catch (e) {
@@ -21,7 +21,7 @@ Future<void> refresh({
   }
 }
 
-Future<void> addNewTableDialog({
+Future<void> addNewListDialog({
   required BuildContext context,
   required String token,
 }) async {
@@ -46,7 +46,7 @@ Future<void> addNewTableDialog({
           TextButton(
             onPressed: () {
               BlocProvider.of<HomeBloc>(context).add(InsertHome(
-                newTable: controller.text,
+                name: controller.text,
                 token: token,
               ));
 
@@ -93,10 +93,6 @@ Future<bool> confirmDismiss({
   return dismiss;
 }
 
-String subtitleCount(int rows) {
-  return rows == 1
-      ? "$rows time"
-      : rows == 0
-          ? "List empty"
-          : "$rows times";
+String subtitleCount(int count) {
+  return count == 1 ? "$count item" : "$count items";
 }

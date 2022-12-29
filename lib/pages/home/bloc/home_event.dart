@@ -36,38 +36,38 @@ class RequestRegister extends HomeEvent {
 }
 
 class UpdateHome extends HomeEvent {
-  final List<TableItem> tables;
+  final List<ListOfItems> lists;
   final String token;
 
-  const UpdateHome({required this.tables, required this.token});
+  const UpdateHome({required this.lists, required this.token});
 
   @override
-  List<Object> get props => [tables, token];
+  List<Object> get props => [lists, token];
 }
 
 class InsertHome extends HomeEvent {
-  final String newTable;
+  final String name;
   final String token;
 
-  const InsertHome({required this.newTable, required this.token});
+  const InsertHome({required this.name, required this.token});
 
   @override
-  List<Object> get props => [newTable, token];
+  List<Object> get props => [name, token];
 }
 
 class RemoveFromHome extends HomeEvent {
-  final List<TableItem> tableList;
-  final TableItem table;
+  final List<ListOfItems> lists;
+  final int id;
   final String token;
 
   const RemoveFromHome({
-    required this.table,
-    required this.tableList,
+    required this.id,
+    required this.lists,
     required this.token,
   });
 
   @override
-  List<Object> get props => [table, tableList, token];
+  List<Object> get props => [id, lists, token];
 }
 
 class ReportHomeError extends HomeEvent {

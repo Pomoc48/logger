@@ -20,12 +20,12 @@ class HomeError extends HomeState {
 
 class HomeLoaded extends HomeState {
   final String token;
-  final List<TableItem> tables;
+  final List<ListOfItems> lists;
 
-  const HomeLoaded({required this.tables, required this.token});
+  const HomeLoaded({required this.lists, required this.token});
 
   @override
-  List<Object> get props => [tables, token];
+  List<Object> get props => [lists, token];
 }
 
 class HomeMessage extends HomeState {

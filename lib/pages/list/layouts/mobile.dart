@@ -18,12 +18,12 @@ class MobileList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (state.rowList.isEmpty) {
+    if (state.itemList.isEmpty) {
       return EmptyList(
-        title: state.title,
-        press: () async => addNewRowDialog(
+        title: state.list.name,
+        press: () async => addNewItemDialog(
           context: context,
-          name: state.title,
+          list: state.list,
           token: state.token,
         ),
       );
@@ -33,7 +33,7 @@ class MobileList extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           flexibleSpace: LineChart(data: state.chartData),
-          title: Text(state.title),
+          title: Text(state.list.name),
           scrolledUnderElevation: 0,
           bottom: const PreferredSize(
             preferredSize: Size.fromHeight(180),
@@ -41,9 +41,9 @@ class MobileList extends StatelessWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () async => addNewRowDialog(
+          onPressed: () async => addNewItemDialog(
             context: context,
-            name: state.title,
+            list: state.list,
             token: state.token,
           ),
           icon: const Icon(Icons.add),
@@ -52,7 +52,7 @@ class MobileList extends StatelessWidget {
         body: RefreshIndicator(
           onRefresh: () async => refresh(
             context: context,
-            name: state.title,
+            list: state.list,
             token: state.token,
           ),
           child: ListView.separated(
@@ -61,30 +61,30 @@ class MobileList extends StatelessWidget {
               return Padding(
                 padding: EdgeInsets.only(
                   top: i == 0 ? 8 : 0,
-                  bottom: i == state.rowList.length - 1 ? 88 : 0,
+                  bottom: i == state.itemList.length - 1 ? 88 : 0,
                 ),
                 child: Dismissible(
-                  key: Key(state.rowList[i].id.toString()),
+                  key: Key(state.itemList[i].id.toString()),
                   direction: DismissDirection.startToEnd,
                   background: const DismissBackground(),
                   onDismissed: (direction) {
                     BlocProvider.of<ListBloc>(context).add(
                       RemoveFromList(
-                        row: state.rowList[i],
-                        title: state.title,
+                        item: state.itemList[i],
+                        list: state.list,
                         token: state.token,
                       ),
                     );
                   },
                   child: ListTile(
-                    leading: ListLeading(state.rowList[i].number),
-                    title: Text(dateTitle(state.rowList[i].date)),
-                    subtitle: Text(dateSubtitle(state.rowList[i].date)),
+                    leading: ListLeading(state.itemList[i].number),
+                    title: Text(dateTitle(state.itemList[i].timestamp)),
+                    subtitle: Text(dateSubtitle(state.itemList[i].timestamp)),
                   ),
                 ),
               );
             },
-            itemCount: state.rowList.length,
+            itemCount: state.itemList.length,
           ),
         ),
       ),
