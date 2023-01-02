@@ -69,6 +69,6 @@ Future<dynamic> makeRequest({
 }
 
 Future<String> renewToken() async {
-  Map response = await autoLoginResult();
+  Map response = await getToken();
   return response["token"];
 }

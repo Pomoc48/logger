@@ -57,7 +57,7 @@ class DesktopList extends StatelessWidget {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        title: Text(Strings.newItem),
+                        title: Text(Strings.addNewDate),
                       );
                     }
 

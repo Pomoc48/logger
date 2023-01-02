@@ -5,17 +5,15 @@ import 'package:http/http.dart';
 import 'package:logger_app/functions.dart';
 import 'package:logger_app/models/list.dart';
 
-Future<Map> autoLoginResult() async {
-  String? username = GetStorage().read("username");
-  String? password = GetStorage().read("password");
-
-  if (username == null && password == null) {
+Future<Map> getToken() async {
+  String? refreshToken = GetStorage().read("refreshToken");
+  if (refreshToken == null) {
     return {"success": false};
   }
 
   Response response = await post(
-    Uri.parse("https://loggerapp.lukawski.xyz/login/"),
-    headers: {"Username": username!, "Password": password!},
+    Uri.parse("https://loggerapp.lukawski.xyz/refresh/"),
+    headers: {"Rtoken": refreshToken},
   );
 
   return loginResult(response: response);
@@ -30,13 +28,7 @@ Future<Map> manualLoginResult({
     headers: {"Username": username, "Password": password},
   );
 
-  return await loginResult(
-    response: response,
-    save: () async {
-      await GetStorage().write("username", username);
-      await GetStorage().write("password", password);
-    },
-  );
+  return await loginResult(response: response, save: true);
 }
 
 Future<Map> registerResult({
@@ -96,19 +88,18 @@ Future<Map> removeList({
 
 Future<Map> loginResult({
   required Response response,
-  Future<void> Function()? save,
+  bool save = false,
 }) async {
   Map map = jsonDecode(utf8.decode(response.bodyBytes));
 
   if (response.statusCode == 200) {
-    if (save != null) await save();
+    if (save) await GetStorage().write("refreshToken", map["refresh_token"]);
     return {"success": true, "token": map["token"]};
   }
 
   return {"success": false, "message": map["message"]};
 }
 
-Future<void> forgetLoginCredentials() async {
-  await GetStorage().remove("username");
-  await GetStorage().remove("password");
+Future<void> forgetSavedToken() async {
+  await GetStorage().remove("refreshToken");
 }

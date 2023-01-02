@@ -15,7 +15,7 @@ class LoginView extends StatelessWidget {
     TextEditingController password = TextEditingController();
 
     void login() {
-      if (username.text == "" || password.text == "") {
+      if (username.text.trim().isEmpty || password.text.trim().isEmpty) {
         showSnack(context, Strings.allFields, mobile);
         return;
       }
