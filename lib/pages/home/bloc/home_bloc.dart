@@ -15,10 +15,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         String token = response["token"];
         try {
           Map map = await getLists(token: token);
+          List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
+          sortList(list);
 
           emit(HomeLoaded(
-            lists: List<ListOfItems>.from(map["data"]),
+            lists: list,
             token: map["token"],
+            sort: getSortType(),
           ));
         } catch (e) {
           emit(HomeError(token: token));
@@ -38,10 +41,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         String token = response["token"];
         try {
           Map map = await getLists(token: token);
+          List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
+          sortList(list);
 
           emit(HomeLoaded(
-            lists: List<ListOfItems>.from(map["data"]),
+            lists: list,
             token: map["token"],
+            sort: getSortType(),
           ));
         } catch (e) {
           emit(HomeError(token: token));
@@ -64,7 +70,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
 
     on<UpdateHome>((event, emit) {
-      emit(HomeLoaded(lists: event.lists, token: event.token));
+      emit(HomeLoaded(
+        lists: event.lists,
+        token: event.token,
+        sort: getSortType(),
+      ));
     });
 
     on<InsertHome>((event, emit) async {
@@ -76,10 +86,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
         if (response["success"]) {
           Map map = await getLists(token: response["token"]);
+          List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
+          sortList(list);
 
           emit(HomeLoaded(
-            lists: List<ListOfItems>.from(map["data"]),
+            lists: list,
             token: map["token"],
+            sort: getSortType(),
           ));
         } else {
           emit(HomeMessage(response["message"]));
@@ -98,10 +111,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
         if (response["success"]) {
           Map map = await getLists(token: response["token"]);
+          List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
+          sortList(list);
 
           emit(HomeLoaded(
-            lists: List<ListOfItems>.from(map["data"]),
+            lists: list,
             token: map["token"],
+            sort: getSortType(),
           ));
         } else {
           emit(HomeMessage(response["message"]));
@@ -118,6 +134,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<ReportLogout>((event, emit) async {
       await forgetSavedToken();
       emit(HomeLoginRequired());
+    });
+
+    on<ChangeSort>((event, emit) {
+      List<ListOfItems> list = List<ListOfItems>.from(event.state.lists);
+      sortList(list);
+
+      emit(HomeLoaded(
+        lists: list,
+        token: event.state.token,
+        sort: getSortType(),
+      ));
     });
   }
 }

@@ -80,3 +80,12 @@ class ReportHomeError extends HomeEvent {
 }
 
 class ReportLogout extends HomeEvent {}
+
+class ChangeSort extends HomeEvent {
+  final HomeLoaded state;
+
+  const ChangeSort({required this.state});
+
+  @override
+  List<Object> get props => [state];
+}

@@ -103,3 +103,39 @@ Future<Map> loginResult({
 Future<void> forgetSavedToken() async {
   await GetStorage().remove("refreshToken");
 }
+
+enum SortingType { count, date, name }
+
+void sortList(List<ListOfItems> list) {
+  SortingType type = getSortType();
+
+  switch (type) {
+    case SortingType.count:
+      list.sort((a, b) => b.count.compareTo(a.count));
+      break;
+    case SortingType.name:
+      list.sort((a, b) => a.name.compareTo(b.name));
+      break;
+    case SortingType.date:
+      list.sort((a, b) {
+        int bTime = b.timestamp.millisecondsSinceEpoch;
+        int aTime = a.timestamp.millisecondsSinceEpoch;
+        return bTime.compareTo(aTime);
+      });
+      break;
+  }
+}
+
+SortingType getSortType() {
+  String? sortType = GetStorage().read("sortType");
+
+  if (sortType == SortingType.date.name) {
+    return SortingType.date;
+  }
+
+  if (sortType == SortingType.name.name) {
+    return SortingType.name;
+  }
+
+  return SortingType.count;
+}

@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:logger_app/pages/home/bloc/functions.dart';
+import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 
-class Sorting extends StatefulWidget {
-  const Sorting({super.key});
+class Sorting extends StatelessWidget {
+  const Sorting({super.key, required this.state});
 
-  @override
-  State<Sorting> createState() => _SortingState();
-}
-
-class _SortingState extends State<Sorting> {
-
-  int dropdownValue = SortingType.count.index;
+  final HomeLoaded state;
 
   @override
   Widget build(BuildContext context) {
@@ -23,23 +20,25 @@ class _SortingState extends State<Sorting> {
           underline: const SizedBox(),
           borderRadius: BorderRadius.circular(12),
           dropdownColor: Theme.of(context).colorScheme.secondaryContainer,
-          value: dropdownValue,
-          onChanged: (value) {
-            setState(() {
-              dropdownValue = value!;
-            });
+          value: state.sort.name,
+          onChanged: (value) async {
+            await GetStorage().write("sortType", value);
+            // ignore: use_build_context_synchronously
+            BlocProvider.of<HomeBloc>(context).add(
+              ChangeSort(state: state),
+            );
           },
           items: [
             DropdownMenuItem(
-              value: SortingType.count.index,
+              value: SortingType.count.name,
               child: Text(SortingType.count.name.capitalize()),
             ),
             DropdownMenuItem(
-              value: SortingType.name.index,
+              value: SortingType.name.name,
               child: Text(SortingType.name.name.capitalize()),
             ),
             DropdownMenuItem(
-              value: SortingType.date.index,
+              value: SortingType.date.name,
               child: Text(SortingType.date.name.capitalize()),
             ),
           ],

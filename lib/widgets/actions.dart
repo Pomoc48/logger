@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/strings.dart';
-import 'package:logger_app/widgets/sorting.dart';
+import 'package:logger_app/pages/home/widgets/sorting.dart';
 
 List<Widget> appBarActions(BuildContext context, HomeLoaded state) {
   return [
-    const Sorting(),
+    Sorting(state: state),
     const SizedBox(width: 8),
     PopupMenuButton<String>(
       color: Theme.of(context).colorScheme.secondaryContainer,
