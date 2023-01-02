@@ -1,7 +1,5 @@
 class Strings {
   static String appName = "Logger";
-  static String serverSetup = "MySQL server setup";
-  static String newItem = "Add new list";
   static String login = "Login";
   static String register = "Register";
   static String noConnection = "No connection";
@@ -19,9 +17,9 @@ class Strings {
   static String haveAccount = "Already have an account";
   static String confirmation = "Confirmation";
   static String confirm = "Confirm";
-  static String listName = "Name of the list";
-  static String addNewList = "Add new list";
-  static String addNewItem = "Add new item";
+  static String counterName = "Name of the counter";
+  static String addNewCounter = "Add new counter";
+  static String addNewDate = "Add new date";
   static String newItemFAB = "New";
   static String create = "Create";
   static String cancel = "Cancel";

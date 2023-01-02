@@ -59,7 +59,7 @@ class DesktopHome extends StatelessWidget {
                       const Icon(Icons.add),
                       const SizedBox(width: 8),
                       Text(
-                        Strings.addNewList,
+                        Strings.addNewCounter,
                         style: tTheme.titleMedium,
                       ),
                     ],

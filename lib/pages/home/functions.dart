@@ -34,7 +34,7 @@ Future<void> addNewListDialog({
         content: TextField(
           controller: controller,
           decoration: InputDecoration(
-            label: Text(Strings.listName),
+            label: Text(Strings.counterName),
             hintText: Strings.newListHint,
           ),
         ),
