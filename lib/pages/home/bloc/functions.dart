@@ -133,9 +133,9 @@ SortingType getSortType() {
     return SortingType.date;
   }
 
-  if (sortType == SortingType.name.name) {
-    return SortingType.name;
+  if (sortType == SortingType.count.name) {
+    return SortingType.count;
   }
 
-  return SortingType.count;
+  return SortingType.name;
 }

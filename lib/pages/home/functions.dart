@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger_app/functions.dart';
 import 'package:logger_app/models/list.dart';
 import 'package:logger_app/pages/home/bloc/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
@@ -11,9 +12,11 @@ Future<void> refresh({
 }) async {
   try {
     Map map = await getLists(token: token);
+    List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
+    sortList(list);
     // ignore: use_build_context_synchronously
     BlocProvider.of<HomeBloc>(context).add(UpdateHome(
-      lists: List<ListOfItems>.from(map["data"]),
+      lists: list,
       token: map["token"],
     ));
   } catch (e) {
@@ -97,4 +100,20 @@ Future<bool> confirmDismiss({
 
 String subtitleCount(int count) {
   return count == 1 ? "$count time" : "$count times";
+}
+
+Future<void> quickItemDialog({
+  required BuildContext context,
+  required ListOfItems list,
+  required String token,
+}) async {
+  DateTime date = DateTime.now();
+
+  BlocProvider.of<HomeBloc>(context).add(
+    QuickInsertHome(
+      timestamp: dateToTimestamp(date),
+      list: list,
+      token: token,
+    ),
+  );
 }
