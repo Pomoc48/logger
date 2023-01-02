@@ -72,3 +72,11 @@ Future<String> renewToken() async {
   Map response = await getToken();
   return response["token"];
 }
+
+int dateToTimestamp(DateTime date, [TimeOfDay? time]) {
+  if (time != null) {
+    DateTime d = date.add(Duration(hours: time.hour, minutes: time.minute));
+    return d.millisecondsSinceEpoch ~/ 1000;
+  }
+  return date.millisecondsSinceEpoch ~/ 1000;
+}

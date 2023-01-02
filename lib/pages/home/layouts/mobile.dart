@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/pages/home/widgets/chart.dart';
+import 'package:logger_app/pages/home/widgets/quick_insert.dart';
 import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/actions.dart';
@@ -89,6 +90,10 @@ class MobileHome extends StatelessWidget {
                         // ignore: use_build_context_synchronously
                         refresh(context: context, token: state.token);
                       },
+                      leading: QuickInsert(
+                        list: state.lists[i],
+                        token: state.token,
+                      ),
                       trailing: SizedBox(
                         width: 120,
                         height: 28,

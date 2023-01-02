@@ -11,9 +11,11 @@ Future<void> refresh({
 }) async {
   try {
     Map map = await getLists(token: token);
+    List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
+    sortList(list);
     // ignore: use_build_context_synchronously
     BlocProvider.of<HomeBloc>(context).add(UpdateHome(
-      lists: List<ListOfItems>.from(map["data"]),
+      lists: list,
       token: map["token"],
     ));
   } catch (e) {

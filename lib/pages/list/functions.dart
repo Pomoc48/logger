@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger_app/functions.dart';
 import 'package:logger_app/models/item.dart';
 import 'package:logger_app/models/list.dart';
 import 'package:logger_app/pages/list/bloc/functions.dart';
@@ -54,14 +55,9 @@ Future<void> addNewItemDialog({
 
   BlocProvider.of<ListBloc>(context).add(
     InsertList(
-      timestamp: _dateToTimestamp(date, time),
+      timestamp: dateToTimestamp(date, time),
       list: list,
       token: token,
     ),
   );
-}
-
-int _dateToTimestamp(DateTime date, TimeOfDay time) {
-  DateTime d = date.add(Duration(hours: time.hour, minutes: time.minute));
-  return d.millisecondsSinceEpoch ~/ 1000;
 }

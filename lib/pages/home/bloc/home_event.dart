@@ -55,6 +55,21 @@ class InsertHome extends HomeEvent {
   List<Object> get props => [name, token];
 }
 
+class QuickInsertHome extends HomeEvent {
+  final ListOfItems list;
+  final int timestamp;
+  final String token;
+
+  const QuickInsertHome({
+    required this.list,
+    required this.token,
+    required this.timestamp,
+  });
+
+  @override
+  List<Object> get props => [list, token, timestamp];
+}
+
 class RemoveFromHome extends HomeEvent {
   final List<ListOfItems> lists;
   final int id;
@@ -80,3 +95,12 @@ class ReportHomeError extends HomeEvent {
 }
 
 class ReportLogout extends HomeEvent {}
+
+class ChangeSort extends HomeEvent {
+  final HomeLoaded state;
+
+  const ChangeSort({required this.state});
+
+  @override
+  List<Object> get props => [state];
+}
