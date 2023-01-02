@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/pages/home/widgets/chart.dart';
+import 'package:logger_app/pages/home/widgets/quick_insert.dart';
 import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/actions.dart';
@@ -102,21 +103,7 @@ class DesktopHome extends StatelessWidget {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          IconButton(
-                            onPressed: () => quickItemDialog(
-                              context: context,
-                              list: state.lists[i],
-                              token: state.token,
-                            ),
-                            constraints: const BoxConstraints(
-                              minHeight: 48,
-                              minWidth: 48,
-                            ),
-                            icon: Icon(
-                              Icons.add,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
+                          QuickInsert(list: state.lists[i], token: state.token),
                           const SizedBox(width: 8),
                           Expanded(
                             child: Column(

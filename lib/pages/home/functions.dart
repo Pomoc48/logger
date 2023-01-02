@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger_app/functions.dart';
 import 'package:logger_app/models/list.dart';
 import 'package:logger_app/pages/home/bloc/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
@@ -100,20 +99,4 @@ Future<bool> confirmDismiss({
 
 String subtitleCount(int count) {
   return count == 1 ? "$count time" : "$count times";
-}
-
-Future<void> quickItemDialog({
-  required BuildContext context,
-  required ListOfItems list,
-  required String token,
-}) async {
-  DateTime date = DateTime.now();
-
-  BlocProvider.of<HomeBloc>(context).add(
-    QuickInsertHome(
-      timestamp: dateToTimestamp(date),
-      list: list,
-      token: token,
-    ),
-  );
 }
