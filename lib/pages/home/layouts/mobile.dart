@@ -34,6 +34,7 @@ class MobileHome extends StatelessWidget {
         appBar: AppBar(
           title: Text(Strings.appName),
           actions: appBarActions(context, state),
+          automaticallyImplyLeading: false,
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () async => addNewListDialog(

@@ -26,6 +26,7 @@ class DesktopHome extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(Strings.appName),
+          automaticallyImplyLeading: false,
           actions: appBarActions(context, state),
         ),
         body: GridView.builder(
