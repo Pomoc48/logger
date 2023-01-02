@@ -45,12 +45,14 @@ Future<void> addNewListDialog({
           ),
           TextButton(
             onPressed: () {
-              BlocProvider.of<HomeBloc>(context).add(InsertHome(
-                name: controller.text,
-                token: token,
-              ));
+              if (controller.text.trim().isNotEmpty) {
+                BlocProvider.of<HomeBloc>(context).add(InsertHome(
+                  name: controller.text,
+                  token: token,
+                ));
 
-              Navigator.pop(context);
+                Navigator.pop(context);
+              }
             },
             child: Text(Strings.create),
           ),
@@ -94,5 +96,5 @@ Future<bool> confirmDismiss({
 }
 
 String subtitleCount(int count) {
-  return count == 1 ? "$count item" : "$count items";
+  return count == 1 ? "$count time" : "$count times";
 }
