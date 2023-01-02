@@ -9,7 +9,7 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitial()) {
     on<AutoLogin>((event, emit) async {
-      Map response = await autoLoginResult();
+      Map response = await getToken();
 
       if (response["success"]) {
         String token = response["token"];
@@ -116,7 +116,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
 
     on<ReportLogout>((event, emit) async {
-      await forgetLoginCredentials();
+      await forgetSavedToken();
       emit(HomeLoginRequired());
     });
   }
