@@ -42,7 +42,6 @@ class Sorting extends StatelessWidget {
               child: Text(SortingType.date.name.capitalize()),
             ),
           ],
-          
         ),
       ],
     );
@@ -50,7 +49,7 @@ class Sorting extends StatelessWidget {
 }
 
 extension StringExtension on String {
-    String capitalize() {
-      return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
-    }
+  String capitalize() {
+    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
+  }
 }

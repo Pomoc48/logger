@@ -90,7 +90,10 @@ class MobileHome extends StatelessWidget {
                         // ignore: use_build_context_synchronously
                         refresh(context: context, token: state.token);
                       },
-                      leading: QuickInsert(list: state.lists[i], token: state.token),
+                      leading: QuickInsert(
+                        list: state.lists[i],
+                        token: state.token,
+                      ),
                       trailing: SizedBox(
                         width: 120,
                         height: 28,
