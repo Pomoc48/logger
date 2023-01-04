@@ -10,11 +10,19 @@ Live preview: [https://loggerapp.lukawski.xyz/](https://loggerapp.lukawski.xyz/)
 
 - Activity chart for the last two weeks
 - Items increase chart for the last month
+- Different list sorting options
 - Responsive design
 - Light / dark theme support
 - Date and time picker for adding items
 - Swipe to remove items (mobile)
-- Automatic login
+- Automatic token refreshing
+
+## Wearables
+
+The application has a [Wear OS](https://wearos.google.com/)
+version available to provide a quick way for adding list items.
+\
+More info: [https://github.com/Pomoc48/logger_app_wear](https://github.com/Pomoc48/logger_app_wear)
 
 ## License
 
