@@ -18,6 +18,10 @@ List<Widget> appBarActions(BuildContext context, HomeLoaded state) {
             child: Text(Strings.refresh),
           ),
           PopupMenuItem<String>(
+            value: "connect",
+            child: Text(Strings.connect),
+          ),
+          PopupMenuItem<String>(
             value: "logout",
             child: Text(Strings.logout),
           ),
@@ -28,6 +32,53 @@ List<Widget> appBarActions(BuildContext context, HomeLoaded state) {
           refresh(
             context: context,
             token: state.token,
+          );
+        }
+
+        if (value == "connect") {
+          TextEditingController controller = TextEditingController();
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text(Strings.connect),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(Strings.connectMessage),
+                    TextField(
+                      controller: controller,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        label: Text(Strings.pairingCode),
+                        hintText: Strings.pairingHint,
+                      ),
+                    ),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(Strings.cancel),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      if (controller.text.trim().isNotEmpty) {
+                        BlocProvider.of<HomeBloc>(context).add(
+                          CheckPairingCode(
+                            code: controller.text,
+                            token: state.token,
+                          ),
+                        );
+
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: Text(Strings.connect),
+                  ),
+                ],
+              );
+            },
           );
         }
 
