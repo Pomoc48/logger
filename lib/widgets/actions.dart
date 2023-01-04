@@ -48,6 +48,7 @@ List<Widget> appBarActions(BuildContext context, HomeLoaded state) {
                     Text(Strings.connectMessage),
                     TextField(
                       controller: controller,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         label: Text(Strings.pairingCode),
                         hintText: Strings.pairingHint,

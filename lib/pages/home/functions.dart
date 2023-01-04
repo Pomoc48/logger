@@ -35,6 +35,7 @@ Future<void> addNewListDialog({
         title: Text(Strings.newItemFAB),
         content: TextField(
           controller: controller,
+          textCapitalization: TextCapitalization.sentences,
           decoration: InputDecoration(
             label: Text(Strings.counterName),
             hintText: Strings.newListHint,
