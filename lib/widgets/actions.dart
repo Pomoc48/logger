@@ -64,10 +64,12 @@ List<Widget> appBarActions(BuildContext context, HomeLoaded state) {
                   TextButton(
                     onPressed: () {
                       if (controller.text.trim().isNotEmpty) {
-                        // BlocProvider.of<HomeBloc>(context).add(InsertHome(
-                        //   name: controller.text,
-                        //   token: token,
-                        // ));
+                        BlocProvider.of<HomeBloc>(context).add(
+                          CheckPairingCode(
+                            code: controller.text,
+                            token: state.token,
+                          ),
+                        );
 
                         Navigator.pop(context);
                       }

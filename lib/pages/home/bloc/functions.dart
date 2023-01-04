@@ -139,3 +139,14 @@ SortingType getSortType() {
 
   return SortingType.name;
 }
+
+Future<Map> checkPairingCode({
+  required String code,
+  required String token,
+}) async {
+  return await makeRequest(
+    url: "https://loggerapp.lukawski.xyz/connect/?pin=$code",
+    headers: {"Token": token},
+    type: RequestType.post,
+  );
+}
