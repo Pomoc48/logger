@@ -15,6 +15,7 @@ Future<void> refresh({
     sortList(list);
     // ignore: use_build_context_synchronously
     BlocProvider.of<HomeBloc>(context).add(UpdateHome(
+      profileUrl: state.profileUrl,
       username: state.username,
       lists: list,
       token: map["token"],

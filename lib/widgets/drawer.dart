@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger_app/models/list.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/strings.dart';
+import 'package:logger_app/widgets/avatar.dart';
 
 class HomeDrawer extends StatelessWidget {
   const HomeDrawer({super.key, required this.state});
@@ -116,24 +118,38 @@ class HomeDrawer extends StatelessWidget {
         children: [
           const SizedBox(height: 24),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
-            height: 160,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 24,
+              vertical: 24,
+            ),
+            child: Row(
               children: [
-                Text(
-                  state.username,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                Text(
-                  "0 friends",
-                  style: Theme.of(context).textTheme.labelMedium,
+                Avatar(profileUrl: state.profileUrl, size: 48),
+                const SizedBox(width: 18),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      state.username,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      "${listCount(state.lists.length)} • ${countItems(state.lists)}",
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
+                    // Text(
+                    //   listCount(state.lists.length),
+                    //   style: Theme.of(context).textTheme.labelMedium,
+                    // ),
+                  ],
                 ),
               ],
             ),
           ),
-          const Divider(height: 16),
+          const Divider(height: 16, indent: 16, endIndent: 16),
+          const SizedBox(height: 12),
           listTile(
             iconData: Icons.refresh,
             label: Strings.refresh,
@@ -144,7 +160,6 @@ class HomeDrawer extends StatelessWidget {
             label: Strings.connectWearable,
             value: "connect",
           ),
-
           listTile(
             iconData: Icons.logout,
             label: Strings.logout,
@@ -155,4 +170,18 @@ class HomeDrawer extends StatelessWidget {
       ),
     );
   }
+}
+
+String listCount(int count) {
+  return count == 1 ? "$count list" : "$count lists";
+}
+
+String countItems(List<ListOfItems> lists) {
+  int itemCount = 0;
+
+  for (ListOfItems list in lists) {
+    itemCount += list.count;
+  }
+
+  return itemCount == 1 ? "$itemCount item" : "$itemCount items";
 }

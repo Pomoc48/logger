@@ -39,11 +39,13 @@ class UpdateHome extends HomeEvent {
   final List<ListOfItems> lists;
   final String token;
   final String username;
+  final String profileUrl;
 
   const UpdateHome({
     required this.lists,
     required this.token,
     required this.username,
+    required this.profileUrl,
   });
 
   @override

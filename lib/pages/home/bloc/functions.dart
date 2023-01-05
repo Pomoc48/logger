@@ -122,6 +122,7 @@ Future<Map> loginResult({
       "success": true,
       "token": map["token"],
       "username": map["username"],
+      "profile_url": map["profile_url"],
     };
   }
 

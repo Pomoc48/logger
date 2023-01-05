@@ -15,6 +15,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (response["success"]) {
         String token = response["token"];
         String username = response["username"];
+        String profileUrl = response["profile_url"];
+
         try {
           Map map = await getLists(token: token);
           List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
@@ -25,6 +27,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             token: map["token"],
             sort: getSortType(),
             username: username,
+            profileUrl: profileUrl,
           ));
 
           Map map2 = await checkUpdate();
@@ -57,6 +60,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             token: map["token"],
             sort: getSortType(),
             username: response["username"],
+            profileUrl: response["profile_url"],
           ));
         } catch (e) {
           emit(HomeError(token: token));
@@ -80,6 +84,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<UpdateHome>((event, emit) {
       emit(HomeLoaded(
+        profileUrl: event.profileUrl,
         lists: event.lists,
         token: event.token,
         sort: getSortType(),
@@ -101,6 +106,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
           emit(HomeLoaded(
             username: event.state.username,
+            profileUrl: event.state.profileUrl,
             lists: list,
             token: map["token"],
             sort: getSortType(),
@@ -127,6 +133,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           sortList(list);
 
           emit(HomeLoaded(
+            profileUrl: event.state.profileUrl,
             username: event.state.username,
             lists: list,
             token: map["token"],
@@ -153,6 +160,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           sortList(list);
 
           emit(HomeLoaded(
+            profileUrl: event.state.profileUrl,
             username: event.state.username,
             lists: list,
             token: map["token"],
@@ -180,6 +188,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       sortList(list);
 
       emit(HomeLoaded(
+        profileUrl: event.state.profileUrl,
         username: event.state.username,
         lists: list,
         token: event.state.token,

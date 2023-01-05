@@ -13,6 +13,18 @@ void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
 
+  ThemeData light = ThemeData(
+    useMaterial3: true,
+    colorSchemeSeed: Colors.blue,
+    brightness: Brightness.light,
+  );
+
+  ThemeData dark = ThemeData(
+    useMaterial3: true,
+    colorSchemeSeed: Colors.blue,
+    brightness: Brightness.dark,
+  );
+
   runApp(
     MultiBlocProvider(
       providers: [
@@ -22,16 +34,11 @@ void main() async {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: Strings.appName,
-        theme: ThemeData(
-          useMaterial3: true,
-          colorSchemeSeed: Colors.blue,
-          textTheme: GoogleFonts.interTextTheme(),
+        theme: light.copyWith(
+          textTheme: GoogleFonts.interTextTheme(light.textTheme),
         ),
-        darkTheme: ThemeData(
-          useMaterial3: true,
-          colorSchemeSeed: Colors.blue,
-          brightness: Brightness.dark,
-          textTheme: GoogleFonts.interTextTheme(),
+        darkTheme: dark.copyWith(
+          textTheme: GoogleFonts.interTextTheme(dark.textTheme),
         ),
         scrollBehavior: const ScrollBehavior().copyWith(
           physics: const BouncingScrollPhysics(),
