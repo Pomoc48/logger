@@ -28,6 +28,8 @@ class Strings {
   static String cancel = "Cancel";
   static String delete = "Delete";
   static String refresh = "Refresh";
+  static String friends = "Friends list";
+  static String connectWearable = "Add wearable";
   static String connect = "Connect";
   static String logout = "Logout";
 
@@ -37,9 +39,7 @@ class Strings {
   static String username = "Username";
   static String password = "Password";
   static String passwordR = "Password repeat";
-  
-  static String connectWearable = "Connect wearable";
-}
+  }
 
 class Routes {
   static String home = "/home";

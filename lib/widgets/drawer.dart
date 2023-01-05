@@ -156,16 +156,22 @@ class HomeDrawer extends StatelessWidget {
             value: "refresh",
           ),
           listTile(
+            iconData: Icons.people_alt,
+            label: Strings.friends,
+            value: "friends",
+          ),
+          listTile(
             iconData: Icons.watch,
             label: Strings.connectWearable,
             value: "connect",
           ),
+          // const Divider(height: 40, indent: 16, endIndent: 16),
           listTile(
             iconData: Icons.logout,
             label: Strings.logout,
             value: "logout",
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 24),
         ],
       ),
     );
@@ -173,7 +179,7 @@ class HomeDrawer extends StatelessWidget {
 }
 
 String listCount(int count) {
-  return count == 1 ? "$count list" : "$count lists";
+  return count == 1 ? "$count counter" : "$count counters";
 }
 
 String countItems(List<ListOfItems> lists) {
@@ -183,5 +189,5 @@ String countItems(List<ListOfItems> lists) {
     itemCount += list.count;
   }
 
-  return itemCount == 1 ? "$itemCount item" : "$itemCount items";
+  return "$itemCount total";
 }

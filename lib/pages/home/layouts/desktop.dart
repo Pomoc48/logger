@@ -7,6 +7,7 @@ import 'package:logger_app/pages/home/widgets/quick_insert.dart';
 import 'package:logger_app/pages/home/widgets/sorting.dart';
 import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 import 'package:logger_app/strings.dart';
+import 'package:logger_app/widgets/drawer.dart';
 import 'package:logger_app/widgets/fader.dart';
 
 class DesktopHome extends StatelessWidget {
@@ -27,9 +28,9 @@ class DesktopHome extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(Strings.appName),
-          automaticallyImplyLeading: false,
           actions: [Sorting(state: state)],
         ),
+        drawer: HomeDrawer(state: state),
         body: GridView.builder(
           padding: EdgeInsets.all(padding),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
