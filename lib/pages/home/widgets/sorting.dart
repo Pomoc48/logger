@@ -43,6 +43,7 @@ class Sorting extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(width: 16),
       ],
     );
   }

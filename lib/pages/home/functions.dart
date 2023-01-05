@@ -7,25 +7,27 @@ import 'package:logger_app/strings.dart';
 
 Future<void> refresh({
   required BuildContext context,
-  required String token,
+  required HomeLoaded state,
 }) async {
   try {
-    Map map = await getLists(token: token);
+    Map map = await getLists(token: state.token);
     List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
     sortList(list);
     // ignore: use_build_context_synchronously
     BlocProvider.of<HomeBloc>(context).add(UpdateHome(
+      profileUrl: state.profileUrl,
+      username: state.username,
       lists: list,
       token: map["token"],
     ));
   } catch (e) {
-    BlocProvider.of<HomeBloc>(context).add(ReportHomeError(token));
+    BlocProvider.of<HomeBloc>(context).add(ReportHomeError(state.token));
   }
 }
 
 Future<void> addNewListDialog({
   required BuildContext context,
-  required String token,
+  required HomeLoaded state,
 }) async {
   TextEditingController controller = TextEditingController();
   showDialog(
@@ -51,7 +53,7 @@ Future<void> addNewListDialog({
               if (controller.text.trim().isNotEmpty) {
                 BlocProvider.of<HomeBloc>(context).add(InsertHome(
                   name: controller.text,
-                  token: token,
+                  state: state,
                 ));
 
                 Navigator.pop(context);

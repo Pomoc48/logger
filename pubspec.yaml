@@ -3,7 +3,7 @@ description: App for logging your life.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.9.11
+version: 1.10.4
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -20,6 +20,9 @@ dependencies:
   get_storage: ^2.0.3
   http: ^0.13.5
   intl: ^0.18.0
+  package_info_plus: ^3.0.2
+  url_launcher: ^6.1.7
+  google_fonts: ^3.0.1
 
 dev_dependencies:
   flutter_test:

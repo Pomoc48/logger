@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
+import 'package:logger_app/pages/home/widgets/sorting.dart';
 import 'package:logger_app/strings.dart';
-import 'package:logger_app/widgets/actions.dart';
 import 'package:logger_app/widgets/fader.dart';
 
 class EmptyList extends StatelessWidget {
@@ -22,7 +22,7 @@ class EmptyList extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(title),
-          actions: state == null ? null : appBarActions(context, state!),
+          actions: state == null ? null : [Sorting(state: state!)],
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () => press(),

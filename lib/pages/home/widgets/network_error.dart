@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/fader.dart';
 
 class NetworkError extends StatelessWidget {
-  const NetworkError({super.key, required this.token});
-
-  final String token;
+  const NetworkError({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +20,6 @@ class NetworkError extends StatelessWidget {
               Text(Strings.error, style: t.textTheme.titleLarge),
               const SizedBox(height: 16),
               Text(Strings.noNet, style: t.textTheme.bodyLarge),
-              const SizedBox(height: 32),
-              OutlinedButton.icon(
-                onPressed: () async => refresh(
-                  context: context,
-                  token: token,
-                ),
-                icon: const Icon(Icons.refresh),
-                label: Text(Strings.refresh),
-              ),
             ],
           ),
         ),

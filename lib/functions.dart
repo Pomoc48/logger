@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:logger_app/pages/home/bloc/functions.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 String dateTitle(DateTime date) {
   return DateFormat('d MMMM yyyy').format(date);
@@ -19,6 +20,30 @@ void showSnack(BuildContext context, String message, bool mobile) {
       width: mobile ? null : 500,
       content: Text(message),
       behavior: SnackBarBehavior.floating,
+    ),
+  );
+}
+
+void showSnackLink({
+  required BuildContext context,
+  required String message,
+  required bool mobile,
+  required String link,
+}) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      width: mobile ? null : 500,
+      content: Text(message),
+      behavior: SnackBarBehavior.floating,
+      duration: const Duration(seconds: 5),
+      action: SnackBarAction(
+        textColor: Theme.of(context).colorScheme.inversePrimary,
+        label: "Open",
+        onPressed: () async => await launchUrl(
+          Uri.parse(link),
+          mode: LaunchMode.externalApplication,
+        ),
+      ),
     ),
   );
 }

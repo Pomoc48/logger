@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/page.dart';
 import 'package:logger_app/pages/home/widgets/register_view.dart';
@@ -10,6 +11,19 @@ import 'package:logger_app/strings.dart';
 
 void main() async {
   await GetStorage.init();
+  WidgetsFlutterBinding.ensureInitialized();
+
+  ThemeData light = ThemeData(
+    useMaterial3: true,
+    colorSchemeSeed: Colors.blue,
+    brightness: Brightness.light,
+  );
+
+  ThemeData dark = ThemeData(
+    useMaterial3: true,
+    colorSchemeSeed: Colors.blue,
+    brightness: Brightness.dark,
+  );
 
   runApp(
     MultiBlocProvider(
@@ -20,14 +34,11 @@ void main() async {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: Strings.appName,
-        theme: ThemeData(
-          useMaterial3: true,
-          colorSchemeSeed: Colors.blue,
+        theme: light.copyWith(
+          textTheme: GoogleFonts.interTextTheme(light.textTheme),
         ),
-        darkTheme: ThemeData(
-          useMaterial3: true,
-          colorSchemeSeed: Colors.blue,
-          brightness: Brightness.dark,
+        darkTheme: dark.copyWith(
+          textTheme: GoogleFonts.interTextTheme(dark.textTheme),
         ),
         scrollBehavior: const ScrollBehavior().copyWith(
           physics: const BouncingScrollPhysics(),

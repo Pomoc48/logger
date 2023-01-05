@@ -38,51 +38,53 @@ class RequestRegister extends HomeEvent {
 class UpdateHome extends HomeEvent {
   final List<ListOfItems> lists;
   final String token;
+  final String username;
+  final String profileUrl;
 
-  const UpdateHome({required this.lists, required this.token});
+  const UpdateHome({
+    required this.lists,
+    required this.token,
+    required this.username,
+    required this.profileUrl,
+  });
 
   @override
-  List<Object> get props => [lists, token];
+  List<Object> get props => [lists, token, username];
 }
 
 class InsertHome extends HomeEvent {
   final String name;
-  final String token;
+  final HomeLoaded state;
 
-  const InsertHome({required this.name, required this.token});
+  const InsertHome({required this.name, required this.state});
 
   @override
-  List<Object> get props => [name, token];
+  List<Object> get props => [name, state];
 }
 
 class QuickInsertHome extends HomeEvent {
   final ListOfItems list;
   final int timestamp;
-  final String token;
+  final HomeLoaded state;
 
   const QuickInsertHome({
     required this.list,
-    required this.token,
+    required this.state,
     required this.timestamp,
   });
 
   @override
-  List<Object> get props => [list, token, timestamp];
+  List<Object> get props => [list, state, timestamp];
 }
 
 class RemoveFromHome extends HomeEvent {
-  final List<ListOfItems> lists;
   final int id;
-  final String token;
+  final HomeLoaded state;
 
-  const RemoveFromHome({
-    required this.id,
-    required this.lists,
-    required this.token,
-  });
+  const RemoveFromHome({required this.id, required this.state});
 
   @override
-  List<Object> get props => [id, lists, token];
+  List<Object> get props => [id, state];
 }
 
 class ReportHomeError extends HomeEvent {
