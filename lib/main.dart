@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/page.dart';
 import 'package:logger_app/pages/home/widgets/register_view.dart';
@@ -24,11 +25,13 @@ void main() async {
         theme: ThemeData(
           useMaterial3: true,
           colorSchemeSeed: Colors.blue,
+          textTheme: GoogleFonts.interTextTheme(),
         ),
         darkTheme: ThemeData(
           useMaterial3: true,
           colorSchemeSeed: Colors.blue,
           brightness: Brightness.dark,
+          textTheme: GoogleFonts.interTextTheme(),
         ),
         scrollBehavior: const ScrollBehavior().copyWith(
           physics: const BouncingScrollPhysics(),
