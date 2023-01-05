@@ -5,10 +5,10 @@ import 'package:logger_app/models/list.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 
 class QuickInsert extends StatelessWidget {
-  const QuickInsert({super.key, required this.list, required this.token});
+  const QuickInsert({super.key, required this.list, required this.state});
 
   final ListOfItems list;
-  final String token;
+  final HomeLoaded state;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class QuickInsert extends StatelessWidget {
       onPressed: () => quickItemDialog(
         context: context,
         list: list,
-        token: token,
+        state: state,
       ),
       constraints: const BoxConstraints(
         minHeight: 48,
@@ -33,7 +33,7 @@ class QuickInsert extends StatelessWidget {
 Future<void> quickItemDialog({
   required BuildContext context,
   required ListOfItems list,
-  required String token,
+  required HomeLoaded state,
 }) async {
   DateTime date = DateTime.now();
 
@@ -41,7 +41,7 @@ Future<void> quickItemDialog({
     QuickInsertHome(
       timestamp: dateToTimestamp(date),
       list: list,
-      token: token,
+      state: state,
     ),
   );
 }

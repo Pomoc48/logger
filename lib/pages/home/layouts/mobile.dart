@@ -26,7 +26,7 @@ class MobileHome extends StatelessWidget {
         state: state,
         press: () async => addNewListDialog(
           context: context,
-          token: state.token,
+          state: state,
         ),
       );
     }
@@ -41,7 +41,7 @@ class MobileHome extends StatelessWidget {
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () async => addNewListDialog(
             context: context,
-            token: state.token,
+            state: state,
           ),
           icon: const Icon(Icons.add),
           label: Text(Strings.newItemFAB),
@@ -49,7 +49,7 @@ class MobileHome extends StatelessWidget {
         body: RefreshIndicator(
           onRefresh: () async => refresh(
             context: context,
-            token: state.token,
+            state: state,
           ),
           child: ListView.separated(
             separatorBuilder: (c, i) => const ListDivider(),
@@ -71,8 +71,7 @@ class MobileHome extends StatelessWidget {
                     BlocProvider.of<HomeBloc>(context).add(
                       RemoveFromHome(
                         id: state.lists[i].id,
-                        lists: state.lists,
-                        token: state.token,
+                        state: state,
                       ),
                     );
                   },
@@ -89,11 +88,11 @@ class MobileHome extends StatelessWidget {
 
                         await Navigator.pushNamed(context, Routes.list);
                         // ignore: use_build_context_synchronously
-                        refresh(context: context, token: state.token);
+                        refresh(context: context, state: state);
                       },
                       leading: QuickInsert(
                         list: state.lists[i],
-                        token: state.token,
+                        state: state,
                       ),
                       trailing: SizedBox(
                         width: 120,

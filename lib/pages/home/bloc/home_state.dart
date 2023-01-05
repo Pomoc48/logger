@@ -22,15 +22,17 @@ class HomeLoaded extends HomeState {
   final String token;
   final List<ListOfItems> lists;
   final SortingType sort;
+  final String username;
 
   const HomeLoaded({
     required this.lists,
     required this.token,
     required this.sort,
+    required this.username,
   });
 
   @override
-  List<Object> get props => [lists, token, sort];
+  List<Object> get props => [lists, token, sort, username];
 }
 
 class HomeMessage extends HomeState {

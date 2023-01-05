@@ -39,11 +39,11 @@ class HomeDrawer extends StatelessWidget {
           borderRadius: BorderRadius.circular(999),
           onTap: () async {
             Navigator.pop(context);
-            
+
             if (value == "refresh") {
               refresh(
                 context: context,
-                token: state.token,
+                state: state,
               );
             }
 
@@ -114,7 +114,26 @@ class HomeDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const SizedBox(height: 32),
+          const SizedBox(height: 24),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            height: 160,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  state.username,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                Text(
+                  "0 friends",
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+              ],
+            ),
+          ),
+          const Divider(height: 16),
           listTile(
             iconData: Icons.refresh,
             label: Strings.refresh,

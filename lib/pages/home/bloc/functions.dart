@@ -24,7 +24,7 @@ Future<Map> checkUpdate() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   String version = packageInfo.version;
 
-  Response response = await post(
+  Response response = await get(
     Uri.parse("https://loggerapp.lukawski.xyz/version/?v=$version"),
   );
 
@@ -118,7 +118,11 @@ Future<Map> loginResult({
 
   if (response.statusCode == 200) {
     if (save) await GetStorage().write("refreshToken", map["refresh_token"]);
-    return {"success": true, "token": map["token"]};
+    return {
+      "success": true,
+      "token": map["token"],
+      "username": map["username"],
+    };
   }
 
   return {"success": false, "message": map["message"]};

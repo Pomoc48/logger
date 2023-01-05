@@ -52,7 +52,7 @@ class DesktopHome extends StatelessWidget {
                 child: InkWell(
                   onTap: () async => addNewListDialog(
                     context: context,
-                    token: state.token,
+                    state: state,
                   ),
                   borderRadius: BorderRadius.circular(12),
                   child: Row(
@@ -87,7 +87,7 @@ class DesktopHome extends StatelessWidget {
 
                   await Navigator.pushNamed(context, Routes.list);
                   // ignore: use_build_context_synchronously
-                  refresh(context: context, token: state.token);
+                  refresh(context: context, state: state);
                 },
                 borderRadius: BorderRadius.circular(12),
                 child: Container(
@@ -103,7 +103,7 @@ class DesktopHome extends StatelessWidget {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          QuickInsert(list: state.lists[i], token: state.token),
+                          QuickInsert(list: state.lists[i], state: state),
                           const SizedBox(width: 8),
                           Expanded(
                             child: Column(
@@ -143,8 +143,7 @@ class DesktopHome extends StatelessWidget {
                                   BlocProvider.of<HomeBloc>(context).add(
                                     RemoveFromHome(
                                       id: state.lists[i].id,
-                                      lists: state.lists,
-                                      token: state.token,
+                                      state: state,
                                     ),
                                   );
                                 }

@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
             }
 
             if (state is HomeError) {
-              return NetworkError(token: state.token);
+              return const NetworkError();
             }
 
             return const PageLoading();
