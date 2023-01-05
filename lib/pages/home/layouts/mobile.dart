@@ -4,11 +4,12 @@ import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/pages/home/widgets/chart.dart';
 import 'package:logger_app/pages/home/widgets/quick_insert.dart';
+import 'package:logger_app/pages/home/widgets/sorting.dart';
 import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 import 'package:logger_app/strings.dart';
-import 'package:logger_app/widgets/actions.dart';
 import 'package:logger_app/widgets/dismiss_background.dart';
 import 'package:logger_app/widgets/divider.dart';
+import 'package:logger_app/widgets/drawer.dart';
 import 'package:logger_app/widgets/empty_list.dart';
 import 'package:logger_app/widgets/fader.dart';
 
@@ -34,9 +35,9 @@ class MobileHome extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(Strings.appName),
-          actions: appBarActions(context, state),
-          automaticallyImplyLeading: false,
+          actions: [Sorting(state: state)],
         ),
+        drawer: HomeDrawer(state: state),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () async => addNewListDialog(
             context: context,

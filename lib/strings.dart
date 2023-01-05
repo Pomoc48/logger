@@ -37,6 +37,8 @@ class Strings {
   static String username = "Username";
   static String password = "Password";
   static String passwordR = "Password repeat";
+  
+  static String connectWearable = "Connect wearable";
 }
 
 class Routes {
