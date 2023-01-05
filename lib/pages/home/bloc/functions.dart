@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
 import 'package:logger_app/functions.dart';
 import 'package:logger_app/models/list.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 Future<Map> getToken() async {
   String? refreshToken = GetStorage().read("refreshToken");
@@ -17,6 +18,29 @@ Future<Map> getToken() async {
   );
 
   return loginResult(response: response);
+}
+
+Future<Map> checkUpdate() async {
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  String version = packageInfo.version;
+
+  Response response = await post(
+    Uri.parse("https://loggerapp.lukawski.xyz/version/?v=$version"),
+  );
+
+  if (response.statusCode == 400) {
+    Map map = jsonDecode(utf8.decode(response.bodyBytes));
+
+    return {
+      "success": false,
+      "message": map["message"],
+      "link": map["link"],
+    };
+  }
+
+  else {
+    return {"success": true};
+  }
 }
 
 Future<Map> manualLoginResult({

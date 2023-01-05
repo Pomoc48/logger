@@ -35,8 +35,9 @@ class HomeLoaded extends HomeState {
 
 class HomeMessage extends HomeState {
   final String message;
+  final String? link;
 
-  const HomeMessage(this.message);
+  const HomeMessage(this.message, [this.link]);
 
   @override
   List<Object> get props => [message];

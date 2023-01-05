@@ -24,6 +24,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             token: map["token"],
             sort: getSortType(),
           ));
+
+          Map map2 = await checkUpdate();
+          if (!map2["success"]) {
+            emit(HomeMessage(map2["message"], map2["link"]));
+          }
         } catch (e) {
           emit(HomeError(token: token));
         }

@@ -10,6 +10,7 @@ import 'package:logger_app/strings.dart';
 
 void main() async {
   await GetStorage.init();
+  WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
     MultiBlocProvider(
