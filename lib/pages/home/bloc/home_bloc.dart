@@ -25,7 +25,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           emit(HomeLoaded(
             lists: list,
             token: map["token"],
-            sort: getSortType(),
             username: username,
             profileUrl: profileUrl,
           ));
@@ -58,7 +57,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           emit(HomeLoaded(
             lists: list,
             token: map["token"],
-            sort: getSortType(),
             username: response["username"],
             profileUrl: response["profile_url"],
           ));
@@ -87,7 +85,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         profileUrl: event.profileUrl,
         lists: event.lists,
         token: event.token,
-        sort: getSortType(),
         username: event.username,
       ));
     });
@@ -109,7 +106,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             profileUrl: event.state.profileUrl,
             lists: list,
             token: map["token"],
-            sort: getSortType(),
           ));
         } else {
           emit(HomeMessage(response["message"]));
@@ -137,7 +133,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             username: event.state.username,
             lists: list,
             token: map["token"],
-            sort: getSortType(),
           ));
         } else {
           emit(HomeMessage(response["message"]));
@@ -164,7 +159,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             username: event.state.username,
             lists: list,
             token: map["token"],
-            sort: getSortType(),
           ));
         } else {
           emit(HomeMessage(response["message"]));
@@ -192,7 +186,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         username: event.state.username,
         lists: list,
         token: event.state.token,
-        sort: getSortType(),
       ));
     });
 

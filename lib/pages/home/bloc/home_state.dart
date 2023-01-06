@@ -21,20 +21,18 @@ class HomeError extends HomeState {
 class HomeLoaded extends HomeState {
   final String token;
   final List<ListOfItems> lists;
-  final SortingType sort;
   final String username;
   final String profileUrl;
 
   const HomeLoaded({
     required this.lists,
     required this.token,
-    required this.sort,
     required this.username,
     required this.profileUrl,
   });
 
   @override
-  List<Object> get props => [lists, token, sort, username, profileUrl];
+  List<Object> get props => [lists, token, username, profileUrl];
 }
 
 class HomeMessage extends HomeState {

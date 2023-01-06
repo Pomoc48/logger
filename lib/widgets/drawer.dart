@@ -1,6 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:logger_app/models/list.dart';
+import 'package:logger_app/pages/home/bloc/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/strings.dart';
@@ -29,10 +33,28 @@ class HomeDrawer extends StatelessWidget {
       List<Widget> drawItems() {
         return [
           const SizedBox(width: 16),
-          Icon(iconData, color: Theme.of(context).colorScheme.onSecondaryContainer),
+          Icon(
+            iconData,
+            color: Theme.of(context).colorScheme.onSecondaryContainer,
+          ),
           const SizedBox(width: 16),
           Text(label, style: drawerLabel(context)),
         ];
+      }
+
+      Widget sortOption(BuildContext c, String name, String value) {
+        return InkWell(
+          onTap: () async {
+            await GetStorage().write("sortType", value);
+            
+            BlocProvider.of<HomeBloc>(c).add(ChangeSort(state: state));
+            Navigator.pop(c);
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            child: Text(name),
+          ),
+        );
       }
 
       return Padding(
@@ -96,6 +118,57 @@ class HomeDrawer extends StatelessWidget {
               );
             }
 
+            if (value == "sort") {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    contentPadding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
+                    title: Text(Strings.changeSorting),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Divider(indent: 16, endIndent: 16),
+                        sortOption(
+                          context,
+                          Strings.sortName,
+                          SortingType.name.name, 
+                        ),
+                        sortOption(
+                          context,
+                          Strings.sortDateAsc,
+                          SortingType.dateASC.name, 
+                        ),
+                        sortOption(
+                          context,
+                          Strings.sortCounterAsc,
+                          SortingType.countASC.name, 
+                        ),
+                        sortOption(
+                          context,
+                          Strings.sortDateDesc,
+                          SortingType.dateDESC.name, 
+                        ),
+                        sortOption(
+                          context,
+                          Strings.sortCounterDesc,
+                          SortingType.countDESC.name, 
+                        ),
+                        const Divider(indent: 16, endIndent: 16),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(Strings.cancel),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+
             if (value == "logout") {
               context.read<HomeBloc>().add(ReportLogout());
             }
@@ -139,10 +212,6 @@ class HomeDrawer extends StatelessWidget {
                       "${listCount(state.lists.length)} • ${countItems(state.lists)}",
                       style: Theme.of(context).textTheme.labelMedium,
                     ),
-                    // Text(
-                    //   listCount(state.lists.length),
-                    //   style: Theme.of(context).textTheme.labelMedium,
-                    // ),
                   ],
                 ),
               ],
@@ -159,6 +228,11 @@ class HomeDrawer extends StatelessWidget {
             iconData: Icons.people_alt,
             label: Strings.friends,
             value: "friends",
+          ),
+          listTile(
+            iconData: Icons.sort,
+            label: Strings.changeSorting,
+            value: "sort",
           ),
           listTile(
             iconData: Icons.watch,

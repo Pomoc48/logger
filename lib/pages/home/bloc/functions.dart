@@ -133,40 +133,41 @@ Future<void> forgetSavedToken() async {
   await GetStorage().remove("refreshToken");
 }
 
-enum SortingType { count, date, name }
+enum SortingType { countASC, countDESC, dateASC, dateDESC, name }
 
 void sortList(List<ListOfItems> list) {
-  SortingType type = getSortType();
-
-  switch (type) {
-    case SortingType.count:
-      list.sort((a, b) => b.count.compareTo(a.count));
-      break;
-    case SortingType.name:
-      list.sort((a, b) => a.name.compareTo(b.name));
-      break;
-    case SortingType.date:
-      list.sort((a, b) {
-        int bTime = b.timestamp.millisecondsSinceEpoch;
-        int aTime = a.timestamp.millisecondsSinceEpoch;
-        return bTime.compareTo(aTime);
-      });
-      break;
-  }
-}
-
-SortingType getSortType() {
   String? sortType = GetStorage().read("sortType");
+  sortType ??= SortingType.name.name;
 
-  if (sortType == SortingType.date.name) {
-    return SortingType.date;
+  if (sortType == SortingType.countASC.name) {
+    list.sort((a, b) => b.count.compareTo(a.count));
+    return;
   }
 
-  if (sortType == SortingType.count.name) {
-    return SortingType.count;
+  if (sortType == SortingType.countDESC.name) {
+    list.sort((a, b) => a.count.compareTo(b.count));
+    return;
   }
 
-  return SortingType.name;
+  if (sortType == SortingType.dateASC.name) {
+    list.sort((a, b) {
+      int bTime = b.timestamp.millisecondsSinceEpoch;
+      int aTime = a.timestamp.millisecondsSinceEpoch;
+      return bTime.compareTo(aTime);
+    });
+    return;
+  }
+
+  if (sortType == SortingType.dateDESC.name) {
+    list.sort((a, b) {
+      int bTime = b.timestamp.millisecondsSinceEpoch;
+      int aTime = a.timestamp.millisecondsSinceEpoch;
+      return aTime.compareTo(bTime);
+    });
+    return;
+  }
+
+  list.sort((a, b) => a.name.compareTo(b.name));
 }
 
 Future<Map> checkPairingCode({

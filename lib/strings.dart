@@ -29,6 +29,7 @@ class Strings {
   static String delete = "Delete";
   static String refresh = "Refresh";
   static String friends = "Friends list";
+  static String changeSorting = "List sorting";
   static String connectWearable = "Add wearable";
   static String connect = "Connect";
   static String logout = "Logout";
@@ -39,7 +40,13 @@ class Strings {
   static String username = "Username";
   static String password = "Password";
   static String passwordR = "Password repeat";
-  }
+
+  static String sortName = "Alphabetically";
+  static String sortDateAsc = "Date (newest)";
+  static String sortDateDesc = "Date (oldest)";
+  static String sortCounterAsc = "Counter (highest)";
+  static String sortCounterDesc = "Counter (lowest)";
+}
 
 class Routes {
   static String home = "/home";

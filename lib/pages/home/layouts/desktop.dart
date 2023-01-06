@@ -4,7 +4,6 @@ import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/pages/home/widgets/chart.dart';
 import 'package:logger_app/pages/home/widgets/quick_insert.dart';
-import 'package:logger_app/pages/home/widgets/sorting.dart';
 import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/drawer.dart';
@@ -26,10 +25,7 @@ class DesktopHome extends StatelessWidget {
 
     return Fader(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(Strings.appName),
-          actions: [Sorting(state: state)],
-        ),
+        appBar: AppBar(title: Text(Strings.appName)),
         drawer: HomeDrawer(state: state),
         body: GridView.builder(
           padding: EdgeInsets.all(padding),
