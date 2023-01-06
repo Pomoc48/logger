@@ -13,7 +13,7 @@ class QuickInsert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () => quickItemDialog(
+      onPressed: () => quickItem(
         context: context,
         list: list,
         state: state,
@@ -30,7 +30,7 @@ class QuickInsert extends StatelessWidget {
   }
 }
 
-Future<void> quickItemDialog({
+Future<void> quickItem({
   required BuildContext context,
   required ListOfItems list,
   required HomeLoaded state,

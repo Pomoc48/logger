@@ -34,6 +34,11 @@ class Strings {
   static String connect = "Connect";
   static String logout = "Logout";
 
+  static String addFav = "Add to favorites";
+  static String quickAdd = "Insert current time";
+  static String changeName = "Change name";
+  static String removeForever = "Delete forever";
+
   static String newListHint = "Workout";
   static String pairingHint = "123456";
 
