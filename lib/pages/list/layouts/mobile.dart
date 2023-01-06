@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/functions.dart';
 import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 import 'package:logger_app/pages/list/functions.dart';
 import 'package:logger_app/pages/list/widgets/chart.dart';
+import 'package:logger_app/pages/list/widgets/trailing_delete.dart';
 import 'package:logger_app/strings.dart';
-import 'package:logger_app/widgets/dismiss_background.dart';
 import 'package:logger_app/widgets/divider.dart';
 import 'package:logger_app/widgets/empty_list.dart';
 import 'package:logger_app/widgets/fader.dart';
@@ -63,24 +62,11 @@ class MobileList extends StatelessWidget {
                   top: i == 0 ? 8 : 0,
                   bottom: i == state.itemList.length - 1 ? 88 : 0,
                 ),
-                child: Dismissible(
-                  key: Key(state.itemList[i].id.toString()),
-                  direction: DismissDirection.startToEnd,
-                  background: const DismissBackground(),
-                  onDismissed: (direction) {
-                    BlocProvider.of<ListBloc>(context).add(
-                      RemoveFromList(
-                        item: state.itemList[i],
-                        list: state.list,
-                        token: state.token,
-                      ),
-                    );
-                  },
-                  child: ListTile(
-                    leading: ListLeading(state.itemList[i].number),
-                    title: Text(dateTitle(state.itemList[i].timestamp)),
-                    subtitle: Text(dateSubtitle(state.itemList[i].timestamp)),
-                  ),
+                child: ListTile(
+                  leading: ListLeading(state.itemList[i].number),
+                  title: Text(dateTitle(state.itemList[i].timestamp)),
+                  subtitle: Text(dateSubtitle(state.itemList[i].timestamp)),
+                  trailing: ListRemove(index: i, state: state),
                 ),
               );
             },
