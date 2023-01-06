@@ -90,6 +90,25 @@ class MobileHome extends StatelessWidget {
                               children: [
                                 const DragHandle(),
                                 ModalList(
+                                  icon: Icons.bolt,
+                                  title: Strings.quickAdd,
+                                  onTap: () async => quickItem(
+                                    context: context,
+                                    list: state.lists[i],
+                                    state: state,
+                                  ),
+                                ),
+                                ModalList(
+                                  icon: Icons.star,
+                                  title: Strings.addFav,
+                                  onTap: null,
+                                ),
+                                ModalList(
+                                  icon: Icons.edit,
+                                  title: Strings.changeName,
+                                  onTap: null,
+                                ),
+                                ModalList(
                                   icon: Icons.delete,
                                   title: Strings.removeForever,
                                   onTap: () async {
