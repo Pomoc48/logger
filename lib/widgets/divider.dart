@@ -8,6 +8,7 @@ class ListDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Divider(
+      thickness: 1,
       height: height,
       endIndent: 16,
       indent: 16,

@@ -9,6 +9,7 @@ import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/avatar.dart';
+import 'package:logger_app/widgets/divider.dart';
 
 class HomeDrawer extends StatelessWidget {
   const HomeDrawer({super.key, required this.state});
@@ -129,7 +130,7 @@ class HomeDrawer extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const Divider(indent: 16, endIndent: 16),
+                        const ListDivider(),
                         sortOption(
                           context,
                           Strings.sortName,
@@ -155,7 +156,7 @@ class HomeDrawer extends StatelessWidget {
                           Strings.sortCounterDesc,
                           SortingType.countDESC.name, 
                         ),
-                        const Divider(indent: 16, endIndent: 16),
+                        const ListDivider(),
                       ],
                     ),
                     actions: [
@@ -239,7 +240,6 @@ class HomeDrawer extends StatelessWidget {
             label: Strings.connectWearable,
             value: "connect",
           ),
-          // const Divider(height: 40, indent: 16, endIndent: 16),
           listTile(
             iconData: Icons.logout,
             label: Strings.logout,
