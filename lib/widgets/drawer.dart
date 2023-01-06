@@ -179,7 +179,7 @@ class HomeDrawer extends StatelessWidget {
               borderRadius: BorderRadius.circular(999),
               color: backgroundColor,
             ),
-            height: 48,
+            height: 56,
             child: Row(children: drawItems()),
           ),
         ),

@@ -75,62 +75,52 @@ class MobileHome extends StatelessWidget {
                     onLongPress: () async {
                       showModalBottomSheet(
                         context: context,
-                        backgroundColor: Colors.transparent,
                         builder: (BuildContext c) {
-                          return Container(
-                            decoration:  BoxDecoration(
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(28),
-                                topRight: Radius.circular(28),
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const DragHandle(),
+                              ModalList(
+                                icon: Icons.bolt,
+                                title: Strings.quickAdd,
+                                onTap: () async => quickItem(
+                                  context: context,
+                                  list: state.lists[i],
+                                  state: state,
+                                ),
                               ),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const DragHandle(),
-                                ModalList(
-                                  icon: Icons.bolt,
-                                  title: Strings.quickAdd,
-                                  onTap: () async => quickItem(
+                              ModalList(
+                                icon: Icons.star,
+                                title: Strings.addFav,
+                                onTap: null,
+                              ),
+                              ModalList(
+                                icon: Icons.edit,
+                                title: Strings.changeName,
+                                onTap: null,
+                              ),
+                              ModalList(
+                                icon: Icons.delete,
+                                title: Strings.removeForever,
+                                onTap: () async {
+                                  bool delete = await confirmDismiss(
                                     context: context,
-                                    list: state.lists[i],
-                                    state: state,
-                                  ),
-                                ),
-                                ModalList(
-                                  icon: Icons.star,
-                                  title: Strings.addFav,
-                                  onTap: null,
-                                ),
-                                ModalList(
-                                  icon: Icons.edit,
-                                  title: Strings.changeName,
-                                  onTap: null,
-                                ),
-                                ModalList(
-                                  icon: Icons.delete,
-                                  title: Strings.removeForever,
-                                  onTap: () async {
-                                    bool delete = await confirmDismiss(
-                                      context: context,
-                                      message: Strings.areSure,
-                                    );
+                                    message: Strings.areSure,
+                                  );
 
-                                    if (delete) {
-                                      
-                                      BlocProvider.of<HomeBloc>(context).add(
-                                        RemoveFromHome(
-                                          id: state.lists[i].id,
-                                          state: state,
-                                        ),
-                                      );
-                                    }
-                                  },
-                                ),
-                                const SizedBox(height: 16),
-                              ],
-                            ),
+                                  if (delete) {
+                                    
+                                    BlocProvider.of<HomeBloc>(context).add(
+                                      RemoveFromHome(
+                                        id: state.lists[i].id,
+                                        state: state,
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
+                              const SizedBox(height: 16),
+                            ],
                           );
                         },
                       );

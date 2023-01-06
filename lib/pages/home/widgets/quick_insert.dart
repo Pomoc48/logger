@@ -23,7 +23,7 @@ class QuickInsert extends StatelessWidget {
         minWidth: 48,
       ),
       icon: Icon(
-        Icons.add,
+        Icons.bolt,
         color: Theme.of(context).colorScheme.primary,
       ),
     );
