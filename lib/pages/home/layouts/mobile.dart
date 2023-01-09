@@ -109,7 +109,6 @@ class MobileHome extends StatelessWidget {
                                   );
 
                                   if (delete) {
-                                    
                                     BlocProvider.of<HomeBloc>(context).add(
                                       RemoveFromHome(
                                         id: state.lists[i].id,

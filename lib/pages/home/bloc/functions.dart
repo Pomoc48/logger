@@ -36,9 +36,7 @@ Future<Map> checkUpdate() async {
       "message": map["message"],
       "link": map["link"],
     };
-  }
-
-  else {
+  } else {
     return {"success": true};
   }
 }

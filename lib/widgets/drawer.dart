@@ -49,7 +49,7 @@ class HomeDrawer extends StatelessWidget {
         return InkWell(
           onTap: () async {
             await GetStorage().write("sortType", value);
-            
+
             BlocProvider.of<HomeBloc>(c).add(ChangeSort(state: state));
             Navigator.pop(c);
           },
@@ -82,6 +82,7 @@ class HomeDrawer extends StatelessWidget {
                   return AlertDialog(
                     title: Text(Strings.connect),
                     content: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(Strings.connectMessage),
@@ -136,27 +137,27 @@ class HomeDrawer extends StatelessWidget {
                         sortOption(
                           context,
                           Strings.sortName,
-                          SortingType.name.name, 
+                          SortingType.name.name,
                         ),
                         sortOption(
                           context,
                           Strings.sortDateAsc,
-                          SortingType.dateASC.name, 
+                          SortingType.dateASC.name,
                         ),
                         sortOption(
                           context,
                           Strings.sortCounterAsc,
-                          SortingType.countASC.name, 
+                          SortingType.countASC.name,
                         ),
                         sortOption(
                           context,
                           Strings.sortDateDesc,
-                          SortingType.dateDESC.name, 
+                          SortingType.dateDESC.name,
                         ),
                         sortOption(
                           context,
                           Strings.sortCounterDesc,
-                          SortingType.countDESC.name, 
+                          SortingType.countDESC.name,
                         ),
                         const ListDivider(),
                       ],

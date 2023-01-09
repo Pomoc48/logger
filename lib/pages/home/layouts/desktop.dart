@@ -19,7 +19,11 @@ class DesktopHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double padding = 24;
-    int axis = width > 1400 ? 3 : width > 900 ? 2 : 1;
+    int axis = width > 1400
+        ? 3
+        : width > 900
+            ? 2
+            : 1;
 
     TextTheme tTheme = Theme.of(context).textTheme;
     ColorScheme cScheme = Theme.of(context).colorScheme;
@@ -65,7 +69,7 @@ class DesktopHome extends StatelessWidget {
               ),
             );
           }
-    
+
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
@@ -80,7 +84,7 @@ class DesktopHome extends StatelessWidget {
                   list: state.lists[i],
                   token: state.token,
                 ));
-    
+
                 await Navigator.pushNamed(context, Routes.list);
                 // ignore: use_build_context_synchronously
                 refresh(context: context, state: state);
@@ -151,13 +155,13 @@ class DesktopHome extends StatelessWidget {
                                 state: state,
                               );
                             }
-    
+
                             if (value == "delete") {
                               bool delete = await confirmDismiss(
                                 context: context,
                                 message: Strings.areSure,
                               );
-    
+
                               if (delete) {
                                 // ignore: use_build_context_synchronously
                                 BlocProvider.of<HomeBloc>(context).add(

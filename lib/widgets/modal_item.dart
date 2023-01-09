@@ -15,10 +15,12 @@ class ModalList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap == null ? null : () {
-        Navigator.pop(context);
-        onTap!();
-      },  
+      onTap: onTap == null
+          ? null
+          : () {
+              Navigator.pop(context);
+              onTap!();
+            },
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 24,

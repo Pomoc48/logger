@@ -20,7 +20,8 @@ class Avatar extends StatelessWidget {
               BuildContext context,
               Object exception,
               StackTrace? stackTrace,
-            ) => _missing(),
+            ) =>
+                _missing(),
           ),
         ),
       );
