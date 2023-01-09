@@ -8,6 +8,7 @@ import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/drawer.dart';
 import 'package:logger_app/widgets/fader.dart';
+import 'package:logger_app/widgets/menu_item.dart';
 
 class DesktopHome extends StatelessWidget {
   const DesktopHome({super.key, required this.state, required this.width});
@@ -122,13 +123,37 @@ class DesktopHome extends StatelessWidget {
                             color: cScheme.secondaryContainer,
                             itemBuilder: (BuildContext context) {
                               return [
-                                PopupMenuItem<String>(
+                                menuItem(
+                                  text: Strings.quickAdd,
+                                  iconData: Icons.bolt,
+                                  value: "add",
+                                ),
+                                menuItem(
+                                  text: Strings.addFav,
+                                  iconData: Icons.star,
+                                  value: "favorite",
+                                ),
+                                menuItem(
+                                  text: Strings.changeName,
+                                  iconData: Icons.edit,
+                                  value: "rename",
+                                ),
+                                menuItem(
+                                  text: Strings.removeForever,
+                                  iconData: Icons.delete,
                                   value: "delete",
-                                  child: Text(Strings.delete),
                                 ),
                               ];
                             },
                             onSelected: (value) async {
+                              if (value == "add") {
+                                quickItem(
+                                  context: context,
+                                  list: state.lists[i],
+                                  state: state,
+                                );
+                              }
+
                               if (value == "delete") {
                                 bool delete = await confirmDismiss(
                                   context: context,
