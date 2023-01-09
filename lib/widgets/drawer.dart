@@ -1,18 +1,27 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:logger_app/models/list.dart';
+import 'package:logger_app/pages/home/bloc/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/avatar.dart';
+import 'package:logger_app/widgets/divider.dart';
 
 class HomeDrawer extends StatelessWidget {
-  const HomeDrawer({super.key, required this.state});
+  const HomeDrawer({super.key, required this.state, this.desktop = false});
 
   final HomeLoaded state;
+  final bool desktop;
 
   @override
   Widget build(BuildContext context) {
+    TextTheme tTheme = Theme.of(context).textTheme;
+    ColorScheme cScheme = Theme.of(context).colorScheme;
+
     Widget listTile({
       required IconData iconData,
       required String label,
@@ -21,18 +30,34 @@ class HomeDrawer extends StatelessWidget {
       Color backgroundColor = Colors.transparent;
 
       TextStyle? drawerLabel(BuildContext context) {
-        return Theme.of(context).textTheme.apply(
-          bodyColor: Theme.of(context).colorScheme.onSecondaryContainer,
-        ).labelLarge;
+        return tTheme.apply(bodyColor: cScheme.onSecondaryContainer).labelLarge;
       }
 
       List<Widget> drawItems() {
         return [
           const SizedBox(width: 16),
-          Icon(iconData, color: Theme.of(context).colorScheme.onSecondaryContainer),
+          Icon(
+            iconData,
+            color: cScheme.onSecondaryContainer,
+          ),
           const SizedBox(width: 16),
           Text(label, style: drawerLabel(context)),
         ];
+      }
+
+      Widget sortOption(BuildContext c, String name, String value) {
+        return InkWell(
+          onTap: () async {
+            await GetStorage().write("sortType", value);
+
+            BlocProvider.of<HomeBloc>(c).add(ChangeSort(state: state));
+            Navigator.pop(c);
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            child: Text(name),
+          ),
+        );
       }
 
       return Padding(
@@ -40,7 +65,7 @@ class HomeDrawer extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(999),
           onTap: () async {
-            Navigator.pop(context);
+            if (!desktop) Navigator.pop(context);
 
             if (value == "refresh") {
               refresh(
@@ -57,6 +82,7 @@ class HomeDrawer extends StatelessWidget {
                   return AlertDialog(
                     title: Text(Strings.connect),
                     content: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(Strings.connectMessage),
@@ -96,6 +122,57 @@ class HomeDrawer extends StatelessWidget {
               );
             }
 
+            if (value == "sort") {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    contentPadding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
+                    title: Text(Strings.changeSorting),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const ListDivider(),
+                        sortOption(
+                          context,
+                          Strings.sortName,
+                          SortingType.name.name,
+                        ),
+                        sortOption(
+                          context,
+                          Strings.sortDateAsc,
+                          SortingType.dateASC.name,
+                        ),
+                        sortOption(
+                          context,
+                          Strings.sortCounterAsc,
+                          SortingType.countASC.name,
+                        ),
+                        sortOption(
+                          context,
+                          Strings.sortDateDesc,
+                          SortingType.dateDESC.name,
+                        ),
+                        sortOption(
+                          context,
+                          Strings.sortCounterDesc,
+                          SortingType.countDESC.name,
+                        ),
+                        const ListDivider(),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(Strings.cancel),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+
             if (value == "logout") {
               context.read<HomeBloc>().add(ReportLogout());
             }
@@ -105,7 +182,7 @@ class HomeDrawer extends StatelessWidget {
               borderRadius: BorderRadius.circular(999),
               color: backgroundColor,
             ),
-            height: 48,
+            height: 56,
             child: Row(children: drawItems()),
           ),
         ),
@@ -113,6 +190,7 @@ class HomeDrawer extends StatelessWidget {
     }
 
     return Drawer(
+      backgroundColor: desktop ? cScheme.surfaceTint.withOpacity(0.05) : null,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -132,23 +210,19 @@ class HomeDrawer extends StatelessWidget {
                   children: [
                     Text(
                       state.username,
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: tTheme.titleMedium,
                     ),
                     const SizedBox(height: 4),
                     Text(
                       "${listCount(state.lists.length)} • ${countItems(state.lists)}",
-                      style: Theme.of(context).textTheme.labelMedium,
+                      style: tTheme.labelMedium,
                     ),
-                    // Text(
-                    //   listCount(state.lists.length),
-                    //   style: Theme.of(context).textTheme.labelMedium,
-                    // ),
                   ],
                 ),
               ],
             ),
           ),
-          const Divider(height: 16, indent: 16, endIndent: 16),
+          const ListDivider(),
           const SizedBox(height: 12),
           listTile(
             iconData: Icons.refresh,
@@ -161,11 +235,15 @@ class HomeDrawer extends StatelessWidget {
             value: "friends",
           ),
           listTile(
+            iconData: Icons.sort,
+            label: Strings.changeSorting,
+            value: "sort",
+          ),
+          listTile(
             iconData: Icons.watch,
             label: Strings.connectWearable,
             value: "connect",
           ),
-          // const Divider(height: 40, indent: 16, endIndent: 16),
           listTile(
             iconData: Icons.logout,
             label: Strings.logout,

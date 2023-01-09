@@ -6,15 +6,16 @@ Live preview: [https://loggerapp.lukawski.xyz/](https://loggerapp.lukawski.xyz/)
 
 ![Banner image](screenshots/banner.png)
 
+More app screenshots in the [screenshots directory](screenshots).
+
 ## Features
 
 - Activity chart for the last two weeks
 - Items increase chart for the last month
-- Different list sorting options
+- Many list sorting options
 - Responsive design
 - Light / dark theme support
 - Date and time picker for adding items
-- Swipe to remove items (mobile)
 - Automatic token refreshing
 
 ## Wearables

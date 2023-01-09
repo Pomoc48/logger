@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
-import 'package:logger_app/pages/home/widgets/sorting.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/fader.dart';
 
@@ -20,10 +19,7 @@ class EmptyList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Fader(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-          actions: state == null ? null : [Sorting(state: state!)],
-        ),
+        appBar: AppBar(title: Text(title)),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () => press(),
           icon: const Icon(Icons.add),
