@@ -12,12 +12,16 @@ import 'package:logger_app/widgets/avatar.dart';
 import 'package:logger_app/widgets/divider.dart';
 
 class HomeDrawer extends StatelessWidget {
-  const HomeDrawer({super.key, required this.state});
+  const HomeDrawer({super.key, required this.state, this.desktop = false});
 
   final HomeLoaded state;
+  final bool desktop;
 
   @override
   Widget build(BuildContext context) {
+    TextTheme tTheme = Theme.of(context).textTheme;
+    ColorScheme cScheme = Theme.of(context).colorScheme;
+
     Widget listTile({
       required IconData iconData,
       required String label,
@@ -26,9 +30,7 @@ class HomeDrawer extends StatelessWidget {
       Color backgroundColor = Colors.transparent;
 
       TextStyle? drawerLabel(BuildContext context) {
-        return Theme.of(context).textTheme.apply(
-          bodyColor: Theme.of(context).colorScheme.onSecondaryContainer,
-        ).labelLarge;
+        return tTheme.apply(bodyColor: cScheme.onSecondaryContainer).labelLarge;
       }
 
       List<Widget> drawItems() {
@@ -36,7 +38,7 @@ class HomeDrawer extends StatelessWidget {
           const SizedBox(width: 16),
           Icon(
             iconData,
-            color: Theme.of(context).colorScheme.onSecondaryContainer,
+            color: cScheme.onSecondaryContainer,
           ),
           const SizedBox(width: 16),
           Text(label, style: drawerLabel(context)),
@@ -63,7 +65,7 @@ class HomeDrawer extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(999),
           onTap: () async {
-            Navigator.pop(context);
+            if (!desktop) Navigator.pop(context);
 
             if (value == "refresh") {
               refresh(
@@ -187,6 +189,7 @@ class HomeDrawer extends StatelessWidget {
     }
 
     return Drawer(
+      backgroundColor: desktop ? cScheme.surfaceTint.withOpacity(0.05) : null,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -206,19 +209,19 @@ class HomeDrawer extends StatelessWidget {
                   children: [
                     Text(
                       state.username,
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: tTheme.titleMedium,
                     ),
                     const SizedBox(height: 4),
                     Text(
                       "${listCount(state.lists.length)} • ${countItems(state.lists)}",
-                      style: Theme.of(context).textTheme.labelMedium,
+                      style: tTheme.labelMedium,
                     ),
                   ],
                 ),
               ],
             ),
           ),
-          const Divider(height: 16, indent: 16, endIndent: 16),
+          const ListDivider(),
           const SizedBox(height: 12),
           listTile(
             iconData: Icons.refresh,
