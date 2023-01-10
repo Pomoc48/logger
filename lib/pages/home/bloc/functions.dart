@@ -108,6 +108,18 @@ Future<Map> removeList({
   );
 }
 
+Future<Map> updateList({
+  required int id,
+  required String name,
+  required String token,
+}) async {
+  return await makeRequest(
+    url: "https://loggerapp.lukawski.xyz/lists/?list_name=$name&list_id=$id",
+    headers: {"Token": token},
+    type: RequestType.patch,
+  );
+}
+
 Future<Map> loginResult({
   required Response response,
   bool save = false,

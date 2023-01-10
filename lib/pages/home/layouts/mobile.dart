@@ -97,7 +97,11 @@ class MobileHome extends StatelessWidget {
                               ModalList(
                                 icon: Icons.edit,
                                 title: Strings.changeName,
-                                onTap: null,
+                                onTap: () => renameDialog(
+                                  context: context,
+                                  counterId: state.lists[i].id,
+                                  state: state,
+                                ),
                               ),
                               ModalList(
                                 icon: Icons.delete,

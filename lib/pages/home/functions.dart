@@ -100,6 +100,52 @@ Future<bool> confirmDismiss({
   return dismiss;
 }
 
+Future<void> renameDialog({
+  required BuildContext context,
+  required int counterId,
+  required HomeLoaded state,
+}) async {
+  TextEditingController controller = TextEditingController();
+  await showDialog(
+    context: context,
+    builder: (c) {
+      return AlertDialog(
+        title: Text(Strings.changeName),
+        content: TextField(
+          controller: controller,
+          textCapitalization: TextCapitalization.sentences,
+          decoration: InputDecoration(
+            label: Text(Strings.counterName),
+            hintText: Strings.newListHint,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(c),
+            child: Text(Strings.cancel),
+          ),
+          TextButton(
+            onPressed: () async {
+              if (controller.text.trim().isNotEmpty) {
+                Navigator.pop(c);
+
+                await updateList(
+                  id: counterId,
+                  name: controller.text,
+                  token: state.token,
+                );
+
+                await refresh(context: context, state: state);
+              }
+            },
+            child: Text(Strings.rename),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 String subtitleCount(int count) {
   return count == 1 ? "$count time" : "$count times";
 }
