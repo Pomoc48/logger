@@ -156,6 +156,14 @@ class DesktopHome extends StatelessWidget {
                               );
                             }
 
+                            if (value == "rename") {
+                              renameDialog(
+                                context: context,
+                                counterId: state.lists[i].id,
+                                state: state,
+                              );
+                            }
+
                             if (value == "delete") {
                               bool delete = await confirmDismiss(
                                 context: context,
