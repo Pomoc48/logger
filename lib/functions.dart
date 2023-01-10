@@ -48,7 +48,7 @@ void showSnackLink({
   );
 }
 
-enum RequestType { post, get, delete }
+enum RequestType { post, get, delete, patch }
 
 Future<dynamic> makeRequest({
   required String url,
@@ -65,6 +65,9 @@ Future<dynamic> makeRequest({
       return await get(Uri.parse(url), headers: headers);
     case RequestType.delete:
       response = await delete(Uri.parse(url), headers: headers);
+      break;
+    case RequestType.patch:
+      response = await patch(Uri.parse(url), headers: headers);
       break;
   }
 

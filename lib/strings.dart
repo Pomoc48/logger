@@ -27,6 +27,7 @@ class Strings {
   static String create = "Create";
   static String cancel = "Cancel";
   static String delete = "Delete";
+  static String rename = "Rename";
   static String refresh = "Refresh";
   static String friends = "Friends list";
   static String changeSorting = "List sorting";
@@ -36,7 +37,7 @@ class Strings {
 
   static String addFav = "Add to favorites";
   static String quickAdd = "Insert current time";
-  static String changeName = "Change name";
+  static String changeName = "Name change";
   static String removeForever = "Delete forever";
 
   static String newListHint = "Workout";
