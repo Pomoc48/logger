@@ -54,7 +54,10 @@ class DesktopList extends StatelessWidget {
                           width: 40,
                           child: Icon(
                             Icons.add,
-                            color: Theme.of(context).colorScheme.primary,
+                            color: favColor(
+                              favourite: state.list.favourite,
+                              context: context,
+                            ),
                           ),
                         ),
                         title: Text(Strings.addNewDate),
@@ -64,7 +67,10 @@ class DesktopList extends StatelessWidget {
                     var i = index - 1;
 
                     return ListTile(
-                      leading: ListLeading(state.itemList[i].number),
+                      leading: ListLeading(
+                        number: state.itemList[i].number,
+                        favourite: state.list.favourite,
+                      ),
                       title: Text(dateTitle(state.itemList[i].timestamp)),
                       subtitle: Text(dateSubtitle(state.itemList[i].timestamp)),
                       trailing: ListRemove(index: i, state: state),
@@ -81,7 +87,10 @@ class DesktopList extends StatelessWidget {
                     bottom: (padding * 2) + 16,
                     left: padding * 2,
                   ),
-                  child: LineChart(data: state.chartData),
+                  child: LineChart(
+                    data: state.chartData,
+                    favourite: state.list.favourite,
+                  ),
                 ),
               ),
             ],

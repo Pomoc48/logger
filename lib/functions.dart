@@ -118,23 +118,34 @@ String getFavButtonString({required bool favourite}) {
   return Strings.addFav;
 }
 
-Color favColor({required bool favourite, required BuildContext context}) {
+Color favColor({
+  required bool favourite,
+  required BuildContext context,
+  bool containerColor = false,
+}) {
   if (favourite) {
     var brightness = MediaQuery.of(context).platformBrightness;
     bool isDarkMode = brightness == Brightness.dark;
 
     if (isDarkMode) {
-      return ColorScheme.fromSeed(
-        seedColor: Colors.teal,
+      ColorScheme colorScheme = ColorScheme.fromSeed(
+        seedColor: Colors.green,
         brightness: Brightness.dark,
-      ).primary;
+      );
+
+      if (containerColor) return colorScheme.primaryContainer;
+      return colorScheme.primary;
     }
 
-    return ColorScheme.fromSeed(
-      seedColor: Colors.teal,
+    ColorScheme colorScheme = ColorScheme.fromSeed(
+      seedColor: Colors.green,
       brightness: Brightness.light,
-    ).primary;
+    );
+
+    if (containerColor) return colorScheme.primaryContainer;
+    return colorScheme.primary;
   }
 
+  if (containerColor) return Theme.of(context).colorScheme.primaryContainer;
   return Theme.of(context).colorScheme.primary;
 }
