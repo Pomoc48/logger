@@ -31,7 +31,10 @@ class MobileList extends StatelessWidget {
     return Fader(
       child: Scaffold(
         appBar: AppBar(
-          flexibleSpace: LineChart(data: state.chartData),
+          flexibleSpace: LineChart(
+            data: state.chartData,
+            favourite: state.list.favourite,
+          ),
           title: Text(state.list.name),
           scrolledUnderElevation: 0,
           bottom: const PreferredSize(
@@ -40,6 +43,11 @@ class MobileList extends StatelessWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
+          backgroundColor: favColor(
+            favourite: state.list.favourite,
+            context: context,
+            containerColor: true,
+          ),
           onPressed: () async => addNewItemDialog(
             context: context,
             list: state.list,
@@ -49,6 +57,7 @@ class MobileList extends StatelessWidget {
           label: Text(Strings.newItemFAB),
         ),
         body: RefreshIndicator(
+          color: favColor(favourite: state.list.favourite, context: context),
           onRefresh: () async => refresh(
             context: context,
             list: state.list,
@@ -63,7 +72,10 @@ class MobileList extends StatelessWidget {
                   bottom: i == state.itemList.length - 1 ? 88 : 0,
                 ),
                 child: ListTile(
-                  leading: ListLeading(state.itemList[i].number),
+                  leading: ListLeading(
+                    number: state.itemList[i].number,
+                    favourite: state.list.favourite,
+                  ),
                   title: Text(dateTitle(state.itemList[i].timestamp)),
                   subtitle: Text(dateSubtitle(state.itemList[i].timestamp)),
                   trailing: ListRemove(index: i, state: state),

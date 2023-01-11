@@ -104,8 +104,11 @@ Future<void> renameDialog({
   required BuildContext context,
   required int counterId,
   required HomeLoaded state,
+  required String oldName,
 }) async {
   TextEditingController controller = TextEditingController();
+  controller.text = oldName;
+  
   await showDialog(
     context: context,
     builder: (c) {
@@ -129,7 +132,7 @@ Future<void> renameDialog({
               if (controller.text.trim().isNotEmpty) {
                 Navigator.pop(c);
 
-                await updateList(
+                await updateListName(
                   id: counterId,
                   name: controller.text,
                   token: state.token,

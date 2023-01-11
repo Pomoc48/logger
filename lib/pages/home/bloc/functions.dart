@@ -108,13 +108,27 @@ Future<Map> removeList({
   );
 }
 
-Future<Map> updateList({
+Future<Map> updateListName({
   required int id,
   required String name,
   required String token,
 }) async {
   return await makeRequest(
     url: "https://loggerapp.lukawski.xyz/lists/?list_name=$name&list_id=$id",
+    headers: {"Token": token},
+    type: RequestType.patch,
+  );
+}
+
+Future<Map> updateListFav({
+  required int id,
+  required bool favourite,
+  required String token,
+}) async {
+  int fav = favourite ? 1 : 0;
+
+  return await makeRequest(
+    url: "https://loggerapp.lukawski.xyz/lists/?favourite=$fav&list_id=$id",
     headers: {"Token": token},
     type: RequestType.patch,
   );

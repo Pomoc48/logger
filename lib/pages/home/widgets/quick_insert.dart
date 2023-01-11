@@ -5,10 +5,16 @@ import 'package:logger_app/models/list.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 
 class QuickInsert extends StatelessWidget {
-  const QuickInsert({super.key, required this.list, required this.state});
+  const QuickInsert({
+    super.key,
+    required this.list,
+    required this.favourite,
+    required this.state,
+  });
 
   final ListOfItems list;
   final HomeLoaded state;
+  final bool favourite;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +30,10 @@ class QuickInsert extends StatelessWidget {
       ),
       icon: Icon(
         Icons.bolt,
-        color: Theme.of(context).colorScheme.primary,
+        color: favColor(
+          favourite: favourite,
+          context: context,
+        ),
       ),
     );
   }

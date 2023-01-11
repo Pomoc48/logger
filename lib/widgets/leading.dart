@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:logger_app/functions.dart';
 
 class ListLeading extends StatelessWidget {
-  const ListLeading(this.number, {super.key});
+  const ListLeading({super.key, required this.number, required this.favourite});
 
   final int number;
+  final bool favourite;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,9 @@ class ListLeading extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .titleLarge!
-              .copyWith(color: Theme.of(context).colorScheme.primary),
+              .copyWith(
+                color: favColor(favourite: favourite, context: context),
+              ),
         ),
       ),
     );

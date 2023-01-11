@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:logger_app/pages/home/bloc/functions.dart';
+import 'package:logger_app/strings.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 String dateTitle(DateTime date) {
@@ -107,4 +108,44 @@ int dateToTimestamp(DateTime date, [TimeOfDay? time]) {
     return d.millisecondsSinceEpoch ~/ 1000;
   }
   return date.millisecondsSinceEpoch ~/ 1000;
+}
+
+String getFavButtonString({required bool favourite}) {
+  if (favourite) {
+    return Strings.remFav;
+  }
+
+  return Strings.addFav;
+}
+
+Color favColor({
+  required bool favourite,
+  required BuildContext context,
+  bool containerColor = false,
+}) {
+  if (favourite) {
+    var brightness = MediaQuery.of(context).platformBrightness;
+    bool isDarkMode = brightness == Brightness.dark;
+
+    if (isDarkMode) {
+      ColorScheme colorScheme = ColorScheme.fromSeed(
+        seedColor: Colors.green,
+        brightness: Brightness.dark,
+      );
+
+      if (containerColor) return colorScheme.primaryContainer;
+      return colorScheme.primary;
+    }
+
+    ColorScheme colorScheme = ColorScheme.fromSeed(
+      seedColor: Colors.green,
+      brightness: Brightness.light,
+    );
+
+    if (containerColor) return colorScheme.primaryContainer;
+    return colorScheme.primary;
+  }
+
+  if (containerColor) return Theme.of(context).colorScheme.primaryContainer;
+  return Theme.of(context).colorScheme.primary;
 }
