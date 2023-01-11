@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger_app/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/pages/home/widgets/chart.dart';
@@ -74,7 +75,10 @@ class DesktopHome extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: cScheme.primary.withOpacity(0.25),
+                color: favColor(
+                  context: context,
+                  favourite: state.lists[i].favourite,
+                ).withOpacity(0.25),
                 width: 2,
               ),
             ),
@@ -97,13 +101,20 @@ class DesktopHome extends StatelessWidget {
                   children: [
                     SizedBox(
                       height: 70,
-                      child: LineChart(data: state.lists[i].chartData),
+                      child: LineChart(
+                        data: state.lists[i].chartData,
+                        favourite: state.lists[i].favourite,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        QuickInsert(list: state.lists[i], state: state),
+                        QuickInsert(
+                          list: state.lists[i],
+                          state: state,
+                          favourite: state.lists[i].favourite,
+                        ),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Column(
@@ -131,7 +142,9 @@ class DesktopHome extends StatelessWidget {
                                 value: "add",
                               ),
                               menuItem(
-                                text: Strings.addFav,
+                                text: getFavButtonString(
+                                  favourite: state.lists[i].favourite,
+                                ),
                                 iconData: Icons.star,
                                 value: "favorite",
                               ),

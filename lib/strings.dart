@@ -35,7 +35,8 @@ class Strings {
   static String connect = "Connect";
   static String logout = "Logout";
 
-  static String addFav = "Add to favorites";
+  static String addFav = "Add favorite";
+  static String remFav = "Remove favorite";
   static String quickAdd = "Insert current time";
   static String changeName = "Name change";
   static String removeForever = "Delete forever";

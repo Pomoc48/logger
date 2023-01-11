@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger_app/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/pages/home/widgets/chart.dart';
@@ -91,7 +92,9 @@ class MobileHome extends StatelessWidget {
                               ),
                               ModalList(
                                 icon: Icons.star,
-                                title: Strings.addFav,
+                                title: getFavButtonString(
+                                  favourite: state.lists[i].favourite,
+                                ),
                                 onTap: null,
                               ),
                               ModalList(
@@ -131,11 +134,15 @@ class MobileHome extends StatelessWidget {
                     leading: QuickInsert(
                       list: state.lists[i],
                       state: state,
+                      favourite: state.lists[i].favourite,
                     ),
                     trailing: SizedBox(
                       width: 120,
                       height: 28,
-                      child: LineChart(data: state.lists[i].chartData),
+                      child: LineChart(
+                        data: state.lists[i].chartData,
+                        favourite: state.lists[i].favourite,
+                      ),
                     ),
                     title: Text(
                       state.lists[i].name,
