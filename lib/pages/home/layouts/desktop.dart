@@ -175,6 +175,7 @@ class DesktopHome extends StatelessWidget {
                                 context: context,
                                 counterId: state.lists[i].id,
                                 state: state,
+                                oldName: state.lists[i].name,
                               );
                             }
 

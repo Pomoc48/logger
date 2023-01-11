@@ -104,8 +104,11 @@ Future<void> renameDialog({
   required BuildContext context,
   required int counterId,
   required HomeLoaded state,
+  required String oldName,
 }) async {
   TextEditingController controller = TextEditingController();
+  controller.text = oldName;
+  
   await showDialog(
     context: context,
     builder: (c) {
