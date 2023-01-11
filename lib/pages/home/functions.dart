@@ -129,7 +129,7 @@ Future<void> renameDialog({
               if (controller.text.trim().isNotEmpty) {
                 Navigator.pop(c);
 
-                await updateList(
+                await updateListName(
                   id: counterId,
                   name: controller.text,
                   token: state.token,

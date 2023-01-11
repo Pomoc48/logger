@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/functions.dart';
+import 'package:logger_app/pages/home/bloc/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/pages/home/widgets/chart.dart';
@@ -175,6 +176,16 @@ class DesktopHome extends StatelessWidget {
                                 counterId: state.lists[i].id,
                                 state: state,
                               );
+                            }
+
+                            if (value == "favorite") {
+                              await updateListFav(
+                                id: state.lists[i].id,
+                                favourite: !state.lists[i].favourite,
+                                token: state.token,
+                              );
+
+                              await refresh(context: context, state: state);
                             }
 
                             if (value == "delete") {
