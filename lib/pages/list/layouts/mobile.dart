@@ -57,6 +57,7 @@ class MobileList extends StatelessWidget {
           label: Text(Strings.newItemFAB),
         ),
         body: RefreshIndicator(
+          color: favColor(favourite: state.list.favourite, context: context),
           onRefresh: () async => refresh(
             context: context,
             list: state.list,

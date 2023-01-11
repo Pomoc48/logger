@@ -127,7 +127,7 @@ class HomeDrawer extends StatelessWidget {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    contentPadding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
+                    contentPadding: const EdgeInsets.fromLTRB(0, 20, 0, 16),
                     title: Text(Strings.changeSorting),
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
