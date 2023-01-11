@@ -124,10 +124,16 @@ Color favColor({required bool favourite, required BuildContext context}) {
     bool isDarkMode = brightness == Brightness.dark;
 
     if (isDarkMode) {
-      return const Color.fromARGB(255, 83, 219, 202);
+      return ColorScheme.fromSeed(
+        seedColor: Colors.teal,
+        brightness: Brightness.dark,
+      ).primary;
     }
 
-    return const Color.fromARGB(255, 0, 106, 96);
+    return ColorScheme.fromSeed(
+      seedColor: Colors.teal,
+      brightness: Brightness.light,
+    ).primary;
   }
 
   return Theme.of(context).colorScheme.primary;
