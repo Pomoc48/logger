@@ -53,6 +53,9 @@ class Strings {
   static String sortDateDesc = "Date (oldest)";
   static String sortCounterAsc = "Counter (highest)";
   static String sortCounterDesc = "Counter (lowest)";
+
+  static String friendPending = "Pending";
+  static String friendAccepted = "Accepted";
 }
 
 class Routes {

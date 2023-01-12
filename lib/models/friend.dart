@@ -1,28 +1,33 @@
 import 'package:equatable/equatable.dart';
 
+enum FriendStatus { pending, accepted, action }
+
 class Friend extends Equatable {
   final int requestId;
-  final bool accepted;
+  final FriendStatus status;
   final DateTime timestamp;
-  final int friendId;
   final String username;
   final String profileUrl;
 
   const Friend({
     required this.requestId,
-    required this.accepted,
+    required this.status,
     required this.timestamp,
-    required this.friendId,
     required this.username,
     required this.profileUrl,
   });
 
   factory Friend.fromMap(dynamic map) {
+    FriendStatus getStatus(int value) {
+      if (value == 0) return FriendStatus.pending;
+      if (value == 1) return FriendStatus.accepted;
+      return FriendStatus.action;
+    }
+
     return Friend(
       requestId: map["id"],
-      accepted: map["accepted"] == 1 ? true : false,
+      status: getStatus(map["status"]),
       timestamp: DateTime.fromMillisecondsSinceEpoch(map["timestamp"] * 1000),
-      friendId: map["friend_id"],
       username: map["username"],
       profileUrl: map["profile_url"],
     );
@@ -30,5 +35,5 @@ class Friend extends Equatable {
 
   @override
   List<Object> get props =>
-      [requestId, accepted, timestamp, friendId, username, profileUrl];
+      [requestId, status, timestamp, username, profileUrl];
 }
