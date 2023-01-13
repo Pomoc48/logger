@@ -27,7 +27,6 @@ class MobileHome extends StatelessWidget {
     if (state.lists.isEmpty) {
       return EmptyList(
         title: Strings.appName,
-        state: state,
         press: () async => addNewListDialog(
           context: context,
           state: state,

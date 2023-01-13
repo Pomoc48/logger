@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/fader.dart';
 
@@ -8,12 +7,10 @@ class EmptyList extends StatelessWidget {
     super.key,
     required this.title,
     required this.press,
-    this.state,
   });
 
   final String title;
   final Future<void> Function() press;
-  final HomeLoaded? state;
 
   @override
   Widget build(BuildContext context) {

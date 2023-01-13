@@ -26,16 +26,7 @@ class FriendTrailing extends StatelessWidget {
           ),
         );
       case FriendStatus.accepted:
-        return Padding(
-          padding: const EdgeInsets.only(right: 16),
-          child: Opacity(
-            opacity: 0.38,
-            child: Text(
-              Strings.friendAccepted,
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-          ),
-        );
+        return const SizedBox();
       case FriendStatus.action:
         return Row(
           mainAxisSize: MainAxisSize.min,

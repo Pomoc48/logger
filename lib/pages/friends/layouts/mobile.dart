@@ -8,6 +8,7 @@ import 'package:logger_app/pages/friends/widgets/status.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/avatar.dart';
 import 'package:logger_app/widgets/divider.dart';
+import 'package:logger_app/widgets/empty_list.dart';
 import 'package:logger_app/widgets/fader.dart';
 
 class MobileFriends extends StatelessWidget {
@@ -18,7 +19,13 @@ class MobileFriends extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (state.friends.isEmpty) {
-      return Text("empty");
+      return EmptyList(
+        title: Strings.friends,
+        press: () async => addNewFriendDialog(
+          context: context,
+          state: state,
+        ),
+      );
     }
 
     return Fader(
