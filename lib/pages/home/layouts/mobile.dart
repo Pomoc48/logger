@@ -27,7 +27,6 @@ class MobileHome extends StatelessWidget {
     if (state.lists.isEmpty) {
       return EmptyList(
         title: Strings.appName,
-        state: state,
         press: () async => addNewListDialog(
           context: context,
           state: state,
@@ -53,7 +52,7 @@ class MobileHome extends StatelessWidget {
             state: state,
           ),
           child: ListView.separated(
-            separatorBuilder: (c, i) => const ListDivider(),
+            separatorBuilder: (c, i) => const ListDivider(height: 8),
             itemBuilder: (context, i) {
               return Padding(
                 padding: EdgeInsets.only(
