@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/functions.dart';
 import 'package:logger_app/pages/friends/bloc/friends_bloc.dart';
+import 'package:logger_app/pages/friends/layouts/desktop.dart';
 import 'package:logger_app/pages/friends/layouts/mobile.dart';
 import 'package:logger_app/widgets/loading.dart';
 
@@ -31,12 +32,7 @@ class FriendsPage extends StatelessWidget {
           builder: (context, state) {
             if (state is FriendsLoaded) {
               if (mobile) return MobileFriends(state: state);
-
-              // return DesktopHome(
-              //   state: state,
-              //   width: constraints.maxWidth,
-              // );
-              return const PageLoading();
+              return DesktopFriends(state: state);
             }
 
             return const PageLoading();

@@ -52,7 +52,7 @@ class MobileHome extends StatelessWidget {
             state: state,
           ),
           child: ListView.separated(
-            separatorBuilder: (c, i) => const ListDivider(),
+            separatorBuilder: (c, i) => const ListDivider(height: 8),
             itemBuilder: (context, i) {
               return Padding(
                 padding: EdgeInsets.only(
