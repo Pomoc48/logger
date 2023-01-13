@@ -16,4 +16,17 @@ class LoadFriends extends FriendsEvent {
   List<Object> get props => [token];
 }
 
+class UpdateFriends extends FriendsEvent {
+  final List<Friend> friends;
+  final String token;
+
+  const UpdateFriends({
+    required this.friends,
+    required this.token,
+  });
+
+  @override
+  List<Object> get props => [friends, token];
+}
+
 class ReportFriendsError extends FriendsEvent {}

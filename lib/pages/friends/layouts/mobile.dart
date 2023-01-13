@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:logger_app/functions.dart';
 import 'package:logger_app/pages/friends/bloc/friends_bloc.dart';
+import 'package:logger_app/pages/friends/functions.dart';
 import 'package:logger_app/pages/friends/widgets/status.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/avatar.dart';
@@ -29,7 +30,10 @@ class MobileFriends extends StatelessWidget {
           label: Text(Strings.newItemFAB),
         ),
         body: RefreshIndicator(
-          onRefresh: () async {},
+          onRefresh: () => refresh(
+            context: context,
+            state: state,
+          ),
           child: ListView.separated(
             separatorBuilder: (c, i) => const ListDivider(),
             itemBuilder: (context, i) {

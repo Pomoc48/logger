@@ -24,5 +24,11 @@ class FriendsBloc extends Bloc<FriendsEvent, FriendsState> {
         emit(FriendsError());
       }
     });
+    on<UpdateFriends>((event, emit) {
+      emit(FriendsLoaded(
+        friends: event.friends,
+        token: event.token,
+      ));
+    });
   }
 }
