@@ -29,4 +29,17 @@ class UpdateFriends extends FriendsEvent {
   List<Object> get props => [friends, token];
 }
 
+class InsertFriend extends FriendsEvent {
+  final String username;
+  final FriendsLoaded state;
+
+  const InsertFriend({
+    required this.username,
+    required this.state,
+  });
+
+  @override
+  List<Object> get props => [username, state];
+}
+
 class ReportFriendsError extends FriendsEvent {}

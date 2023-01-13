@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/models/friend.dart';
 import 'package:logger_app/pages/friends/bloc/friends_bloc.dart';
 import 'package:logger_app/pages/friends/bloc/functions.dart';
+import 'package:logger_app/strings.dart';
 
 Future<void> refresh({
   required BuildContext context,
@@ -20,4 +21,45 @@ Future<void> refresh({
   } catch (e) {
     BlocProvider.of<FriendsBloc>(context).add(ReportFriendsError());
   }
+}
+
+Future<void> addNewFriendDialog({
+  required BuildContext context,
+  required FriendsLoaded state,
+}) async {
+  TextEditingController controller = TextEditingController();
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(Strings.addNewFriend),
+        content: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            label: Text(Strings.friendName),
+            hintText: Strings.friendHint,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(Strings.cancel),
+          ),
+          TextButton(
+            onPressed: () {
+              if (controller.text.trim().isNotEmpty) {
+                BlocProvider.of<FriendsBloc>(context).add(InsertFriend(
+                  username: controller.text,
+                  state: state,
+                ));
+
+                Navigator.pop(context);
+              }
+            },
+            child: Text(Strings.add),
+          ),
+        ],
+      );
+    },
+  );
 }

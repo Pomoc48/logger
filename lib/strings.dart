@@ -20,10 +20,13 @@ class Strings {
   static String confirmation = "Confirmation";
   static String confirm = "Confirm";
   static String counterName = "Name of the counter";
+  static String friendName = "Friend username";
   static String pairingCode = "Pairing code";
   static String addNewCounter = "Add new counter";
+  static String addNewFriend = "Add new friend";
   static String addNewDate = "Add new date";
   static String newItemFAB = "New";
+  static String add = "Add";
   static String create = "Create";
   static String cancel = "Cancel";
   static String delete = "Delete";
@@ -42,6 +45,7 @@ class Strings {
   static String removeForever = "Delete forever";
 
   static String newListHint = "Workout";
+  static String friendHint = "user123";
   static String pairingHint = "123456";
 
   static String username = "Username";

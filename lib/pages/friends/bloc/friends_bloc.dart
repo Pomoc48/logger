@@ -24,6 +24,30 @@ class FriendsBloc extends Bloc<FriendsEvent, FriendsState> {
         emit(FriendsError());
       }
     });
+
+    on<InsertFriend>((event, emit) async {
+      try {
+        Map response = await addFriend(
+          username: event.username,
+          token: event.state.token,
+        );
+
+        if (response["success"]) {
+          Map map = await getFriends(token: response["token"]);
+          List<Friend> list = List<Friend>.from(map["data"]);
+
+          emit(FriendsLoaded(
+            friends: list,
+            token: map["token"],
+          ));
+        } else {
+          emit(FriendsMessage(response["message"]));
+        }
+      } catch (e) {
+        emit(FriendsError());
+      }
+    });
+
     on<UpdateFriends>((event, emit) {
       emit(FriendsLoaded(
         friends: event.friends,

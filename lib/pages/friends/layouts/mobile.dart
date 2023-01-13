@@ -25,7 +25,10 @@ class MobileFriends extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(title: Text(Strings.friends)),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
+          onPressed: () => addNewFriendDialog(
+            context: context,
+            state: state,
+          ),
           icon: const Icon(Icons.add),
           label: Text(Strings.newItemFAB),
         ),

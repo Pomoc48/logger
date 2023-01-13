@@ -25,3 +25,14 @@ Future<Map> getFriends({required String token}) async {
 
   return {"data": list, "token": token};
 }
+
+Future<Map> addFriend({
+  required String token,
+  required String username,
+}) async {
+  return await makeRequest(
+    url: "https://loggerapp.lukawski.xyz/friends/?username=$username",
+    headers: {"Token": token},
+    type: RequestType.post,
+  );
+}
