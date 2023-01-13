@@ -60,7 +60,8 @@ class MobileFriends extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   trailing: FriendTrailing(
-                    friendStatus: state.friends[i].status,
+                    friend: state.friends[i],
+                    token: state.token,
                   ),
                 ),
               );

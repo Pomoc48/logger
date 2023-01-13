@@ -36,3 +36,14 @@ Future<Map> addFriend({
     type: RequestType.post,
   );
 }
+
+Future<Map> acceptFriend({
+  required String token,
+  required int id,
+}) async {
+  return await makeRequest(
+    url: "https://loggerapp.lukawski.xyz/friends/?id=$id",
+    headers: {"Token": token},
+    type: RequestType.patch,
+  );
+}
