@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:logger_app/functions.dart';
+import 'package:logger_app/models/friend.dart';
 import 'package:logger_app/pages/friends/bloc/friends_bloc.dart';
 import 'package:logger_app/pages/friends/functions.dart';
 import 'package:logger_app/pages/friends/widgets/status.dart';
@@ -53,6 +54,15 @@ class MobileFriends extends StatelessWidget {
                   bottom: i == state.friends.length - 1 ? 88 : 0,
                 ),
                 child: ListTile(
+                  onLongPress: () {
+                    if (state.friends[i].status != FriendStatus.action) {
+                      deleteFriendDialog(
+                        context: context,
+                        friend: state.friends[i],
+                        token: state.token,
+                      );
+                    }
+                  },
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 4,

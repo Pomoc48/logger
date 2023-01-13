@@ -63,3 +63,40 @@ Future<void> addNewFriendDialog({
     },
   );
 }
+
+Future<void> deleteFriendDialog({
+  required BuildContext context,
+  required Friend friend,
+  required String token,
+}) async {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(Strings.removeFriend),
+        content: Text(Strings.deleteFriendDialog),
+        actions: [
+          TextButton.icon(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(Icons.close),
+            label: Text(Strings.cancel),
+          ),
+          TextButton.icon(
+            onPressed: () {
+              BlocProvider.of<FriendsBloc>(context).add(
+                RemoveFriend(
+                  friend: friend,
+                  token: token,
+                ),
+              );
+
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.delete_outlined),
+            label: Text(Strings.delete),
+          ),
+        ],
+      );
+    },
+  );
+}
