@@ -55,4 +55,17 @@ class AcceptFriend extends FriendsEvent {
   List<Object> get props => [friend, token];
 }
 
+class RemoveFriend extends FriendsEvent {
+  final String token;
+  final Friend friend;
+
+  const RemoveFriend({
+    required this.token,
+    required this.friend,
+  });
+
+  @override
+  List<Object> get props => [friend, token];
+}
+
 class ReportFriendsError extends FriendsEvent {}

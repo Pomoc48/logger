@@ -20,9 +20,12 @@ class FriendTrailing extends StatelessWidget {
       case FriendStatus.pending:
         return Padding(
           padding: const EdgeInsets.only(right: 16),
-          child: Text(
-            Strings.friendPending,
-            style: Theme.of(context).textTheme.titleSmall,
+          child: Opacity(
+            opacity: 0.5,
+            child: Text(
+              Strings.friendPending,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
           ),
         );
       case FriendStatus.accepted:
@@ -44,7 +47,12 @@ class FriendTrailing extends StatelessWidget {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () => BlocProvider.of<FriendsBloc>(context).add(
+                RemoveFriend(
+                  friend: friend,
+                  token: token,
+                ),
+              ),
               icon: const Icon(
                 Icons.clear,
                 color: Colors.red,

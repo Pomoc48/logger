@@ -47,3 +47,14 @@ Future<Map> acceptFriend({
     type: RequestType.patch,
   );
 }
+
+Future<Map> removeFriend({
+  required String token,
+  required int id,
+}) async {
+  return await makeRequest(
+    url: "https://loggerapp.lukawski.xyz/friends/?id=$id",
+    headers: {"Token": token},
+    type: RequestType.delete,
+  );
+}
