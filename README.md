@@ -7,11 +7,18 @@ Live preview: [https://loggerapp.lukawski.xyz/](https://loggerapp.lukawski.xyz/)
 ![Banner image](screenshots/banner.png)
 
 More app screenshots in the [screenshots directory](screenshots).
+\
+*Screenshots may be little outdated.
 
 ## Features
 
-- Activity chart for the last two weeks
-- Items increase chart for the last month
+- Data charts:
+  - Activity over the last two weeks
+  - Items increase over the last month
+- Friends list:
+  - Invite, accept and remove requests
+  - View your friends counters (in progress)
+- Profile picture customization
 - Many list sorting options
 - Responsive design
 - Light / dark theme support
