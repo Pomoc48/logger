@@ -211,7 +211,7 @@ class HomeDrawer extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Avatar(profileUrl: state.profileUrl, size: 48),
+                Avatar(profileUrl: state.profileUrl, size: 48, update: true),
                 const SizedBox(width: 18),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
