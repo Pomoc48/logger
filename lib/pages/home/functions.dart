@@ -35,12 +35,15 @@ Future<void> addNewListDialog({
     builder: (context) {
       return AlertDialog(
         title: Text(Strings.newItemFAB),
-        content: TextField(
-          controller: controller,
-          textCapitalization: TextCapitalization.sentences,
-          decoration: InputDecoration(
-            label: Text(Strings.counterName),
-            hintText: Strings.newListHint,
+        content: SizedBox(
+          width: 400,
+          child: TextField(
+            controller: controller,
+            textCapitalization: TextCapitalization.sentences,
+            decoration: InputDecoration(
+              label: Text(Strings.counterName),
+              hintText: Strings.newListHint,
+            ),
           ),
         ),
         actions: [
@@ -77,7 +80,10 @@ Future<bool> confirmDismiss({
     builder: (context) {
       return AlertDialog(
         title: Text(Strings.confirmation),
-        content: Text(message),
+        content: SizedBox(
+          width: 400,
+          child: Text(message),
+        ),
         actions: [
           TextButton.icon(
             onPressed: () => Navigator.pop(context),
@@ -114,12 +120,15 @@ Future<void> renameDialog({
     builder: (c) {
       return AlertDialog(
         title: Text(Strings.changeName),
-        content: TextField(
-          controller: controller,
-          textCapitalization: TextCapitalization.sentences,
-          decoration: InputDecoration(
-            label: Text(Strings.counterName),
-            hintText: Strings.newListHint,
+        content: SizedBox(
+          width: 400,
+          child: TextField(
+            controller: controller,
+            textCapitalization: TextCapitalization.sentences,
+            decoration: InputDecoration(
+              label: Text(Strings.counterName),
+              hintText: Strings.newListHint,
+            ),
           ),
         ),
         actions: [
@@ -160,12 +169,15 @@ Future<void> updateUrlDialog({
     builder: (c) {
       return AlertDialog(
         title: Text(Strings.updatePhoto),
-        content: TextField(
-          controller: controller,
-          keyboardType: TextInputType.url,
-          decoration: InputDecoration(
-            label: Text(Strings.profileUrl),
-            hintText: Strings.newUrl,
+        content: SizedBox(
+          width: 400,
+          child: TextField(
+            controller: controller,
+            keyboardType: TextInputType.url,
+            decoration: InputDecoration(
+              label: Text(Strings.profileUrl),
+              hintText: Strings.newUrl,
+            ),
           ),
         ),
         actions: [

@@ -33,11 +33,14 @@ Future<void> addNewFriendDialog({
     builder: (context) {
       return AlertDialog(
         title: Text(Strings.addNewFriend),
-        content: TextField(
-          controller: controller,
-          decoration: InputDecoration(
-            label: Text(Strings.friendName),
-            hintText: Strings.friendHint,
+        content: SizedBox(
+          width: 400,
+          child: TextField(
+            controller: controller,
+            decoration: InputDecoration(
+              label: Text(Strings.friendName),
+              hintText: Strings.friendHint,
+            ),
           ),
         ),
         actions: [
@@ -74,7 +77,10 @@ Future<void> deleteFriendDialog({
     builder: (context) {
       return AlertDialog(
         title: Text(Strings.removeFriend),
-        content: Text(Strings.deleteFriendDialog),
+        content: SizedBox(
+          width: 400,
+          child: Text(Strings.deleteFriendDialog),
+        ),
         actions: [
           TextButton.icon(
             onPressed: () => Navigator.pop(context),
