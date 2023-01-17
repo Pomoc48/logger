@@ -90,20 +90,23 @@ class HomeDrawer extends StatelessWidget {
                 builder: (context) {
                   return AlertDialog(
                     title: Text(Strings.connect),
-                    content: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(Strings.connectMessage),
-                        TextField(
-                          controller: controller,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            label: Text(Strings.pairingCode),
-                            hintText: Strings.pairingHint,
+                    content: SizedBox(
+                      width: 400,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(Strings.connectMessage),
+                          TextField(
+                            controller: controller,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              label: Text(Strings.pairingCode),
+                              hintText: Strings.pairingHint,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     actions: [
                       TextButton(
@@ -138,38 +141,41 @@ class HomeDrawer extends StatelessWidget {
                   return AlertDialog(
                     contentPadding: const EdgeInsets.fromLTRB(0, 20, 0, 16),
                     title: Text(Strings.changeSorting),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const ListDivider(),
-                        sortOption(
-                          context,
-                          Strings.sortName,
-                          SortingType.name.name,
-                        ),
-                        sortOption(
-                          context,
-                          Strings.sortDateAsc,
-                          SortingType.dateASC.name,
-                        ),
-                        sortOption(
-                          context,
-                          Strings.sortCounterAsc,
-                          SortingType.countASC.name,
-                        ),
-                        sortOption(
-                          context,
-                          Strings.sortDateDesc,
-                          SortingType.dateDESC.name,
-                        ),
-                        sortOption(
-                          context,
-                          Strings.sortCounterDesc,
-                          SortingType.countDESC.name,
-                        ),
-                        const ListDivider(),
-                      ],
+                    content: SizedBox(
+                      width: 400,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const ListDivider(),
+                          sortOption(
+                            context,
+                            Strings.sortName,
+                            SortingType.name.name,
+                          ),
+                          sortOption(
+                            context,
+                            Strings.sortDateAsc,
+                            SortingType.dateASC.name,
+                          ),
+                          sortOption(
+                            context,
+                            Strings.sortCounterAsc,
+                            SortingType.countASC.name,
+                          ),
+                          sortOption(
+                            context,
+                            Strings.sortDateDesc,
+                            SortingType.dateDESC.name,
+                          ),
+                          sortOption(
+                            context,
+                            Strings.sortCounterDesc,
+                            SortingType.countDESC.name,
+                          ),
+                          const ListDivider(),
+                        ],
+                      ),
                     ),
                     actions: [
                       TextButton(
@@ -211,7 +217,12 @@ class HomeDrawer extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Avatar(profileUrl: state.profileUrl, size: 48),
+                Avatar(
+                  profileUrl: state.profileUrl,
+                  size: 48,
+                  state: state,
+                  pop: !desktop,
+                ),
                 const SizedBox(width: 18),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,

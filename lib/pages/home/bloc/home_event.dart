@@ -116,3 +116,13 @@ class CheckPairingCode extends HomeEvent {
   @override
   List<Object> get props => [code, token];
 }
+
+class UpdatePhoto extends HomeEvent {
+  final String url;
+  final HomeLoaded state;
+
+  const UpdatePhoto({required this.url, required this.state});
+
+  @override
+  List<Object> get props => [url, state];
+}

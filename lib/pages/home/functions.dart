@@ -35,12 +35,15 @@ Future<void> addNewListDialog({
     builder: (context) {
       return AlertDialog(
         title: Text(Strings.newItemFAB),
-        content: TextField(
-          controller: controller,
-          textCapitalization: TextCapitalization.sentences,
-          decoration: InputDecoration(
-            label: Text(Strings.counterName),
-            hintText: Strings.newListHint,
+        content: SizedBox(
+          width: 400,
+          child: TextField(
+            controller: controller,
+            textCapitalization: TextCapitalization.sentences,
+            decoration: InputDecoration(
+              label: Text(Strings.counterName),
+              hintText: Strings.newListHint,
+            ),
           ),
         ),
         actions: [
@@ -77,7 +80,10 @@ Future<bool> confirmDismiss({
     builder: (context) {
       return AlertDialog(
         title: Text(Strings.confirmation),
-        content: Text(message),
+        content: SizedBox(
+          width: 400,
+          child: Text(message),
+        ),
         actions: [
           TextButton.icon(
             onPressed: () => Navigator.pop(context),
@@ -108,18 +114,21 @@ Future<void> renameDialog({
 }) async {
   TextEditingController controller = TextEditingController();
   controller.text = oldName;
-  
+
   await showDialog(
     context: context,
     builder: (c) {
       return AlertDialog(
         title: Text(Strings.changeName),
-        content: TextField(
-          controller: controller,
-          textCapitalization: TextCapitalization.sentences,
-          decoration: InputDecoration(
-            label: Text(Strings.counterName),
-            hintText: Strings.newListHint,
+        content: SizedBox(
+          width: 400,
+          child: TextField(
+            controller: controller,
+            textCapitalization: TextCapitalization.sentences,
+            decoration: InputDecoration(
+              label: Text(Strings.counterName),
+              hintText: Strings.newListHint,
+            ),
           ),
         ),
         actions: [
@@ -139,6 +148,52 @@ Future<void> renameDialog({
                 );
 
                 await refresh(context: context, state: state);
+              }
+            },
+            child: Text(Strings.rename),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+Future<void> updateUrlDialog({
+  required BuildContext context,
+  required HomeLoaded state,
+}) async {
+  TextEditingController controller = TextEditingController();
+
+  await showDialog(
+    context: context,
+    builder: (c) {
+      return AlertDialog(
+        title: Text(Strings.updatePhoto),
+        content: SizedBox(
+          width: 400,
+          child: TextField(
+            controller: controller,
+            keyboardType: TextInputType.url,
+            decoration: InputDecoration(
+              label: Text(Strings.profileUrl),
+              hintText: Strings.newUrl,
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(c),
+            child: Text(Strings.cancel),
+          ),
+          TextButton(
+            onPressed: () async {
+              if (controller.text.trim().isNotEmpty) {
+                Navigator.pop(c);
+
+                BlocProvider.of<HomeBloc>(context).add(UpdatePhoto(
+                  url: controller.text,
+                  state: state,
+                ));
               }
             },
             child: Text(Strings.rename),
