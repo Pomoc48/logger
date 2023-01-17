@@ -22,6 +22,7 @@ class Strings {
   static String confirmation = "Confirmation";
   static String confirm = "Confirm";
   static String counterName = "Name of the counter";
+  static String profileUrl = "Image URL";
   static String friendName = "Friend username";
   static String pairingCode = "Pairing code";
   static String addNewCounter = "Add new counter";
@@ -45,9 +46,11 @@ class Strings {
   static String remFav = "Remove favorite";
   static String quickAdd = "Insert current time";
   static String changeName = "Name change";
+  static String updatePhoto = "Update photo";
   static String removeForever = "Delete forever";
 
   static String newListHint = "Workout";
+  static String newUrl = "https://example.com/photo.jpg";
   static String friendHint = "user123";
   static String pairingHint = "123456";
 

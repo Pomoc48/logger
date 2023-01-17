@@ -134,6 +134,19 @@ Future<Map> updateListFav({
   );
 }
 
+Future<Map> updatePhoto({
+  required String url,
+  required String token,
+}) async {
+  String urlEscaped = url.replaceAll("&", "%26");
+
+  return await makeRequest(
+    url: "https://loggerapp.lukawski.xyz/photo/?url=$urlEscaped",
+    headers: {"Token": token},
+    type: RequestType.post,
+  );
+}
+
 Future<Map> loginResult({
   required Response response,
   bool save = false,

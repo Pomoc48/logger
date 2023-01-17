@@ -1,24 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:logger_app/pages/home/bloc/home_bloc.dart';
+import 'package:logger_app/pages/home/functions.dart';
 
 class Avatar extends StatelessWidget {
   const Avatar({
     super.key,
     this.profileUrl,
     this.size = 40,
-    this.update = false,
+    this.state,
+    this.pop = false,
   });
 
   final String? profileUrl;
   final double size;
-  final bool update;
+  final HomeLoaded? state;
+  final bool pop;
 
   @override
   Widget build(BuildContext context) {
     Widget child = (profileUrl is String) ? _content() : _missing();
 
-    if (update) {
+    if (state != null) {
       return InkWell(
-        onTap: () {},
+        onTap: () {
+          if (pop) Navigator.pop(context);
+
+          updateUrlDialog(
+            context: context,
+            state: state!,
+          );
+        },
         borderRadius: BorderRadius.circular(999),
         child: child,
       );

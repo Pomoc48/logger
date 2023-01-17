@@ -108,7 +108,7 @@ Future<void> renameDialog({
 }) async {
   TextEditingController controller = TextEditingController();
   controller.text = oldName;
-  
+
   await showDialog(
     context: context,
     builder: (c) {
@@ -139,6 +139,49 @@ Future<void> renameDialog({
                 );
 
                 await refresh(context: context, state: state);
+              }
+            },
+            child: Text(Strings.rename),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+Future<void> updateUrlDialog({
+  required BuildContext context,
+  required HomeLoaded state,
+}) async {
+  TextEditingController controller = TextEditingController();
+
+  await showDialog(
+    context: context,
+    builder: (c) {
+      return AlertDialog(
+        title: Text(Strings.updatePhoto),
+        content: TextField(
+          controller: controller,
+          keyboardType: TextInputType.url,
+          decoration: InputDecoration(
+            label: Text(Strings.profileUrl),
+            hintText: Strings.newUrl,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(c),
+            child: Text(Strings.cancel),
+          ),
+          TextButton(
+            onPressed: () async {
+              if (controller.text.trim().isNotEmpty) {
+                Navigator.pop(c);
+
+                BlocProvider.of<HomeBloc>(context).add(UpdatePhoto(
+                  url: controller.text,
+                  state: state,
+                ));
               }
             },
             child: Text(Strings.rename),
