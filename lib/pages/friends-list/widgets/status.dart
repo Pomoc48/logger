@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/models/friend.dart';
-import 'package:logger_app/pages/friends/bloc/friends_bloc.dart';
+import 'package:logger_app/pages/friends-list/bloc/friends_bloc.dart';
 import 'package:logger_app/strings.dart';
 
 class FriendTrailing extends StatelessWidget {

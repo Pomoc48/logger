@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:logger_app/models/friend.dart';
-import 'package:logger_app/pages/friends/bloc/functions.dart';
+import 'package:logger_app/pages/friends-list/bloc/functions.dart';
 
 part 'friends_event.dart';
 part 'friends_state.dart';
