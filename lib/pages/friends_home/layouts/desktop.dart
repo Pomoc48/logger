@@ -5,8 +5,9 @@ import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/pages/home/widgets/chart.dart';
 import 'package:logger_app/widgets/fader.dart';
 
-class DesktopHome extends StatelessWidget {
-  const DesktopHome({super.key, required this.state, required this.width});
+class DesktopFriendsHome extends StatelessWidget {
+  const DesktopFriendsHome(
+      {super.key, required this.state, required this.width});
 
   final FriendsHomeLoaded state;
   final double width;
@@ -21,7 +22,6 @@ class DesktopHome extends StatelessWidget {
             : 1;
 
     TextTheme tTheme = Theme.of(context).textTheme;
-    ColorScheme cScheme = Theme.of(context).colorScheme;
 
     return Fader(
       child: Scaffold(

@@ -7,8 +7,8 @@ import 'package:logger_app/pages/home/widgets/chart.dart';
 import 'package:logger_app/widgets/divider.dart';
 import 'package:logger_app/widgets/fader.dart';
 
-class MobileHome extends StatelessWidget {
-  const MobileHome({super.key, required this.state});
+class MobileFriendsHome extends StatelessWidget {
+  const MobileFriendsHome({super.key, required this.state});
 
   final FriendsHomeLoaded state;
 
