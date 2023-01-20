@@ -17,7 +17,7 @@ More app screenshots in the [screenshots directory](screenshots).
   - Items increase over the last month
 - Friends list:
   - Invite, accept and remove requests
-  - View your friends counters (in progress)
+  - View your friends counters
 - Profile picture customization
 - Many list sorting options
 - Responsive design
