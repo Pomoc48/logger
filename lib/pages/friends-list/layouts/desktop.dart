@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:logger_app/functions.dart';
 import 'package:logger_app/models/friend.dart';
-import 'package:logger_app/pages/friends/bloc/friends_bloc.dart';
-import 'package:logger_app/pages/friends/functions.dart';
-import 'package:logger_app/pages/friends/widgets/status.dart';
+import 'package:logger_app/pages/friends-list/bloc/friends_bloc.dart';
+import 'package:logger_app/pages/friends-list/functions.dart';
+import 'package:logger_app/pages/friends-list/widgets/status.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/avatar.dart';
 import 'package:logger_app/widgets/fader.dart';

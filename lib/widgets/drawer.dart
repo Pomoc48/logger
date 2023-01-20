@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger_app/models/list.dart';
-import 'package:logger_app/pages/friends/bloc/friends_bloc.dart';
+import 'package:logger_app/pages/friends-list/bloc/friends_bloc.dart';
 import 'package:logger_app/pages/home/bloc/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';

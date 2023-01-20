@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/functions.dart';
-import 'package:logger_app/pages/friends/bloc/friends_bloc.dart';
-import 'package:logger_app/pages/friends/layouts/desktop.dart';
-import 'package:logger_app/pages/friends/layouts/mobile.dart';
+import 'package:logger_app/pages/friends-list/bloc/friends_bloc.dart';
+import 'package:logger_app/pages/friends-list/layouts/desktop.dart';
+import 'package:logger_app/pages/friends-list/layouts/mobile.dart';
 import 'package:logger_app/widgets/loading.dart';
 
 class FriendsPage extends StatelessWidget {
