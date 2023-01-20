@@ -1,11 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/functions.dart';
 import 'package:logger_app/models/friend.dart';
 import 'package:logger_app/pages/friends-list/bloc/friends_bloc.dart';
 import 'package:logger_app/pages/friends-list/functions.dart';
 import 'package:logger_app/pages/friends-list/widgets/status.dart';
+import 'package:logger_app/pages/friends_home/bloc/friends_home_bloc.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/avatar.dart';
 import 'package:logger_app/widgets/fader.dart';
@@ -55,6 +57,18 @@ class DesktopFriends extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
+                    onTap: () {
+                      if (state.friends[i].status == FriendStatus.accepted) {
+                        BlocProvider.of<FriendsHomeBloc>(context).add(
+                          LoadFriendsHome(
+                            friend: state.friends[i],
+                            token: state.token,
+                          ),
+                        );
+
+                        Navigator.pushNamed(context, Routes.friendsHome);
+                      }
+                    },
                     onLongPress: () {
                       if (state.friends[i].status != FriendStatus.action) {
                         deleteFriendDialog(
