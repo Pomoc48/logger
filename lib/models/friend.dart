@@ -4,6 +4,7 @@ enum FriendStatus { pending, accepted, action }
 
 class Friend extends Equatable {
   final int requestId;
+  final int userId;
   final FriendStatus status;
   final DateTime timestamp;
   final String username;
@@ -11,6 +12,7 @@ class Friend extends Equatable {
 
   const Friend({
     required this.requestId,
+    required this.userId,
     required this.status,
     required this.timestamp,
     required this.username,
@@ -26,6 +28,7 @@ class Friend extends Equatable {
 
     return Friend(
       requestId: map["id"],
+      userId: map["user_id"],
       status: getStatus(map["status"]),
       timestamp: DateTime.fromMillisecondsSinceEpoch(map["timestamp"] * 1000),
       username: map["username"],

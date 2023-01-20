@@ -17,6 +17,7 @@ class FriendsHomeBloc extends Bloc<FriendsHomeEvent, FriendsHomeState> {
 
       try {
         Map map = await getFriendLists(
+          friendId: event.friend.userId,
           token: event.token,
         );
 
@@ -42,15 +43,18 @@ class FriendsHomeBloc extends Bloc<FriendsHomeEvent, FriendsHomeState> {
   }
 }
 
-Future<Map> getFriendLists({required String token}) async {
+Future<Map> getFriendLists({
+  required String token,
+  required int friendId,
+}) async {
   Response response = await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/lists/",
+    url: "https://loggerapp.lukawski.xyz/friend-lists/?friend_id=$friendId",
     headers: {"Token": token},
     type: RequestType.get,
   );
 
   if (response.statusCode == 403) {
-    return await getFriendLists(token: await renewToken());
+    return await getFriendLists(token: await renewToken(), friendId: friendId);
   }
 
   dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
