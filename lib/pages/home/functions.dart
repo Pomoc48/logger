@@ -30,6 +30,18 @@ Future<void> addNewListDialog({
   required HomeLoaded state,
 }) async {
   TextEditingController controller = TextEditingController();
+
+  void confirm() {
+    if (controller.text.trim().isNotEmpty) {
+      BlocProvider.of<HomeBloc>(context).add(InsertHome(
+        name: controller.text,
+        state: state,
+      ));
+
+      Navigator.pop(context);
+    }
+  }
+
   showDialog(
     context: context,
     builder: (context) {
@@ -38,12 +50,15 @@ Future<void> addNewListDialog({
         content: SizedBox(
           width: 400,
           child: TextField(
+            autofocus: true,
             controller: controller,
             textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
               label: Text(Strings.counterName),
               hintText: Strings.newListHint,
             ),
+            textInputAction: TextInputAction.done,
+            onSubmitted: (value) => confirm(),
           ),
         ),
         actions: [
@@ -52,16 +67,7 @@ Future<void> addNewListDialog({
             child: Text(Strings.cancel),
           ),
           TextButton(
-            onPressed: () {
-              if (controller.text.trim().isNotEmpty) {
-                BlocProvider.of<HomeBloc>(context).add(InsertHome(
-                  name: controller.text,
-                  state: state,
-                ));
-
-                Navigator.pop(context);
-              }
-            },
+            onPressed: () => confirm(),
             child: Text(Strings.create),
           ),
         ],
@@ -115,6 +121,20 @@ Future<void> renameDialog({
   TextEditingController controller = TextEditingController();
   controller.text = oldName;
 
+  void confirm(BuildContext c) async {
+    if (controller.text.trim().isNotEmpty) {
+      Navigator.pop(c);
+
+      await updateListName(
+        id: counterId,
+        name: controller.text,
+        token: state.token,
+      );
+
+      await refresh(context: context, state: state);
+    }
+  }
+
   await showDialog(
     context: context,
     builder: (c) {
@@ -123,12 +143,15 @@ Future<void> renameDialog({
         content: SizedBox(
           width: 400,
           child: TextField(
+            autofocus: true,
             controller: controller,
             textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
               label: Text(Strings.counterName),
               hintText: Strings.newListHint,
             ),
+            textInputAction: TextInputAction.done,
+            onSubmitted: (value) => confirm(c),
           ),
         ),
         actions: [
@@ -137,19 +160,7 @@ Future<void> renameDialog({
             child: Text(Strings.cancel),
           ),
           TextButton(
-            onPressed: () async {
-              if (controller.text.trim().isNotEmpty) {
-                Navigator.pop(c);
-
-                await updateListName(
-                  id: counterId,
-                  name: controller.text,
-                  token: state.token,
-                );
-
-                await refresh(context: context, state: state);
-              }
-            },
+            onPressed: () async => confirm(c),
             child: Text(Strings.rename),
           ),
         ],
@@ -164,6 +175,17 @@ Future<void> updateUrlDialog({
 }) async {
   TextEditingController controller = TextEditingController();
 
+  void confirm(BuildContext c) {
+    if (controller.text.trim().isNotEmpty) {
+      Navigator.pop(c);
+
+      BlocProvider.of<HomeBloc>(context).add(UpdatePhoto(
+        url: controller.text,
+        state: state,
+      ));
+    }
+  }
+
   await showDialog(
     context: context,
     builder: (c) {
@@ -172,12 +194,15 @@ Future<void> updateUrlDialog({
         content: SizedBox(
           width: 400,
           child: TextField(
+            autofocus: true,
             controller: controller,
             keyboardType: TextInputType.url,
             decoration: InputDecoration(
               label: Text(Strings.profileUrl),
               hintText: Strings.newUrl,
             ),
+            textInputAction: TextInputAction.done,
+            onSubmitted: (value) => confirm(c),
           ),
         ),
         actions: [
@@ -186,16 +211,7 @@ Future<void> updateUrlDialog({
             child: Text(Strings.cancel),
           ),
           TextButton(
-            onPressed: () async {
-              if (controller.text.trim().isNotEmpty) {
-                Navigator.pop(c);
-
-                BlocProvider.of<HomeBloc>(context).add(UpdatePhoto(
-                  url: controller.text,
-                  state: state,
-                ));
-              }
-            },
+            onPressed: () async => confirm(c),
             child: Text(Strings.rename),
           ),
         ],

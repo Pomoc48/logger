@@ -40,10 +40,12 @@ class LoginView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextField(
+                autofocus: true,
                 controller: username,
                 decoration: InputDecoration(
                   label: Text(Strings.username),
                 ),
+                textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 16),
               TextField(
@@ -52,6 +54,8 @@ class LoginView extends StatelessWidget {
                 decoration: InputDecoration(
                   label: Text(Strings.password),
                 ),
+                textInputAction: TextInputAction.done,
+                onSubmitted: (value) => login(),
               ),
               const SizedBox(height: 16),
               TextButton(
@@ -77,10 +81,12 @@ class LoginView extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
+                autofocus: true,
                 controller: username,
                 decoration: InputDecoration(
                   label: Text(Strings.username),
                 ),
+                textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 16),
               TextField(
@@ -89,6 +95,8 @@ class LoginView extends StatelessWidget {
                 decoration: InputDecoration(
                   label: Text(Strings.password),
                 ),
+                textInputAction: TextInputAction.done,
+                onSubmitted: (value) => login(),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
