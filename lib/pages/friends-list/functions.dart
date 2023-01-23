@@ -28,6 +28,18 @@ Future<void> addNewFriendDialog({
   required FriendsLoaded state,
 }) async {
   TextEditingController controller = TextEditingController();
+
+  void confirm() {
+    if (controller.text.trim().isNotEmpty) {
+      BlocProvider.of<FriendsBloc>(context).add(InsertFriend(
+        username: controller.text,
+        state: state,
+      ));
+
+      Navigator.pop(context);
+    }
+  }
+
   showDialog(
     context: context,
     builder: (context) {
@@ -36,11 +48,14 @@ Future<void> addNewFriendDialog({
         content: SizedBox(
           width: 400,
           child: TextField(
+            autofocus: true,
             controller: controller,
             decoration: InputDecoration(
               label: Text(Strings.friendName),
               hintText: Strings.friendHint,
             ),
+            textInputAction: TextInputAction.done,
+            onSubmitted: (value) => confirm(),
           ),
         ),
         actions: [
@@ -49,16 +64,7 @@ Future<void> addNewFriendDialog({
             child: Text(Strings.cancel),
           ),
           TextButton(
-            onPressed: () {
-              if (controller.text.trim().isNotEmpty) {
-                BlocProvider.of<FriendsBloc>(context).add(InsertFriend(
-                  username: controller.text,
-                  state: state,
-                ));
-
-                Navigator.pop(context);
-              }
-            },
+            onPressed: () => confirm(),
             child: Text(Strings.add),
           ),
         ],

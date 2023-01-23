@@ -85,6 +85,20 @@ class HomeDrawer extends StatelessWidget {
 
             if (value == "connect") {
               TextEditingController controller = TextEditingController();
+
+              void confirm() {
+                if (controller.text.trim().isNotEmpty) {
+                  BlocProvider.of<HomeBloc>(context).add(
+                    CheckPairingCode(
+                      code: controller.text,
+                      token: state.token,
+                    ),
+                  );
+
+                  Navigator.pop(context);
+                }
+              }
+
               showDialog(
                 context: context,
                 builder: (context) {
@@ -98,12 +112,15 @@ class HomeDrawer extends StatelessWidget {
                         children: [
                           Text(Strings.connectMessage),
                           TextField(
+                            autofocus: true,
                             controller: controller,
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               label: Text(Strings.pairingCode),
                               hintText: Strings.pairingHint,
                             ),
+                            textInputAction: TextInputAction.done,
+                            onSubmitted: (value) => confirm(),
                           ),
                         ],
                       ),
@@ -114,18 +131,7 @@ class HomeDrawer extends StatelessWidget {
                         child: Text(Strings.cancel),
                       ),
                       TextButton(
-                        onPressed: () {
-                          if (controller.text.trim().isNotEmpty) {
-                            BlocProvider.of<HomeBloc>(context).add(
-                              CheckPairingCode(
-                                code: controller.text,
-                                token: state.token,
-                              ),
-                            );
-
-                            Navigator.pop(context);
-                          }
-                        },
+                        onPressed: () => confirm(),
                         child: Text(Strings.connect),
                       ),
                     ],

@@ -45,20 +45,25 @@ class RegisterView extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextField(
+                    autofocus: true,
                     controller: username,
                     decoration: InputDecoration(label: Text(Strings.username)),
+                    textInputAction: TextInputAction.next,
                   ),
                   const SizedBox(height: 16),
                   TextField(
                     controller: password,
                     obscureText: true,
                     decoration: InputDecoration(label: Text(Strings.password)),
+                    textInputAction: TextInputAction.next,
                   ),
                   const SizedBox(height: 16),
                   TextField(
                     controller: repeatP,
                     obscureText: true,
                     decoration: InputDecoration(label: Text(Strings.passwordR)),
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (value) => register(mobile),
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
@@ -93,20 +98,25 @@ class RegisterView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextField(
+                autofocus: true,
                 controller: username,
                 decoration: InputDecoration(label: Text(Strings.username)),
+                textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: password,
                 obscureText: true,
                 decoration: InputDecoration(label: Text(Strings.password)),
+                textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: repeatP,
                 obscureText: true,
                 decoration: InputDecoration(label: Text(Strings.passwordR)),
+                textInputAction: TextInputAction.done,
+                onSubmitted: (value) => register(mobile),
               ),
             ],
           ),
