@@ -48,6 +48,7 @@ void main() async {
         ),
         scrollBehavior: const ScrollBehavior().copyWith(
           physics: const BouncingScrollPhysics(),
+          scrollbars: false,
         ),
         routes: {
           Routes.home: (context) => const HomePage(),
