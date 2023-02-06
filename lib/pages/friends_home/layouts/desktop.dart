@@ -4,6 +4,7 @@ import 'package:logger_app/pages/friends_home/bloc/friends_home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/pages/home/widgets/chart.dart';
 import 'package:logger_app/widgets/fader.dart';
+import 'package:marquee_widget/marquee_widget.dart';
 
 class DesktopFriendsHome extends StatelessWidget {
   const DesktopFriendsHome(
@@ -59,14 +60,23 @@ class DesktopFriendsHome extends StatelessWidget {
                         favourite: state.lists[i].favourite,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 15),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          state.lists[i].name,
-                          style: tTheme.titleMedium,
-                          overflow: TextOverflow.ellipsis,
+                        Marquee(
+                          forwardAnimation: Curves.easeInOut,
+                          animationDuration: Duration(
+                            milliseconds: (state.lists[i].name.length * 80),
+                          ),
+                          backDuration: const Duration(milliseconds: 500),
+                          backwardAnimation: Curves.easeOutCirc,
+                          pauseDuration: const Duration(seconds: 1),
+                          child: Text(
+                            state.lists[i].name,
+                            style: tTheme.titleMedium,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         Text(
                           subtitleCount(state.lists[i].count),
