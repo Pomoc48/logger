@@ -6,6 +6,7 @@ import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/pages/home/widgets/chart.dart';
 import 'package:logger_app/widgets/divider.dart';
 import 'package:logger_app/widgets/fader.dart';
+import 'package:marquee_widget/marquee_widget.dart';
 
 class MobileFriendsHome extends StatelessWidget {
   const MobileFriendsHome({super.key, required this.state});
@@ -20,6 +21,7 @@ class MobileFriendsHome extends StatelessWidget {
     //     press: () async => {},
     //   );
     // }
+    // TODO: add empty list widget
 
     return Fader(
       child: Scaffold(
@@ -48,9 +50,18 @@ class MobileFriendsHome extends StatelessWidget {
                       favourite: state.lists[i].favourite,
                     ),
                   ),
-                  title: Text(
-                    state.lists[i].name,
-                    overflow: TextOverflow.ellipsis,
+                  title: Marquee(
+                    forwardAnimation: Curves.easeInOut,
+                    animationDuration: Duration(
+                      milliseconds: (state.lists[i].name.length * 80),
+                    ),
+                    backDuration: const Duration(milliseconds: 500),
+                    backwardAnimation: Curves.easeOutCirc,
+                    pauseDuration: const Duration(seconds: 1),
+                    child: Text(
+                      state.lists[i].name,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   subtitle: Text(subtitleCount(state.lists[i].count)),
                 ),
