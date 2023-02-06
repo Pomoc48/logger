@@ -11,6 +11,7 @@ import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/drawer.dart';
 import 'package:logger_app/widgets/menu_item.dart';
+import 'package:marquee_widget/marquee_widget.dart';
 
 class DesktopHome extends StatelessWidget {
   const DesktopHome({super.key, required this.state, required this.width});
@@ -107,7 +108,7 @@ class DesktopHome extends StatelessWidget {
                         favourite: state.lists[i].favourite,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 15),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -121,10 +122,20 @@ class DesktopHome extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                state.lists[i].name,
-                                style: tTheme.titleMedium,
-                                overflow: TextOverflow.ellipsis,
+                              Marquee(
+                                forwardAnimation: Curves.easeInOut,
+                                animationDuration: Duration(
+                                  milliseconds:
+                                      (state.lists[i].name.length * 80),
+                                ),
+                                backDuration: const Duration(milliseconds: 500),
+                                backwardAnimation: Curves.easeOutCirc,
+                                pauseDuration: const Duration(seconds: 1),
+                                child: Text(
+                                  state.lists[i].name,
+                                  style: tTheme.titleMedium,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                               Text(
                                 subtitleCount(state.lists[i].count),
