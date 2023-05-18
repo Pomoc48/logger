@@ -30,10 +30,10 @@ More app screenshots in the [screenshots directory](screenshots).
 The application has a [Wear OS](https://wearos.google.com/)
 version available to provide a quick way for adding list items.
 \
-More info: [https://github.com/Pomoc48/logger_app_wear](https://github.com/Pomoc48/logger_app_wear)
+More info: [https://github.com/Pomoc48/logger-wear](https://github.com/Pomoc48/logger-wear)
 
 ## License
 
 This project is licensed under the GNU General Public License.
 \
-Please see the [licence file](LICENSE) for more information.
+Please see the [license file](LICENSE) for more information.
