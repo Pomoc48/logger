@@ -2,7 +2,7 @@
 
 Simple Flutter application for logging your life.
 \
-Live preview: [https://loggerapp.lukawski.xyz/](https://loggerapp.lukawski.xyz/)
+Live preview: [https://logger.mlukawski.com/](https://logger.mlukawski.com/)
 
 ![Banner image](screenshots/banner.png)
 

@@ -6,7 +6,7 @@ import 'package:logger_app/models/friend.dart';
 
 Future<Map> getFriends({required String token}) async {
   Response response = await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/friends/",
+    url: "https://logger.mlukawski.com/friends/",
     headers: {"Token": token},
     type: RequestType.get,
   );
@@ -31,7 +31,7 @@ Future<Map> addFriend({
   required String username,
 }) async {
   return await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/friends/?username=$username",
+    url: "https://logger.mlukawski.com/friends/?username=$username",
     headers: {"Token": token},
     type: RequestType.post,
   );
@@ -42,7 +42,7 @@ Future<Map> acceptFriend({
   required int id,
 }) async {
   return await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/friends/?id=$id",
+    url: "https://logger.mlukawski.com/friends/?id=$id",
     headers: {"Token": token},
     type: RequestType.patch,
   );
@@ -53,7 +53,7 @@ Future<Map> removeFriend({
   required int id,
 }) async {
   return await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/friends/?id=$id",
+    url: "https://logger.mlukawski.com/friends/?id=$id",
     headers: {"Token": token},
     type: RequestType.delete,
   );

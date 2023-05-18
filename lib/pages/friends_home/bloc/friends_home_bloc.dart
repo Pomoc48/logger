@@ -48,7 +48,7 @@ Future<Map> getFriendLists({
   required int friendId,
 }) async {
   Response response = await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/friend-lists/?friend_id=$friendId",
+    url: "https://logger.mlukawski.com/friend-lists/?friend_id=$friendId",
     headers: {"Token": token},
     type: RequestType.get,
   );
