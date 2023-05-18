@@ -4,7 +4,7 @@ import 'package:http/http.dart';
 import 'package:logger_app/functions.dart';
 import 'package:logger_app/models/item.dart';
 
-String backend = "https://loggerapp.lukawski.xyz/items/";
+String backend = "https://logger.mlukawski.com/items/";
 
 Future<Map> getItems({required int listId, required String token}) async {
   Response response = await makeRequest(

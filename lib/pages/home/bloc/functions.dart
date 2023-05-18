@@ -13,7 +13,7 @@ Future<Map> getToken() async {
   }
 
   Response response = await post(
-    Uri.parse("https://loggerapp.lukawski.xyz/refresh/"),
+    Uri.parse("https://logger.mlukawski.com/refresh/"),
     headers: {"Rtoken": refreshToken},
   );
 
@@ -25,7 +25,7 @@ Future<Map> checkUpdate() async {
   String version = packageInfo.version;
 
   Response response = await get(
-    Uri.parse("https://loggerapp.lukawski.xyz/version/?v=$version"),
+    Uri.parse("https://logger.mlukawski.com/version/?v=$version"),
   );
 
   if (response.statusCode == 400) {
@@ -46,7 +46,7 @@ Future<Map> manualLoginResult({
   required String password,
 }) async {
   Response response = await post(
-    Uri.parse("https://loggerapp.lukawski.xyz/login/"),
+    Uri.parse("https://logger.mlukawski.com/login/"),
     headers: {"Username": username, "Password": password},
   );
 
@@ -58,7 +58,7 @@ Future<Map> registerResult({
   required String password,
 }) async {
   return await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/register/",
+    url: "https://logger.mlukawski.com/register/",
     headers: {"Username": username, "Password": password},
     type: RequestType.post,
   );
@@ -66,7 +66,7 @@ Future<Map> registerResult({
 
 Future<Map> getLists({required String token}) async {
   Response response = await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/lists/",
+    url: "https://logger.mlukawski.com/lists/",
     headers: {"Token": token},
     type: RequestType.get,
   );
@@ -91,7 +91,7 @@ Future<Map> addList({
   required String token,
 }) async {
   return await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/lists/?list_name=$name",
+    url: "https://logger.mlukawski.com/lists/?list_name=$name",
     headers: {"Token": token},
     type: RequestType.post,
   );
@@ -102,7 +102,7 @@ Future<Map> removeList({
   required String token,
 }) async {
   return await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/lists/?list_id=$id",
+    url: "https://logger.mlukawski.com/lists/?list_id=$id",
     headers: {"Token": token},
     type: RequestType.delete,
   );
@@ -114,7 +114,7 @@ Future<Map> updateListName({
   required String token,
 }) async {
   return await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/lists/?list_name=$name&list_id=$id",
+    url: "https://logger.mlukawski.com/lists/?list_name=$name&list_id=$id",
     headers: {"Token": token},
     type: RequestType.patch,
   );
@@ -128,7 +128,7 @@ Future<Map> updateListFav({
   int fav = favourite ? 1 : 0;
 
   return await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/lists/?favourite=$fav&list_id=$id",
+    url: "https://logger.mlukawski.com/lists/?favourite=$fav&list_id=$id",
     headers: {"Token": token},
     type: RequestType.patch,
   );
@@ -141,7 +141,7 @@ Future<Map> updatePhoto({
   String urlEscaped = url.replaceAll("&", "%26");
 
   return await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/photo/?url=$urlEscaped",
+    url: "https://logger.mlukawski.com/photo/?url=$urlEscaped",
     headers: {"Token": token},
     type: RequestType.post,
   );
@@ -212,7 +212,7 @@ Future<Map> checkPairingCode({
   required String token,
 }) async {
   return await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/connect/?pin=$code",
+    url: "https://logger.mlukawski.com/connect/?pin=$code",
     headers: {"Token": token},
     type: RequestType.post,
   );
