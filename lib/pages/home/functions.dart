@@ -1,29 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger_app/models/list.dart';
 import 'package:logger_app/pages/home/bloc/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/strings.dart';
-
-Future<void> refresh({
-  required BuildContext context,
-  required HomeLoaded state,
-}) async {
-  try {
-    Map map = await getLists(token: state.token);
-    List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
-    sortList(list);
-    // ignore: use_build_context_synchronously
-    BlocProvider.of<HomeBloc>(context).add(UpdateHome(
-      profileUrl: state.profileUrl,
-      username: state.username,
-      lists: list,
-      token: map["token"],
-    ));
-  } catch (e) {
-    BlocProvider.of<HomeBloc>(context).add(ReportHomeError(state.token));
-  }
-}
 
 Future<void> addNewListDialog({
   required BuildContext context,
@@ -130,8 +109,6 @@ Future<void> renameDialog({
         name: controller.text,
         token: state.token,
       );
-
-      await refresh(context: context, state: state);
     }
   }
 

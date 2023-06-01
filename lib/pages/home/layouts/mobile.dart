@@ -47,136 +47,124 @@ class MobileHome extends StatelessWidget {
           icon: const Icon(Icons.add),
           label: Text(Strings.newItemFAB),
         ),
-        body: RefreshIndicator(
-          onRefresh: () async => refresh(
-            context: context,
-            state: state,
-          ),
-          child: ListView.separated(
-            separatorBuilder: (c, i) => const ListDivider(height: 8),
-            itemBuilder: (context, i) {
-              return Padding(
-                padding: EdgeInsets.only(
-                  top: i == 0 ? 8 : 0,
-                  bottom: i == state.lists.length - 1 ? 88 : 0,
-                ),
-                child: SizedBox(
-                  height: 64 + 8,
-                  child: ListTile(
-                    contentPadding:
-                        const EdgeInsets.only(left: 16, right: 16, top: 4),
-                    onTap: () async {
-                      BlocProvider.of<ListBloc>(context).add(LoadList(
-                        list: state.lists[i],
-                        token: state.token,
-                      ));
-
-                      await Navigator.pushNamed(context, Routes.list);
-                      refresh(context: context, state: state);
-                    },
-                    onLongPress: () async {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext c) {
-                          return Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const DragHandle(),
-                              ModalList(
-                                icon: Icons.bolt,
-                                title: Strings.quickAdd,
-                                onTap: () async => quickItem(
-                                  context: context,
-                                  list: state.lists[i],
-                                  state: state,
-                                ),
-                              ),
-                              ModalList(
-                                icon: Icons.star,
-                                title: getFavButtonString(
-                                  favourite: state.lists[i].favourite,
-                                ),
-                                onTap: () async {
-                                  await updateListFav(
-                                    id: state.lists[i].id,
-                                    favourite: !state.lists[i].favourite,
-                                    token: state.token,
-                                  );
-
-                                  await refresh(
-                                    context: context,
-                                    state: state,
-                                  );
-                                },
-                              ),
-                              ModalList(
-                                icon: Icons.edit,
-                                title: Strings.changeName,
-                                onTap: () => renameDialog(
-                                  context: context,
-                                  counterId: state.lists[i].id,
-                                  state: state,
-                                  oldName: state.lists[i].name,
-                                ),
-                              ),
-                              ModalList(
-                                icon: Icons.delete,
-                                title: Strings.removeForever,
-                                onTap: () async {
-                                  bool delete = await confirmDismiss(
-                                    context: context,
-                                    message: Strings.areSure,
-                                  );
-
-                                  if (delete) {
-                                    BlocProvider.of<HomeBloc>(context).add(
-                                      RemoveFromHome(
-                                        id: state.lists[i].id,
-                                        state: state,
-                                      ),
-                                    );
-                                  }
-                                },
-                              ),
-                              const SizedBox(height: 16),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    leading: QuickInsert(
+        body: ListView.separated(
+          separatorBuilder: (c, i) => const ListDivider(height: 8),
+          itemBuilder: (context, i) {
+            return Padding(
+              padding: EdgeInsets.only(
+                top: i == 0 ? 8 : 0,
+                bottom: i == state.lists.length - 1 ? 88 : 0,
+              ),
+              child: SizedBox(
+                height: 64 + 8,
+                child: ListTile(
+                  contentPadding:
+                      const EdgeInsets.only(left: 16, right: 16, top: 4),
+                  onTap: () async {
+                    BlocProvider.of<ListBloc>(context).add(LoadList(
                       list: state.lists[i],
-                      state: state,
+                      token: state.token,
+                    ));
+
+                    await Navigator.pushNamed(context, Routes.list);
+                  },
+                  onLongPress: () async {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext c) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const DragHandle(),
+                            ModalList(
+                              icon: Icons.bolt,
+                              title: Strings.quickAdd,
+                              onTap: () async => quickItem(
+                                context: context,
+                                list: state.lists[i],
+                                state: state,
+                              ),
+                            ),
+                            ModalList(
+                              icon: Icons.star,
+                              title: getFavButtonString(
+                                favourite: state.lists[i].favourite,
+                              ),
+                              onTap: () async {
+                                await updateListFav(
+                                  id: state.lists[i].id,
+                                  favourite: !state.lists[i].favourite,
+                                  token: state.token,
+                                );
+                              },
+                            ),
+                            ModalList(
+                              icon: Icons.edit,
+                              title: Strings.changeName,
+                              onTap: () => renameDialog(
+                                context: context,
+                                counterId: state.lists[i].id,
+                                state: state,
+                                oldName: state.lists[i].name,
+                              ),
+                            ),
+                            ModalList(
+                              icon: Icons.delete,
+                              title: Strings.removeForever,
+                              onTap: () async {
+                                bool delete = await confirmDismiss(
+                                  context: context,
+                                  message: Strings.areSure,
+                                );
+
+                                if (delete) {
+                                  BlocProvider.of<HomeBloc>(context).add(
+                                    RemoveFromHome(
+                                      id: state.lists[i].id,
+                                      state: state,
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                            const SizedBox(height: 16),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  leading: QuickInsert(
+                    list: state.lists[i],
+                    state: state,
+                    favourite: state.lists[i].favourite,
+                  ),
+                  trailing: SizedBox(
+                    width: 120,
+                    height: 28,
+                    child: LineChart(
+                      data: state.lists[i].chartData,
                       favourite: state.lists[i].favourite,
                     ),
-                    trailing: SizedBox(
-                      width: 120,
-                      height: 28,
-                      child: LineChart(
-                        data: state.lists[i].chartData,
-                        favourite: state.lists[i].favourite,
-                      ),
-                    ),
-                    title: Marquee(
-                      forwardAnimation: Curves.easeInOut,
-                      animationDuration: Duration(
-                        milliseconds: (state.lists[i].name.length * 80),
-                      ),
-                      backDuration: const Duration(milliseconds: 500),
-                      backwardAnimation: Curves.easeOutCirc,
-                      pauseDuration: const Duration(seconds: 1),
-                      child: Text(
-                        state.lists[i].name,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    subtitle: Text(subtitleCount(state.lists[i].count)),
                   ),
+                  title: Marquee(
+                    forwardAnimation: Curves.easeInOut,
+                    animationDuration: Duration(
+                      milliseconds: (state.lists[i].name.length * 80),
+                    ),
+                    backDuration: const Duration(milliseconds: 500),
+                    backwardAnimation: Curves.easeOutCirc,
+                    pauseDuration: const Duration(seconds: 1),
+                    child: Text(
+                      state.lists[i].name,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  subtitle: Text(subtitleCount(state.lists[i].count)),
                 ),
-              );
-            },
-            itemCount: state.lists.length,
-          ),
+              ),
+            );
+          },
+          itemCount: state.lists.length,
         ),
       ),
     );

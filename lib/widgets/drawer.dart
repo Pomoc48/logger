@@ -6,7 +6,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:logger_app/models/list.dart';
 import 'package:logger_app/pages/home/bloc/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
-import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/avatar.dart';
 import 'package:logger_app/widgets/divider.dart';
@@ -66,13 +65,6 @@ class HomeDrawer extends StatelessWidget {
           borderRadius: BorderRadius.circular(999),
           onTap: () async {
             if (!desktop) Navigator.pop(context);
-
-            if (value == "refresh") {
-              refresh(
-                context: context,
-                state: state,
-              );
-            }
 
             if (value == "sort") {
               showDialog(
@@ -184,11 +176,6 @@ class HomeDrawer extends StatelessWidget {
           ),
           const ListDivider(),
           const SizedBox(height: 12),
-          listTile(
-            iconData: Icons.refresh,
-            label: Strings.refresh,
-            value: "refresh",
-          ),
           listTile(
             iconData: Icons.sort,
             label: Strings.changeSorting,

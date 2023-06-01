@@ -92,8 +92,6 @@ class DesktopHome extends StatelessWidget {
                 ));
 
                 await Navigator.pushNamed(context, Routes.list);
-                // ignore: use_build_context_synchronously
-                refresh(context: context, state: state);
               },
               borderRadius: BorderRadius.circular(12),
               child: Container(
@@ -196,8 +194,6 @@ class DesktopHome extends StatelessWidget {
                                 favourite: !state.lists[i].favourite,
                                 token: state.token,
                               );
-
-                              await refresh(context: context, state: state);
                             }
 
                             if (value == "delete") {
