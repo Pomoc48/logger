@@ -56,7 +56,7 @@ List<double> getChartData(List<ListItem> items) {
     DateTime now = DateTime.now().subtract(Duration(days: a));
     doubleList.add(itemCount.toDouble());
 
-    if (items.any((item) => _matchDates(item.timestamp, now))) {
+    if (items.any((item) => _matchDates(item.date, now))) {
       itemCount -= _countItemsInOneDay(now, items);
     }
   }
@@ -68,7 +68,7 @@ int _countItemsInOneDay(DateTime date, List<ListItem> items) {
   int count = 0;
 
   for (ListItem element in items) {
-    if (_matchDates(element.timestamp, date)) count++;
+    if (_matchDates(element.date, date)) count++;
   }
 
   return count;

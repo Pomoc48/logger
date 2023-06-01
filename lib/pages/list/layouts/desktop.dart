@@ -55,7 +55,7 @@ class DesktopList extends StatelessWidget {
                           child: Icon(
                             Icons.add,
                             color: favColor(
-                              favourite: state.list.favourite,
+                              favourite: state.list.favorite,
                               context: context,
                             ),
                           ),
@@ -69,10 +69,10 @@ class DesktopList extends StatelessWidget {
                     return ListTile(
                       leading: ListLeading(
                         number: state.itemList[i].number,
-                        favourite: state.list.favourite,
+                        favourite: state.list.favorite,
                       ),
-                      title: Text(dateTitle(state.itemList[i].timestamp)),
-                      subtitle: Text(dateSubtitle(state.itemList[i].timestamp)),
+                      title: Text(dateTitle(state.itemList[i].date)),
+                      subtitle: Text(dateSubtitle(state.itemList[i].date)),
                       trailing: ListRemove(index: i, state: state),
                     );
                   },
@@ -89,7 +89,7 @@ class DesktopList extends StatelessWidget {
                   ),
                   child: LineChart(
                     data: state.chartData,
-                    favourite: state.list.favourite,
+                    favourite: state.list.favorite,
                   ),
                 ),
               ),

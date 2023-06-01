@@ -88,12 +88,12 @@ class MobileHome extends StatelessWidget {
                             ModalList(
                               icon: Icons.star,
                               title: getFavButtonString(
-                                favourite: state.lists[i].favourite,
+                                favourite: state.lists[i].favorite,
                               ),
                               onTap: () async {
                                 await updateListFav(
                                   id: state.lists[i].id,
-                                  favourite: !state.lists[i].favourite,
+                                  favourite: !state.lists[i].favorite,
                                   token: state.token,
                                 );
                               },
@@ -136,14 +136,14 @@ class MobileHome extends StatelessWidget {
                   leading: QuickInsert(
                     list: state.lists[i],
                     state: state,
-                    favourite: state.lists[i].favourite,
+                    favourite: state.lists[i].favorite,
                   ),
                   trailing: SizedBox(
                     width: 120,
                     height: 28,
                     child: LineChart(
                       data: state.lists[i].chartData,
-                      favourite: state.lists[i].favourite,
+                      favourite: state.lists[i].favorite,
                     ),
                   ),
                   title: Marquee(

@@ -188,8 +188,8 @@ void sortList(List<ListOfItems> list) {
 
   if (sortType == SortingType.dateASC.name) {
     list.sort((a, b) {
-      int bTime = b.timestamp.millisecondsSinceEpoch;
-      int aTime = a.timestamp.millisecondsSinceEpoch;
+      int bTime = b.creationDate.millisecondsSinceEpoch;
+      int aTime = a.creationDate.millisecondsSinceEpoch;
       return bTime.compareTo(aTime);
     });
     return;
@@ -197,8 +197,8 @@ void sortList(List<ListOfItems> list) {
 
   if (sortType == SortingType.dateDESC.name) {
     list.sort((a, b) {
-      int bTime = b.timestamp.millisecondsSinceEpoch;
-      int aTime = a.timestamp.millisecondsSinceEpoch;
+      int bTime = b.creationDate.millisecondsSinceEpoch;
+      int aTime = a.creationDate.millisecondsSinceEpoch;
       return aTime.compareTo(bTime);
     });
     return;

@@ -79,7 +79,7 @@ class DesktopHome extends StatelessWidget {
               border: Border.all(
                 color: favColor(
                   context: context,
-                  favourite: state.lists[i].favourite,
+                  favourite: state.lists[i].favorite,
                 ).withOpacity(0.25),
                 width: 2,
               ),
@@ -103,7 +103,7 @@ class DesktopHome extends StatelessWidget {
                       height: 70,
                       child: LineChart(
                         data: state.lists[i].chartData,
-                        favourite: state.lists[i].favourite,
+                        favourite: state.lists[i].favorite,
                       ),
                     ),
                     const SizedBox(height: 15),
@@ -113,7 +113,7 @@ class DesktopHome extends StatelessWidget {
                         QuickInsert(
                           list: state.lists[i],
                           state: state,
-                          favourite: state.lists[i].favourite,
+                          favourite: state.lists[i].favorite,
                         ),
                         const SizedBox(width: 8),
                         Expanded(
@@ -153,7 +153,7 @@ class DesktopHome extends StatelessWidget {
                               ),
                               menuItem(
                                 text: getFavButtonString(
-                                  favourite: state.lists[i].favourite,
+                                  favourite: state.lists[i].favorite,
                                 ),
                                 iconData: Icons.star,
                                 value: "favorite",
@@ -191,7 +191,7 @@ class DesktopHome extends StatelessWidget {
                             if (value == "favorite") {
                               await updateListFav(
                                 id: state.lists[i].id,
-                                favourite: !state.lists[i].favourite,
+                                favourite: !state.lists[i].favorite,
                                 token: state.token,
                               );
                             }

@@ -33,7 +33,7 @@ class MobileList extends StatelessWidget {
         appBar: AppBar(
           flexibleSpace: LineChart(
             data: state.chartData,
-            favourite: state.list.favourite,
+            favourite: state.list.favorite,
           ),
           title: Text(state.list.name),
           scrolledUnderElevation: 0,
@@ -44,7 +44,7 @@ class MobileList extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton.extended(
           backgroundColor: favColor(
-            favourite: state.list.favourite,
+            favourite: state.list.favorite,
             context: context,
             containerColor: true,
           ),
@@ -57,7 +57,7 @@ class MobileList extends StatelessWidget {
           label: Text(Strings.newItemFAB),
         ),
         body: RefreshIndicator(
-          color: favColor(favourite: state.list.favourite, context: context),
+          color: favColor(favourite: state.list.favorite, context: context),
           onRefresh: () async => refresh(
             context: context,
             list: state.list,
@@ -74,10 +74,10 @@ class MobileList extends StatelessWidget {
                 child: ListTile(
                   leading: ListLeading(
                     number: state.itemList[i].number,
-                    favourite: state.list.favourite,
+                    favourite: state.list.favorite,
                   ),
-                  title: Text(dateTitle(state.itemList[i].timestamp)),
-                  subtitle: Text(dateSubtitle(state.itemList[i].timestamp)),
+                  title: Text(dateTitle(state.itemList[i].date)),
+                  subtitle: Text(dateSubtitle(state.itemList[i].date)),
                   trailing: ListRemove(index: i, state: state),
                 ),
               );
