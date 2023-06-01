@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/functions.dart';
-import 'package:logger_app/pages/list/bloc/list_bloc.dart';
+import 'package:logger_app/models/list.dart';
+import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/list/layouts/desktop.dart';
 import 'package:logger_app/pages/list/layouts/mobile.dart';
 import 'package:logger_app/widgets/loading.dart';
 
 class ListPage extends StatelessWidget {
-  const ListPage({super.key});
+  const ListPage({super.key, required this.id});
+
+  final Key id;
 
   @override
   Widget build(BuildContext context) {
@@ -15,29 +18,24 @@ class ListPage extends StatelessWidget {
       builder: (context, constraints) {
         bool mobile = constraints.maxWidth < 600;
 
-        return BlocConsumer<ListBloc, ListState>(
+        return BlocConsumer<HomeBloc, HomeState>(
           listener: (context, state) {
-            if (state is ListMessage) {
+            if (state is HomeMessage) {
               showSnack(context, state.message, mobile);
-            }
-
-            if (state is ListError) {
-              Navigator.pop(context);
             }
           },
           buildWhen: (previous, current) {
-            if (current is ListMessage) return false;
+            if (current is HomeMessage) return false;
             return true;
           },
           builder: (context, state) {
-            if (state is ListLoaded) {
-              if (mobile) return MobileList(state: state);
+            if (state is HomeLoaded) {
+              ListOfItems list = state.lists.singleWhere(
+                (list) => list.id == id,
+              );
 
-              return DesktopList(state: state, width: constraints.maxWidth);
-            }
-
-            if (state is ListInitial) {
-              return const PageLoading();
+              if (mobile) return MobileList(list: list);
+              return DesktopList(list: list, width: constraints.maxWidth);
             }
 
             return const PageLoading();

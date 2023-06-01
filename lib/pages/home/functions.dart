@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger_app/pages/home/bloc/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/strings.dart';
 
-Future<void> addNewListDialog({
-  required BuildContext context,
-  required HomeLoaded state,
-}) async {
+Future<void> addNewListDialog({required BuildContext context}) async {
   TextEditingController controller = TextEditingController();
 
   void confirm() {
     if (controller.text.trim().isNotEmpty) {
       BlocProvider.of<HomeBloc>(context).add(InsertHome(
-        name: controller.text,
-        state: state,
+        name: controller.text.trim(),
       ));
 
       Navigator.pop(context);
@@ -55,7 +50,7 @@ Future<void> addNewListDialog({
   );
 }
 
-Future<bool> confirmDismiss({
+Future<bool> confirmDelete({
   required BuildContext context,
   required String message,
 }) async {
@@ -93,8 +88,7 @@ Future<bool> confirmDismiss({
 
 Future<void> renameDialog({
   required BuildContext context,
-  required int counterId,
-  required HomeLoaded state,
+  required Key listId,
   required String oldName,
 }) async {
   TextEditingController controller = TextEditingController();
@@ -104,11 +98,11 @@ Future<void> renameDialog({
     if (controller.text.trim().isNotEmpty) {
       Navigator.pop(c);
 
-      await updateListName(
-        id: counterId,
-        name: controller.text,
-        token: state.token,
-      );
+      // await updateListName(
+      //   id: counterId,
+      //   name: controller.text,
+      //   token: state.token,
+      // );
     }
   }
 

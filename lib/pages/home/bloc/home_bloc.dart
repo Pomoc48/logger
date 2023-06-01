@@ -1,192 +1,142 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:logger_app/enums/list_sorting.dart';
+import 'package:logger_app/models/item.dart';
 import 'package:logger_app/models/list.dart';
-import 'package:logger_app/pages/home/bloc/functions.dart';
-import 'package:logger_app/pages/list/bloc/functions.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitial()) {
-    on<AutoLogin>((event, emit) async {
-      Map response = await getToken();
+    on<LoadHome>((event, emit) async {
+      GetStorage gs = GetStorage();
 
-      if (response["success"]) {
-        String token = response["token"];
-        String username = response["username"];
-        String profileUrl = response["profile_url"];
+      String? sortType = gs.read("sortType");
+      sortType ??= SortingType.name.name;
 
-        try {
-          Map map = await getLists(token: token);
-          List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
-          sortList(list);
+      List<ListOfItems> list = [];
 
-          emit(HomeLoaded(
-            lists: list,
-            token: map["token"],
-            username: username,
-            profileUrl: profileUrl,
-          ));
+      List? serialized = gs.read("listData");
 
-          Map map2 = await checkUpdate();
-          if (!map2["success"]) {
-            emit(HomeMessage(map2["message"], map2["link"]));
-          }
-        } catch (e) {
-          emit(HomeError(token: token));
-        }
-      } else {
-        emit(HomeLoginRequired());
+      if (serialized != null) {
+        list = List<ListOfItems>.from(
+            serialized.map((e) => ListOfItems.fromMap(e)));
       }
+
+      List<ListOfItems> sorted = _sortList(list, sortType);
+
+      emit(HomeLoaded(lists: sorted));
     });
 
-    on<RequestLogin>((event, emit) async {
-      Map response = await manualLoginResult(
-        username: event.username,
-        password: event.password,
+    on<InsertHome>((event, emit) {
+      ListOfItems listOfItems = ListOfItems(
+        id: UniqueKey(),
+        name: event.name,
+        favorite: false,
+        itemCount: 0,
+        creationDate: DateTime.now(),
+        dates: const [],
       );
 
-      if (response["success"]) {
-        String token = response["token"];
-        try {
-          Map map = await getLists(token: token);
-          List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
-          sortList(list);
+      List<ListOfItems> newState = List.from((state as HomeLoaded).lists);
+      newState.add(listOfItems);
 
-          emit(HomeLoaded(
-            lists: list,
-            token: map["token"],
-            username: response["username"],
-            profileUrl: response["profile_url"],
-          ));
-        } catch (e) {
-          emit(HomeError(token: token));
-        }
-      } else {
-        emit(HomeMessage(response["message"]));
-      }
-    });
-
-    on<RequestRegister>((event, emit) async {
-      Map response = await registerResult(
-        username: event.username,
-        password: event.password,
-      );
-
-      emit(RegisterResults(
-        registered: response["success"],
-        message: response["message"],
-      ));
-    });
-
-    on<UpdateHome>((event, emit) {
-      emit(HomeLoaded(
-        profileUrl: event.profileUrl,
-        lists: event.lists,
-        token: event.token,
-        username: event.username,
-      ));
-    });
-
-    on<InsertHome>((event, emit) async {
-      try {
-        Map response = await addList(
-          name: event.name,
-          token: event.state.token,
-        );
-
-        if (response["success"]) {
-          Map map = await getLists(token: response["token"]);
-          List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
-          sortList(list);
-
-          emit(HomeLoaded(
-            username: event.state.username,
-            profileUrl: event.state.profileUrl,
-            lists: list,
-            token: map["token"],
-          ));
-        } else {
-          emit(HomeMessage(response["message"]));
-        }
-      } catch (e) {
-        emit(HomeError(token: event.state.token));
-      }
+      emit(HomeLoaded(lists: newState));
     });
 
     on<QuickInsertHome>((event, emit) async {
-      try {
-        Map response = await addItem(
-          listId: event.list.id,
-          timestamp: event.timestamp,
-          token: event.state.token,
-        );
-
-        if (response["success"]) {
-          Map map = await getLists(token: response["token"]);
-          List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
-          sortList(list);
-
-          emit(HomeLoaded(
-            profileUrl: event.state.profileUrl,
-            username: event.state.username,
-            lists: list,
-            token: map["token"],
-          ));
-        } else {
-          emit(HomeMessage(response["message"]));
-        }
-      } catch (e) {
-        emit(HomeError(token: event.state.token));
-      }
+      //TODO: do some loading
     });
 
     on<RemoveFromHome>((event, emit) async {
-      try {
-        Map response = await removeList(
-          id: event.id,
-          token: event.state.token,
-        );
+      List<ListOfItems> list = (state as HomeLoaded).lists;
+      list.removeWhere((element) => element.id == event.id);
 
-        if (response["success"]) {
-          Map map = await getLists(token: response["token"]);
-          List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
-          sortList(list);
-
-          emit(HomeLoaded(
-            profileUrl: event.state.profileUrl,
-            username: event.state.username,
-            lists: list,
-            token: map["token"],
-          ));
-        } else {
-          emit(HomeMessage(response["message"]));
-        }
-      } catch (e) {
-        emit(HomeError(token: event.state.token));
-      }
-    });
-
-    on<ReportHomeError>((event, emit) {
-      emit(HomeError(token: event.token));
-    });
-
-    on<ReportLogout>((event, emit) async {
-      await forgetSavedToken();
-      emit(HomeLoginRequired());
+      emit(HomeLoaded(lists: list));
     });
 
     on<ChangeSort>((event, emit) {
-      List<ListOfItems> list = List<ListOfItems>.from(event.state.lists);
-      sortList(list);
+      List<ListOfItems> sorted = _sortList(
+        (state as HomeLoaded).lists,
+        event.sortingType.name,
+      );
 
-      emit(HomeLoaded(
-        profileUrl: event.state.profileUrl,
-        username: event.state.username,
-        lists: list,
-        token: event.state.token,
-      ));
+      emit(HomeLoaded(lists: sorted));
+
+      GetStorage().write("sortType", event.sortingType.name);
     });
   }
+}
+
+List<ListOfItems> _sortList(
+  List<ListOfItems> list,
+  String sortTypeName,
+) {
+  if (sortTypeName == SortingType.countASC.name) {
+    list.sort((a, b) => b.itemCount.compareTo(a.itemCount));
+  }
+
+  if (sortTypeName == SortingType.countDESC.name) {
+    list.sort((a, b) => a.itemCount.compareTo(b.itemCount));
+  }
+
+  if (sortTypeName == SortingType.dateASC.name) {
+    list.sort((a, b) {
+      int bTime = b.creationDate.millisecondsSinceEpoch;
+      int aTime = a.creationDate.millisecondsSinceEpoch;
+
+      return bTime.compareTo(aTime);
+    });
+  }
+
+  if (sortTypeName == SortingType.dateDESC.name) {
+    list.sort((a, b) {
+      int bTime = b.creationDate.millisecondsSinceEpoch;
+      int aTime = a.creationDate.millisecondsSinceEpoch;
+
+      return aTime.compareTo(bTime);
+    });
+  }
+
+  if (sortTypeName == SortingType.name.name) {
+    list.sort((a, b) => a.name.compareTo(b.name));
+  }
+
+  return list;
+}
+
+List<double> _getChartData(List<ListItem> items) {
+  int itemCount = items.length;
+  List<double> doubleList = [];
+
+  for (int a = 0; a < 30; a++) {
+    DateTime now = DateTime.now().subtract(Duration(days: a));
+    doubleList.add(itemCount.toDouble());
+
+    if (items.any((item) => _matchDates(item.date, now))) {
+      itemCount -= _countItemsInOneDay(now, items);
+    }
+  }
+
+  return List.from(doubleList.reversed);
+}
+
+int _countItemsInOneDay(DateTime date, List<ListItem> items) {
+  int count = 0;
+
+  for (ListItem element in items) {
+    if (_matchDates(element.date, date)) count++;
+  }
+
+  return count;
+}
+
+bool _matchDates(DateTime d1, DateTime d2) {
+  if (d1.day != d2.day) return false;
+  if (d1.month != d2.month) return false;
+  if (d1.year != d2.year) return false;
+  return true;
 }

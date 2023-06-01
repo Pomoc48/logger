@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logger_app/functions.dart';
-import 'package:logger_app/pages/list/bloc/list_bloc.dart';
+import 'package:logger_app/models/list.dart';
 import 'package:logger_app/pages/list/functions.dart';
 import 'package:logger_app/pages/list/widgets/chart.dart';
 import 'package:logger_app/pages/list/widgets/trailing_delete.dart';
@@ -10,9 +10,9 @@ import 'package:logger_app/widgets/fader.dart';
 import 'package:logger_app/widgets/leading.dart';
 
 class DesktopList extends StatelessWidget {
-  const DesktopList({super.key, required this.state, required this.width});
+  const DesktopList({super.key, required this.list, required this.width});
 
-  final ListLoaded state;
+  final ListOfItems list;
   final double width;
 
   @override
@@ -22,7 +22,7 @@ class DesktopList extends StatelessWidget {
     return Fader(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(state.list.name),
+          title: Text(list.name),
           scrolledUnderElevation: 0,
         ),
         body: Padding(
@@ -43,8 +43,7 @@ class DesktopList extends StatelessWidget {
                       return ListTile(
                         onTap: () => addNewItemDialog(
                           context: context,
-                          list: state.list,
-                          token: state.token,
+                          list: list,
                         ),
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16,
@@ -55,7 +54,7 @@ class DesktopList extends StatelessWidget {
                           child: Icon(
                             Icons.add,
                             color: favColor(
-                              favourite: state.list.favorite,
+                              favorite: list.favorite,
                               context: context,
                             ),
                           ),
@@ -68,15 +67,18 @@ class DesktopList extends StatelessWidget {
 
                     return ListTile(
                       leading: ListLeading(
-                        number: state.itemList[i].number,
-                        favourite: state.list.favorite,
+                        number: list.dates.length - i,
+                        favorite: list.favorite,
                       ),
-                      title: Text(dateTitle(state.itemList[i].date)),
-                      subtitle: Text(dateSubtitle(state.itemList[i].date)),
-                      trailing: ListRemove(index: i, state: state),
+                      title: Text(dateTitle(list.dates[i].date)),
+                      subtitle: Text(dateSubtitle(list.dates[i].date)),
+                      trailing: ListRemove(
+                        itemId: list.dates[i].id,
+                        listId: list.id,
+                      ),
                     );
                   },
-                  itemCount: state.itemList.length + 1,
+                  itemCount: list.dates.length + 1,
                 ),
               ),
               SizedBox(width: padding),
@@ -88,8 +90,8 @@ class DesktopList extends StatelessWidget {
                     left: padding * 2,
                   ),
                   child: LineChart(
-                    data: state.chartData,
-                    favourite: state.list.favorite,
+                    data: list.getLongChartData(),
+                    favorite: list.favorite,
                   ),
                 ),
               ),

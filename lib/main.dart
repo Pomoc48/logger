@@ -4,8 +4,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/page.dart';
-import 'package:logger_app/pages/home/widgets/register_view.dart';
-import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 import 'package:logger_app/pages/list/page.dart';
 import 'package:logger_app/strings.dart';
 
@@ -26,11 +24,8 @@ void main() async {
   );
 
   runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => HomeBloc()..add(AutoLogin())),
-        BlocProvider(create: (context) => ListBloc()),
-      ],
+    BlocProvider(
+      create: (context) => HomeBloc()..add(LoadHome()),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: Strings.appName,
@@ -46,8 +41,15 @@ void main() async {
         ),
         routes: {
           Routes.home: (context) => const HomePage(),
-          Routes.list: (context) => const ListPage(),
-          Routes.register: (context) => const RegisterView(),
+        },
+        onGenerateRoute: (settings) {
+          if (settings.name == Routes.list) {
+            return MaterialPageRoute(
+              builder: (_) => ListPage(id: settings.arguments as Key),
+            );
+          }
+
+          return null;
         },
         initialRoute: Routes.home,
       ),

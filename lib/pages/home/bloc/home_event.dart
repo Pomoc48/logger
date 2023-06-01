@@ -7,102 +7,70 @@ abstract class HomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AutoLogin extends HomeEvent {}
-
-class RequestLogin extends HomeEvent {
-  final String username;
-  final String password;
-
-  const RequestLogin({
-    required this.username,
-    required this.password,
-  });
-
-  @override
-  List<Object> get props => [username, password];
-}
-
-class RequestRegister extends HomeEvent {
-  final String username;
-  final String password;
-
-  const RequestRegister({
-    required this.username,
-    required this.password,
-  });
-
-  @override
-  List<Object> get props => [username, password];
-}
-
-class UpdateHome extends HomeEvent {
-  final List<ListOfItems> lists;
-  final String token;
-  final String username;
-  final String profileUrl;
-
-  const UpdateHome({
-    required this.lists,
-    required this.token,
-    required this.username,
-    required this.profileUrl,
-  });
-
-  @override
-  List<Object> get props => [lists, token, username];
-}
+class LoadHome extends HomeEvent {}
 
 class InsertHome extends HomeEvent {
   final String name;
-  final HomeLoaded state;
 
-  const InsertHome({required this.name, required this.state});
+  const InsertHome({required this.name});
 
   @override
-  List<Object> get props => [name, state];
+  List<Object> get props => [name];
 }
 
 class QuickInsertHome extends HomeEvent {
-  final ListOfItems list;
-  final int timestamp;
-  final HomeLoaded state;
+  final Key listId;
+  final DateTime date;
 
   const QuickInsertHome({
-    required this.list,
-    required this.state,
-    required this.timestamp,
+    required this.listId,
+    required this.date,
   });
 
   @override
-  List<Object> get props => [list, state, timestamp];
+  List<Object> get props => [listId, date];
 }
 
 class RemoveFromHome extends HomeEvent {
-  final int id;
-  final HomeLoaded state;
+  final Key id;
 
-  const RemoveFromHome({required this.id, required this.state});
-
-  @override
-  List<Object> get props => [id, state];
-}
-
-class ReportHomeError extends HomeEvent {
-  final String token;
-
-  const ReportHomeError(this.token);
+  const RemoveFromHome({required this.id});
 
   @override
-  List<Object> get props => [token];
+  List<Object> get props => [id];
 }
-
-class ReportLogout extends HomeEvent {}
 
 class ChangeSort extends HomeEvent {
-  final HomeLoaded state;
+  final SortingType sortingType;
 
-  const ChangeSort({required this.state});
+  const ChangeSort({required this.sortingType});
 
   @override
-  List<Object> get props => [state];
+  List<Object> get props => [sortingType];
+}
+
+class InsertListItem extends HomeEvent {
+  final Key listId;
+  final DateTime date;
+
+  const InsertListItem({
+    required this.listId,
+    required this.date,
+  });
+
+  @override
+  List<Object> get props => [listId, date];
+}
+
+class RemoveListItem extends HomeEvent {
+  final Key listId;
+  final Key itemId;
+
+  const RemoveListItem({
+    required this.listId,
+    required this.itemId,
+  });
+
+  @override
+  List<Object> get props => [listId, itemId];
 }

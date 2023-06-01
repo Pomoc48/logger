@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/functions.dart';
-import 'package:logger_app/pages/home/bloc/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/pages/home/widgets/chart.dart';
 import 'package:logger_app/pages/home/widgets/left_panel.dart';
 import 'package:logger_app/pages/home/widgets/quick_insert.dart';
-import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/drawer.dart';
 import 'package:logger_app/widgets/menu_item.dart';
@@ -32,7 +29,7 @@ class DesktopHome extends StatelessWidget {
     ColorScheme cScheme = Theme.of(context).colorScheme;
 
     return DesktopPanel(
-      left: HomeDrawer(state: state, desktop: true),
+      left: const HomeDrawer(desktop: true),
       right: GridView.builder(
         padding: EdgeInsets.all(padding),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -55,7 +52,6 @@ class DesktopHome extends StatelessWidget {
               child: InkWell(
                 onTap: () async => addNewListDialog(
                   context: context,
-                  state: state,
                 ),
                 borderRadius: BorderRadius.circular(12),
                 child: Row(
@@ -79,19 +75,19 @@ class DesktopHome extends StatelessWidget {
               border: Border.all(
                 color: favColor(
                   context: context,
-                  favourite: state.lists[i].favorite,
+                  favorite: state.lists[i].favorite,
                 ).withOpacity(0.25),
                 width: 2,
               ),
             ),
             child: InkWell(
               onTap: () async {
-                BlocProvider.of<ListBloc>(context).add(LoadList(
-                  list: state.lists[i],
-                  token: state.token,
-                ));
+                // BlocProvider.of<ListBloc>(context).add(LoadList(
+                //   list: state.lists[i],
+                //   token: state.token,
+                // ));
 
-                await Navigator.pushNamed(context, Routes.list);
+                // await Navigator.pushNamed(context, Routes.list);
               },
               borderRadius: BorderRadius.circular(12),
               child: Container(
@@ -102,8 +98,8 @@ class DesktopHome extends StatelessWidget {
                     SizedBox(
                       height: 70,
                       child: LineChart(
-                        data: state.lists[i].chartData,
-                        favourite: state.lists[i].favorite,
+                        data: state.lists[i].getChartData(),
+                        favorite: state.lists[i].favorite,
                       ),
                     ),
                     const SizedBox(height: 15),
@@ -111,9 +107,8 @@ class DesktopHome extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         QuickInsert(
-                          list: state.lists[i],
-                          state: state,
-                          favourite: state.lists[i].favorite,
+                          listId: state.lists[i].id,
+                          favorite: state.lists[i].favorite,
                         ),
                         const SizedBox(width: 8),
                         Expanded(
@@ -136,7 +131,7 @@ class DesktopHome extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                subtitleCount(state.lists[i].count),
+                                subtitleCount(state.lists[i].dates.length),
                                 style: tTheme.labelMedium,
                               ),
                             ],
@@ -153,7 +148,7 @@ class DesktopHome extends StatelessWidget {
                               ),
                               menuItem(
                                 text: getFavButtonString(
-                                  favourite: state.lists[i].favorite,
+                                  favorite: state.lists[i].favorite,
                                 ),
                                 iconData: Icons.star,
                                 value: "favorite",
@@ -174,43 +169,42 @@ class DesktopHome extends StatelessWidget {
                             if (value == "add") {
                               quickItem(
                                 context: context,
-                                list: state.lists[i],
-                                state: state,
+                                listId: state.lists[i].id,
                               );
                             }
 
                             if (value == "rename") {
-                              renameDialog(
-                                context: context,
-                                counterId: state.lists[i].id,
-                                state: state,
-                                oldName: state.lists[i].name,
-                              );
+                              // renameDialog(
+                              //   context: context,
+                              //   counterId: state.lists[i].id,
+                              //   state: state,
+                              //   oldName: state.lists[i].name,
+                              // );
                             }
 
                             if (value == "favorite") {
-                              await updateListFav(
-                                id: state.lists[i].id,
-                                favourite: !state.lists[i].favorite,
-                                token: state.token,
-                              );
+                              // await updateListFav(
+                              //   id: state.lists[i].id,
+                              //   favourite: !state.lists[i].favorite,
+                              //   token: state.token,
+                              // );
                             }
 
                             if (value == "delete") {
-                              bool delete = await confirmDismiss(
-                                context: context,
-                                message: Strings.areSure,
-                              );
+                              // bool delete = await confirmDismiss(
+                              //   context: context,
+                              //   message: Strings.areSure,
+                              // );
 
-                              if (delete) {
-                                // ignore: use_build_context_synchronously
-                                BlocProvider.of<HomeBloc>(context).add(
-                                  RemoveFromHome(
-                                    id: state.lists[i].id,
-                                    state: state,
-                                  ),
-                                );
-                              }
+                              // if (delete) {
+                              //   // ignore: use_build_context_synchronously
+                              //   BlocProvider.of<HomeBloc>(context).add(
+                              //     RemoveFromHome(
+                              //       id: state.lists[i].id,
+                              //       state: state,
+                              //     ),
+                              //   );
+                              // }
                             }
                           },
                         ),

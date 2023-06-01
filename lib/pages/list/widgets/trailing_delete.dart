@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger_app/pages/list/bloc/list_bloc.dart';
+import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/strings.dart';
 
 class ListRemove extends StatelessWidget {
-  const ListRemove({required this.index, required this.state, super.key});
+  const ListRemove({required this.itemId, super.key, required this.listId});
 
-  final int index;
-  final ListLoaded state;
+  final Key itemId;
+  final Key listId;
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +24,10 @@ class ListRemove extends StatelessWidget {
       },
       onSelected: (value) {
         if (value == "delete") {
-          BlocProvider.of<ListBloc>(context).add(
-            RemoveFromList(
-              item: state.itemList[index],
-              list: state.list,
-              token: state.token,
+          BlocProvider.of<HomeBloc>(context).add(
+            RemoveListItem(
+              itemId: itemId,
+              listId: listId,
             ),
           );
         }

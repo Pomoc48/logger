@@ -2,18 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:logger_app/models/list.dart';
-import 'package:logger_app/pages/home/bloc/functions.dart';
+import 'package:logger_app/enums/list_sorting.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/strings.dart';
-import 'package:logger_app/widgets/avatar.dart';
 import 'package:logger_app/widgets/divider.dart';
 
 class HomeDrawer extends StatelessWidget {
-  const HomeDrawer({super.key, required this.state, this.desktop = false});
-
-  final HomeLoaded state;
+  const HomeDrawer({super.key, this.desktop = false});
   final bool desktop;
 
   @override
@@ -44,12 +39,10 @@ class HomeDrawer extends StatelessWidget {
         ];
       }
 
-      Widget sortOption(BuildContext c, String name, String value) {
+      Widget sortOption(BuildContext c, String name, SortingType value) {
         return InkWell(
-          onTap: () async {
-            await GetStorage().write("sortType", value);
-
-            BlocProvider.of<HomeBloc>(c).add(ChangeSort(state: state));
+          onTap: () {
+            BlocProvider.of<HomeBloc>(c).add(ChangeSort(sortingType: value));
             Navigator.pop(c);
           },
           child: Padding(
@@ -83,27 +76,27 @@ class HomeDrawer extends StatelessWidget {
                           sortOption(
                             context,
                             Strings.sortName,
-                            SortingType.name.name,
+                            SortingType.name,
                           ),
                           sortOption(
                             context,
                             Strings.sortDateAsc,
-                            SortingType.dateASC.name,
+                            SortingType.dateASC,
                           ),
                           sortOption(
                             context,
                             Strings.sortCounterAsc,
-                            SortingType.countASC.name,
+                            SortingType.countASC,
                           ),
                           sortOption(
                             context,
                             Strings.sortDateDesc,
-                            SortingType.dateDESC.name,
+                            SortingType.dateDESC,
                           ),
                           sortOption(
                             context,
                             Strings.sortCounterDesc,
-                            SortingType.countDESC.name,
+                            SortingType.countDESC,
                           ),
                           const ListDivider(),
                         ],
@@ -118,10 +111,6 @@ class HomeDrawer extends StatelessWidget {
                   );
                 },
               );
-            }
-
-            if (value == "logout") {
-              context.read<HomeBloc>().add(ReportLogout());
             }
           },
           child: Container(
@@ -142,67 +131,14 @@ class HomeDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           const SizedBox(height: 24),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 24,
-            ),
-            child: Row(
-              children: [
-                Avatar(
-                  profileUrl: state.profileUrl,
-                  size: 48,
-                  state: state,
-                  pop: !desktop,
-                ),
-                const SizedBox(width: 18),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      state.username,
-                      style: tTheme.titleMedium,
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      "${listCount(state.lists.length)} • ${countItems(state.lists)}",
-                      style: tTheme.labelMedium,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const ListDivider(),
-          const SizedBox(height: 12),
           listTile(
             iconData: Icons.sort,
             label: Strings.changeSorting,
             value: "sort",
-          ),
-          listTile(
-            iconData: Icons.logout,
-            label: Strings.logout,
-            value: "logout",
           ),
           const SizedBox(height: 24),
         ],
       ),
     );
   }
-}
-
-String listCount(int count) {
-  return count == 1 ? "$count counter" : "$count counters";
-}
-
-String countItems(List<ListOfItems> lists) {
-  int itemCount = 0;
-
-  for (ListOfItems list in lists) {
-    itemCount += list.count;
-  }
-
-  return "$itemCount total";
 }

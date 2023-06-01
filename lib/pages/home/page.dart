@@ -4,9 +4,7 @@ import 'package:logger_app/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/layouts/desktop.dart';
 import 'package:logger_app/pages/home/layouts/mobile.dart';
-import 'package:logger_app/pages/home/widgets/login_view.dart';
 import 'package:logger_app/widgets/loading.dart';
-import 'package:logger_app/pages/home/widgets/network_error.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -20,21 +18,11 @@ class HomePage extends StatelessWidget {
         return BlocConsumer<HomeBloc, HomeState>(
           listener: (context, state) {
             if (state is HomeMessage) {
-              if (state.link == null) {
-                showSnack(context, state.message, mobile);
-              } else {
-                showSnackLink(
-                  context: context,
-                  message: state.message,
-                  mobile: mobile,
-                  link: state.link!,
-                );
-              }
+              showSnack(context, state.message, mobile);
             }
           },
           buildWhen: (previous, current) {
             if (current is HomeMessage) return false;
-            if (current is RegisterResults) return false;
             return true;
           },
           builder: (context, state) {
@@ -45,14 +33,6 @@ class HomePage extends StatelessWidget {
                 state: state,
                 width: constraints.maxWidth,
               );
-            }
-
-            if (state is HomeLoginRequired) {
-              return LoginView(mobile: mobile);
-            }
-
-            if (state is HomeError) {
-              return const NetworkError();
             }
 
             return const PageLoading();

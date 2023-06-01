@@ -1,14 +1,9 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/functions.dart';
-import 'package:logger_app/pages/home/bloc/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/pages/home/widgets/chart.dart';
 import 'package:logger_app/pages/home/widgets/quick_insert.dart';
-import 'package:logger_app/pages/list/bloc/list_bloc.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/divider.dart';
 import 'package:logger_app/widgets/drawer.dart';
@@ -30,7 +25,6 @@ class MobileHome extends StatelessWidget {
         title: Strings.appName,
         press: () async => addNewListDialog(
           context: context,
-          state: state,
         ),
       );
     }
@@ -38,11 +32,10 @@ class MobileHome extends StatelessWidget {
     return Fader(
       child: Scaffold(
         appBar: AppBar(title: Text(Strings.appName)),
-        drawer: HomeDrawer(state: state),
+        drawer: const HomeDrawer(),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () async => addNewListDialog(
             context: context,
-            state: state,
           ),
           icon: const Icon(Icons.add),
           label: Text(Strings.newItemFAB),
@@ -61,12 +54,12 @@ class MobileHome extends StatelessWidget {
                   contentPadding:
                       const EdgeInsets.only(left: 16, right: 16, top: 4),
                   onTap: () async {
-                    BlocProvider.of<ListBloc>(context).add(LoadList(
-                      list: state.lists[i],
-                      token: state.token,
-                    ));
+                    // BlocProvider.of<ListBloc>(context).add(LoadList(
+                    //   list: state.lists[i],
+                    //   token: state.token,
+                    // ));
 
-                    await Navigator.pushNamed(context, Routes.list);
+                    // await Navigator.pushNamed(context, Routes.list);
                   },
                   onLongPress: () async {
                     showModalBottomSheet(
@@ -79,51 +72,52 @@ class MobileHome extends StatelessWidget {
                             ModalList(
                               icon: Icons.bolt,
                               title: Strings.quickAdd,
-                              onTap: () async => quickItem(
+                              onTap: () => quickItem(
                                 context: context,
-                                list: state.lists[i],
-                                state: state,
+                                listId: state.lists[i].id,
                               ),
                             ),
                             ModalList(
                               icon: Icons.star,
                               title: getFavButtonString(
-                                favourite: state.lists[i].favorite,
+                                favorite: state.lists[i].favorite,
                               ),
                               onTap: () async {
-                                await updateListFav(
-                                  id: state.lists[i].id,
-                                  favourite: !state.lists[i].favorite,
-                                  token: state.token,
-                                );
+                                // await updateListFav(
+                                //   id: state.lists[i].id,
+                                //   favourite: !state.lists[i].favorite,
+                                //   token: state.token,
+                                // );
                               },
                             ),
                             ModalList(
                               icon: Icons.edit,
                               title: Strings.changeName,
-                              onTap: () => renameDialog(
-                                context: context,
-                                counterId: state.lists[i].id,
-                                state: state,
-                                oldName: state.lists[i].name,
-                              ),
+                              onTap: () => {
+                                // renameDialog(
+                                //   context: context,
+                                //   counterId: state.lists[i].id,
+                                //   state: state,
+                                //   oldName: state.lists[i].name,
+                                // )
+                              },
                             ),
                             ModalList(
                               icon: Icons.delete,
                               title: Strings.removeForever,
                               onTap: () async {
-                                bool delete = await confirmDismiss(
+                                bool delete = await confirmDelete(
                                   context: context,
                                   message: Strings.areSure,
                                 );
 
                                 if (delete) {
-                                  BlocProvider.of<HomeBloc>(context).add(
-                                    RemoveFromHome(
-                                      id: state.lists[i].id,
-                                      state: state,
-                                    ),
-                                  );
+                                  // BlocProvider.of<HomeBloc>(context).add(
+                                  //   RemoveFromHome(
+                                  //     id: state.lists[i].id,
+                                  //     state: state,
+                                  //   ),
+                                  // );
                                 }
                               },
                             ),
@@ -134,16 +128,15 @@ class MobileHome extends StatelessWidget {
                     );
                   },
                   leading: QuickInsert(
-                    list: state.lists[i],
-                    state: state,
-                    favourite: state.lists[i].favorite,
+                    listId: state.lists[i].id,
+                    favorite: state.lists[i].favorite,
                   ),
                   trailing: SizedBox(
                     width: 120,
                     height: 28,
                     child: LineChart(
-                      data: state.lists[i].chartData,
-                      favourite: state.lists[i].favorite,
+                      data: state.lists[i].getChartData(),
+                      favorite: state.lists[i].favorite,
                     ),
                   ),
                   title: Marquee(
@@ -159,7 +152,7 @@ class MobileHome extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  subtitle: Text(subtitleCount(state.lists[i].count)),
+                  subtitle: Text(subtitleCount(state.lists[i].dates.length)),
                 ),
               ),
             );
