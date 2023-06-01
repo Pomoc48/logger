@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger_app/models/list.dart';
-import 'package:logger_app/pages/friends-list/bloc/friends_bloc.dart';
 import 'package:logger_app/pages/home/bloc/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
@@ -73,14 +72,6 @@ class HomeDrawer extends StatelessWidget {
                 context: context,
                 state: state,
               );
-            }
-
-            if (value == "friends") {
-              BlocProvider.of<FriendsBloc>(context).add(LoadFriends(
-                token: state.token,
-              ));
-
-              await Navigator.pushNamed(context, Routes.friends);
             }
 
             if (value == "connect") {
@@ -254,11 +245,6 @@ class HomeDrawer extends StatelessWidget {
             iconData: Icons.refresh,
             label: Strings.refresh,
             value: "refresh",
-          ),
-          listTile(
-            iconData: Icons.people_alt,
-            label: Strings.friends,
-            value: "friends",
           ),
           listTile(
             iconData: Icons.sort,

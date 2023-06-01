@@ -71,7 +71,5 @@ class Strings {
 class Routes {
   static String home = "/home";
   static String list = "/list";
-  static String friends = "/friends";
   static String register = "/register";
-  static String friendsHome = "/friends-lists";
 }

@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:logger_app/pages/friends-list/bloc/friends_bloc.dart';
-import 'package:logger_app/pages/friends-list/page.dart';
-import 'package:logger_app/pages/friends_home/bloc/friends_home_bloc.dart';
-import 'package:logger_app/pages/friends_home/page.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/page.dart';
 import 'package:logger_app/pages/home/widgets/register_view.dart';
@@ -34,8 +30,6 @@ void main() async {
       providers: [
         BlocProvider(create: (context) => HomeBloc()..add(AutoLogin())),
         BlocProvider(create: (context) => ListBloc()),
-        BlocProvider(create: (context) => FriendsBloc()),
-        BlocProvider(create: (context) => FriendsHomeBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -53,9 +47,7 @@ void main() async {
         routes: {
           Routes.home: (context) => const HomePage(),
           Routes.list: (context) => const ListPage(),
-          Routes.friends: (context) => const FriendsPage(),
           Routes.register: (context) => const RegisterView(),
-          Routes.friendsHome: (context) => const FriendsHomePage(),
         },
         initialRoute: Routes.home,
       ),
