@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/bloc/list_bloc.dart';
+import 'package:logger_app/enums/list_sorting.dart';
 import 'package:logger_app/strings.dart';
+import 'package:logger_app/widgets/divider.dart';
 
 Future<void> addNewListDialog({required BuildContext context}) async {
   TextEditingController controller = TextEditingController();
@@ -142,4 +144,71 @@ Future<void> renameDialog({
 
 String subtitleCount(int count) {
   return count == 1 ? "$count time" : "$count times";
+}
+
+void showSortingOptions(BuildContext context) {
+  Widget sortOption(BuildContext c, String name, SortingType value) {
+    return InkWell(
+      onTap: () {
+        BlocProvider.of<ListBloc>(c).add(ChangeSort(sortingType: value));
+        Navigator.pop(c);
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: Text(name),
+      ),
+    );
+  }
+
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        contentPadding: const EdgeInsets.fromLTRB(0, 20, 0, 16),
+        title: Text(Strings.changeSorting),
+        content: SizedBox(
+          width: 400,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const ListDivider(),
+              sortOption(
+                context,
+                Strings.sortName,
+                SortingType.name,
+              ),
+              sortOption(
+                context,
+                Strings.sortDateAsc,
+                SortingType.dateASC,
+              ),
+              sortOption(
+                context,
+                Strings.sortCounterAsc,
+                SortingType.countASC,
+              ),
+              sortOption(
+                context,
+                Strings.sortDateDesc,
+                SortingType.dateDESC,
+              ),
+              sortOption(
+                context,
+                Strings.sortCounterDesc,
+                SortingType.countDESC,
+              ),
+              const ListDivider(),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(Strings.cancel),
+          ),
+        ],
+      );
+    },
+  );
 }

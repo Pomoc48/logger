@@ -42,7 +42,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
         dates: const [],
       );
 
-      List<ListOfItems> newState = getNewInstance(state);
+      List<ListOfItems> newState = _getNewInstance(state);
       newState.add(listOfItems);
 
       await _saveLocally(newState);
@@ -54,7 +54,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
     });
 
     on<RemoveList>((event, emit) async {
-      List<ListOfItems> newState = getNewInstance(state);
+      List<ListOfItems> newState = _getNewInstance(state);
       newState.removeWhere((element) => element.id == event.id);
 
       await _saveLocally(newState);
@@ -62,7 +62,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
     });
 
     on<ChangeSort>((event, emit) {
-      List<ListOfItems> newState = getNewInstance(state);
+      List<ListOfItems> newState = _getNewInstance(state);
       List<ListOfItems> sorted = _sortList(newState, event.sortingType.name);
 
       emit(ListLoaded(lists: sorted));
@@ -70,7 +70,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
     });
 
     on<InsertListItem>((event, emit) {
-      List<ListOfItems> newState = getNewInstance(state);
+      List<ListOfItems> newState = _getNewInstance(state);
 
       int index = newState.indexWhere(
         (element) => element.id == event.listId,
@@ -95,7 +95,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
   }
 }
 
-List<ListOfItems> getNewInstance(ListState state) {
+List<ListOfItems> _getNewInstance(ListState state) {
   return List.from((state as ListLoaded).lists);
 }
 

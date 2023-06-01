@@ -7,7 +7,6 @@ import 'package:logger_app/pages/home/widgets/chart.dart';
 import 'package:logger_app/pages/home/widgets/quick_insert.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/divider.dart';
-import 'package:logger_app/widgets/drawer.dart';
 import 'package:logger_app/widgets/empty_list.dart';
 import 'package:logger_app/widgets/handle.dart';
 import 'package:logger_app/widgets/modal_item.dart';
@@ -30,14 +29,21 @@ class MobileHome extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(Strings.appName)),
-      drawer: const HomeDrawer(),
-      floatingActionButton: FloatingActionButton.extended(
+      appBar: AppBar(
+        title: Text(Strings.appName),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.sort),
+            onPressed: () => showSortingOptions(context),
+          ),
+          const SizedBox(width: 6),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton.large(
         onPressed: () async => addNewListDialog(
           context: context,
         ),
-        icon: const Icon(Icons.add),
-        label: Text(Strings.newItem),
+        child: const Icon(Icons.add),
       ),
       body: ListView.separated(
         separatorBuilder: (c, i) => const ListDivider(height: 8),
@@ -45,7 +51,7 @@ class MobileHome extends StatelessWidget {
           return Padding(
             padding: EdgeInsets.only(
               top: i == 0 ? 8 : 0,
-              bottom: i == state.lists.length - 1 ? 88 : 0,
+              bottom: i == state.lists.length - 1 ? 128 : 0,
             ),
             child: SizedBox(
               height: 64 + 8,
