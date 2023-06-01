@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
@@ -191,20 +192,17 @@ class DesktopHome extends StatelessWidget {
                             }
 
                             if (value == "delete") {
-                              // bool delete = await confirmDismiss(
-                              //   context: context,
-                              //   message: Strings.areSure,
-                              // );
+                              bool delete = await confirmDelete(
+                                context: context,
+                                message: Strings.areSure,
+                              );
 
-                              // if (delete) {
-                              //   // ignore: use_build_context_synchronously
-                              //   BlocProvider.of<HomeBloc>(context).add(
-                              //     RemoveFromHome(
-                              //       id: state.lists[i].id,
-                              //       state: state,
-                              //     ),
-                              //   );
-                              // }
+                              if (delete) {
+                                // ignore: use_build_context_synchronously
+                                BlocProvider.of<HomeBloc>(context).add(
+                                  RemoveFromHome(id: state.lists[i].id),
+                                );
+                              }
                             }
                           },
                         ),

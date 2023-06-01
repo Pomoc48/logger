@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/functions.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
@@ -53,13 +54,12 @@ class MobileHome extends StatelessWidget {
                 child: ListTile(
                   contentPadding:
                       const EdgeInsets.only(left: 16, right: 16, top: 4),
-                  onTap: () async {
-                    // BlocProvider.of<ListBloc>(context).add(LoadList(
-                    //   list: state.lists[i],
-                    //   token: state.token,
-                    // ));
-
-                    // await Navigator.pushNamed(context, Routes.list);
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      Routes.list,
+                      arguments: state.lists[i].id,
+                    );
                   },
                   onLongPress: () async {
                     showModalBottomSheet(
@@ -112,12 +112,10 @@ class MobileHome extends StatelessWidget {
                                 );
 
                                 if (delete) {
-                                  // BlocProvider.of<HomeBloc>(context).add(
-                                  //   RemoveFromHome(
-                                  //     id: state.lists[i].id,
-                                  //     state: state,
-                                  //   ),
-                                  // );
+                                  // ignore: use_build_context_synchronously
+                                  BlocProvider.of<HomeBloc>(context).add(
+                                    RemoveFromHome(id: state.lists[i].id),
+                                  );
                                 }
                               },
                             ),

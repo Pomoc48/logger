@@ -23,7 +23,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       if (serialized != null) {
         list = List<ListOfItems>.from(
-            serialized.map((e) => ListOfItems.fromMap(e)));
+          serialized.map((e) => ListOfItems.fromMap(e)),
+        );
       }
 
       List<ListOfItems> sorted = _sortList(list, sortType);
@@ -31,20 +32,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(HomeLoaded(lists: sorted));
     });
 
-    on<InsertHome>((event, emit) {
+    on<InsertHome>((event, emit) async {
       ListOfItems listOfItems = ListOfItems(
         id: UniqueKey(),
         name: event.name,
         favorite: false,
-        itemCount: 0,
         creationDate: DateTime.now(),
         dates: const [],
       );
 
-      List<ListOfItems> newState = List.from((state as HomeLoaded).lists);
+      List<ListOfItems> newState = getNewInstance(state);
       newState.add(listOfItems);
 
-      emit(HomeLoaded(lists: newState));
+      await _saveLocally(newState);
+      emit(HomeLoaded(lists: newState, message: "List successfully added"));
     });
 
     on<QuickInsertHome>((event, emit) async {
@@ -52,23 +53,54 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
 
     on<RemoveFromHome>((event, emit) async {
-      List<ListOfItems> list = (state as HomeLoaded).lists;
-      list.removeWhere((element) => element.id == event.id);
+      List<ListOfItems> newState = getNewInstance(state);
+      newState.removeWhere((element) => element.id == event.id);
 
-      emit(HomeLoaded(lists: list));
+      await _saveLocally(newState);
+      emit(HomeLoaded(lists: newState, message: "List successfully removed"));
     });
 
     on<ChangeSort>((event, emit) {
-      List<ListOfItems> sorted = _sortList(
-        (state as HomeLoaded).lists,
-        event.sortingType.name,
-      );
+      List<ListOfItems> newState = getNewInstance(state);
+      List<ListOfItems> sorted = _sortList(newState, event.sortingType.name);
 
       emit(HomeLoaded(lists: sorted));
-
       GetStorage().write("sortType", event.sortingType.name);
     });
+
+    on<InsertListItem>((event, emit) {
+      List<ListOfItems> newState = getNewInstance(state);
+
+      int index = newState.indexWhere(
+        (element) => element.id == event.listId,
+      );
+
+      List<ListItem> newDates = [...newState[index].dates];
+      newDates.add(ListItem(id: UniqueKey(), date: event.date));
+
+      ListOfItems newList = ListOfItems(
+        id: event.listId,
+        name: newState[index].name,
+        favorite: newState[index].favorite,
+        creationDate: newState[index].creationDate,
+        dates: newDates,
+      );
+
+      newState[index] = newList;
+
+      emit(HomeLoaded(lists: newState));
+      _saveLocally(newState);
+    });
   }
+}
+
+List<ListOfItems> getNewInstance(HomeState state) {
+  return List.from((state as HomeLoaded).lists);
+}
+
+Future<void> _saveLocally(List<ListOfItems> lists) async {
+  List data = lists.map((e) => e.toMap()).toList();
+  await GetStorage().write("listData", data);
 }
 
 List<ListOfItems> _sortList(
@@ -76,11 +108,11 @@ List<ListOfItems> _sortList(
   String sortTypeName,
 ) {
   if (sortTypeName == SortingType.countASC.name) {
-    list.sort((a, b) => b.itemCount.compareTo(a.itemCount));
+    list.sort((a, b) => b.dates.length.compareTo(a.dates.length));
   }
 
   if (sortTypeName == SortingType.countDESC.name) {
-    list.sort((a, b) => a.itemCount.compareTo(b.itemCount));
+    list.sort((a, b) => a.dates.length.compareTo(b.dates.length));
   }
 
   if (sortTypeName == SortingType.dateASC.name) {

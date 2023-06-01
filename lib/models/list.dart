@@ -6,7 +6,6 @@ class ListOfItems extends Equatable {
   final Key id;
   final String name;
   final bool favorite;
-  final int itemCount;
   final DateTime creationDate;
   final List<ListItem> dates;
 
@@ -14,7 +13,6 @@ class ListOfItems extends Equatable {
     required this.id,
     required this.name,
     required this.favorite,
-    required this.itemCount,
     required this.creationDate,
     required this.dates,
   });
@@ -28,8 +26,7 @@ class ListOfItems extends Equatable {
       id: Key(map["id"]),
       name: map["name"],
       favorite: map["favorite"],
-      itemCount: dates.length,
-      creationDate: DateTime.fromMillisecondsSinceEpoch(map["timestamp"]),
+      creationDate: DateTime.fromMillisecondsSinceEpoch(map["creationDate"]),
       dates: dates,
     );
   }
@@ -53,5 +50,5 @@ class ListOfItems extends Equatable {
   }
 
   @override
-  List<Object> get props => [id, name, favorite, creationDate];
+  List<Object> get props => [id, name, favorite, creationDate, dates];
 }

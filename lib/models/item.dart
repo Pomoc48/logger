@@ -19,7 +19,7 @@ class ListItem extends Equatable {
 
   Map toMap() {
     return {
-      "id": id,
+      "id": id.toString(),
       "date": date.millisecondsSinceEpoch,
     };
   }

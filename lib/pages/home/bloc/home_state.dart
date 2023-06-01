@@ -11,20 +11,13 @@ class HomeInitial extends HomeState {}
 
 class HomeLoaded extends HomeState {
   final List<ListOfItems> lists;
+  final String? message;
 
   const HomeLoaded({
     required this.lists,
+    this.message,
   });
 
   @override
   List<Object> get props => [lists];
-}
-
-class HomeMessage extends HomeState {
-  final String message;
-
-  const HomeMessage(this.message);
-
-  @override
-  List<Object> get props => [message];
 }

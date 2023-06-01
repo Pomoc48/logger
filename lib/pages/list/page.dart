@@ -20,13 +20,9 @@ class ListPage extends StatelessWidget {
 
         return BlocConsumer<HomeBloc, HomeState>(
           listener: (context, state) {
-            if (state is HomeMessage) {
-              showSnack(context, state.message, mobile);
+            if (state is HomeLoaded && state.message != null) {
+              showSnack(context, state.message!, mobile);
             }
-          },
-          buildWhen: (previous, current) {
-            if (current is HomeMessage) return false;
-            return true;
           },
           builder: (context, state) {
             if (state is HomeLoaded) {
