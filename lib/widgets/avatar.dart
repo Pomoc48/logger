@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:logger_app/pages/home/bloc/home_bloc.dart';
-import 'package:logger_app/pages/home/functions.dart';
 
 class Avatar extends StatelessWidget {
   const Avatar({
@@ -18,24 +17,7 @@ class Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget child = (profileUrl is String) ? _content() : _missing();
-
-    if (state != null) {
-      return InkWell(
-        onTap: () {
-          if (pop) Navigator.pop(context);
-
-          updateUrlDialog(
-            context: context,
-            state: state!,
-          );
-        },
-        borderRadius: BorderRadius.circular(999),
-        child: child,
-      );
-    }
-
-    return child;
+    return (profileUrl is String) ? _content() : _missing();
   }
 
   ClipRRect _content() {

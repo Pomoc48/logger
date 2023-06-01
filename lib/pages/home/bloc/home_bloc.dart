@@ -188,31 +188,5 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         token: event.state.token,
       ));
     });
-
-    on<UpdatePhoto>((event, emit) async {
-      try {
-        Map response = await updatePhoto(
-          url: event.url,
-          token: event.state.token,
-        );
-
-        if (response["success"]) {
-          Map map = await getLists(token: response["token"]);
-          List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
-          sortList(list);
-
-          emit(HomeLoaded(
-            profileUrl: event.url,
-            username: event.state.username,
-            lists: list,
-            token: map["token"],
-          ));
-        } else {
-          emit(HomeMessage(response["message"]));
-        }
-      } catch (e) {
-        emit(HomeError(token: event.state.token));
-      }
-    });
   }
 }

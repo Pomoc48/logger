@@ -169,57 +169,6 @@ Future<void> renameDialog({
   );
 }
 
-Future<void> updateUrlDialog({
-  required BuildContext context,
-  required HomeLoaded state,
-}) async {
-  TextEditingController controller = TextEditingController();
-
-  void confirm(BuildContext c) {
-    if (controller.text.trim().isNotEmpty) {
-      Navigator.pop(c);
-
-      BlocProvider.of<HomeBloc>(context).add(UpdatePhoto(
-        url: controller.text,
-        state: state,
-      ));
-    }
-  }
-
-  await showDialog(
-    context: context,
-    builder: (c) {
-      return AlertDialog(
-        title: Text(Strings.updatePhoto),
-        content: SizedBox(
-          width: 400,
-          child: TextField(
-            autofocus: true,
-            controller: controller,
-            keyboardType: TextInputType.url,
-            decoration: InputDecoration(
-              label: Text(Strings.profileUrl),
-              hintText: Strings.newUrl,
-            ),
-            textInputAction: TextInputAction.done,
-            onSubmitted: (value) => confirm(c),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(c),
-            child: Text(Strings.cancel),
-          ),
-          TextButton(
-            onPressed: () async => confirm(c),
-            child: Text(Strings.rename),
-          ),
-        ],
-      );
-    },
-  );
-}
-
 String subtitleCount(int count) {
   return count == 1 ? "$count time" : "$count times";
 }

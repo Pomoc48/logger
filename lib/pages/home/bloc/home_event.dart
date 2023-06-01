@@ -106,13 +106,3 @@ class ChangeSort extends HomeEvent {
   @override
   List<Object> get props => [state];
 }
-
-class UpdatePhoto extends HomeEvent {
-  final String url;
-  final HomeLoaded state;
-
-  const UpdatePhoto({required this.url, required this.state});
-
-  @override
-  List<Object> get props => [url, state];
-}
