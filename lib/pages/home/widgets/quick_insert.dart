@@ -1,28 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/functions.dart';
-import 'package:logger_app/models/list.dart';
-import 'package:logger_app/pages/home/bloc/home_bloc.dart';
+import 'package:logger_app/bloc/list_bloc.dart';
 
 class QuickInsert extends StatelessWidget {
   const QuickInsert({
     super.key,
-    required this.list,
-    required this.favourite,
-    required this.state,
+    required this.listId,
+    required this.favorite,
   });
 
-  final ListOfItems list;
-  final HomeLoaded state;
-  final bool favourite;
+  final Key listId;
+  final bool favorite;
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () => quickItem(
         context: context,
-        list: list,
-        state: state,
+        listId: listId,
       ),
       constraints: const BoxConstraints(
         minHeight: 48,
@@ -31,7 +27,7 @@ class QuickInsert extends StatelessWidget {
       icon: Icon(
         Icons.bolt,
         color: favColor(
-          favourite: favourite,
+          favorite: favorite,
           context: context,
         ),
       ),
@@ -41,16 +37,14 @@ class QuickInsert extends StatelessWidget {
 
 Future<void> quickItem({
   required BuildContext context,
-  required ListOfItems list,
-  required HomeLoaded state,
+  required Key listId,
 }) async {
   DateTime date = DateTime.now();
 
-  BlocProvider.of<HomeBloc>(context).add(
-    QuickInsertHome(
-      timestamp: dateToTimestamp(date),
-      list: list,
-      state: state,
+  BlocProvider.of<ListBloc>(context).add(
+    QuickInsertItem(
+      date: date,
+      listId: listId,
     ),
   );
 }

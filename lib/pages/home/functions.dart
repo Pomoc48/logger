@@ -1,41 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger_app/models/list.dart';
-import 'package:logger_app/pages/home/bloc/functions.dart';
-import 'package:logger_app/pages/home/bloc/home_bloc.dart';
+import 'package:logger_app/bloc/list_bloc.dart';
+import 'package:logger_app/enums/list_sorting.dart';
 import 'package:logger_app/strings.dart';
+import 'package:logger_app/widgets/divider.dart';
 
-Future<void> refresh({
-  required BuildContext context,
-  required HomeLoaded state,
-}) async {
-  try {
-    Map map = await getLists(token: state.token);
-    List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
-    sortList(list);
-    // ignore: use_build_context_synchronously
-    BlocProvider.of<HomeBloc>(context).add(UpdateHome(
-      profileUrl: state.profileUrl,
-      username: state.username,
-      lists: list,
-      token: map["token"],
-    ));
-  } catch (e) {
-    BlocProvider.of<HomeBloc>(context).add(ReportHomeError(state.token));
-  }
-}
-
-Future<void> addNewListDialog({
-  required BuildContext context,
-  required HomeLoaded state,
-}) async {
+Future<void> addNewListDialog({required BuildContext context}) async {
   TextEditingController controller = TextEditingController();
 
   void confirm() {
     if (controller.text.trim().isNotEmpty) {
-      BlocProvider.of<HomeBloc>(context).add(InsertHome(
-        name: controller.text,
-        state: state,
+      BlocProvider.of<ListBloc>(context).add(InsertList(
+        name: controller.text.trim(),
       ));
 
       Navigator.pop(context);
@@ -46,7 +22,7 @@ Future<void> addNewListDialog({
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text(Strings.newItemFAB),
+        title: Text(Strings.newItem),
         content: SizedBox(
           width: 400,
           child: TextField(
@@ -76,7 +52,7 @@ Future<void> addNewListDialog({
   );
 }
 
-Future<bool> confirmDismiss({
+Future<bool> confirmDelete({
   required BuildContext context,
   required String message,
 }) async {
@@ -114,8 +90,7 @@ Future<bool> confirmDismiss({
 
 Future<void> renameDialog({
   required BuildContext context,
-  required int counterId,
-  required HomeLoaded state,
+  required Key listId,
   required String oldName,
 }) async {
   TextEditingController controller = TextEditingController();
@@ -125,13 +100,11 @@ Future<void> renameDialog({
     if (controller.text.trim().isNotEmpty) {
       Navigator.pop(c);
 
-      await updateListName(
-        id: counterId,
-        name: controller.text,
-        token: state.token,
-      );
-
-      await refresh(context: context, state: state);
+      // await updateListName(
+      //   id: counterId,
+      //   name: controller.text,
+      //   token: state.token,
+      // );
     }
   }
 
@@ -169,57 +142,73 @@ Future<void> renameDialog({
   );
 }
 
-Future<void> updateUrlDialog({
-  required BuildContext context,
-  required HomeLoaded state,
-}) async {
-  TextEditingController controller = TextEditingController();
+String subtitleCount(int count) {
+  return count == 1 ? "$count time" : "$count times";
+}
 
-  void confirm(BuildContext c) {
-    if (controller.text.trim().isNotEmpty) {
-      Navigator.pop(c);
-
-      BlocProvider.of<HomeBloc>(context).add(UpdatePhoto(
-        url: controller.text,
-        state: state,
-      ));
-    }
+void showSortingOptions(BuildContext context) {
+  Widget sortOption(BuildContext c, String name, SortingType value) {
+    return InkWell(
+      onTap: () {
+        BlocProvider.of<ListBloc>(c).add(ChangeSort(sortingType: value));
+        Navigator.pop(c);
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: Text(name),
+      ),
+    );
   }
 
-  await showDialog(
+  showDialog(
     context: context,
-    builder: (c) {
+    builder: (context) {
       return AlertDialog(
-        title: Text(Strings.updatePhoto),
+        contentPadding: const EdgeInsets.fromLTRB(0, 20, 0, 16),
+        title: Text(Strings.changeSorting),
         content: SizedBox(
           width: 400,
-          child: TextField(
-            autofocus: true,
-            controller: controller,
-            keyboardType: TextInputType.url,
-            decoration: InputDecoration(
-              label: Text(Strings.profileUrl),
-              hintText: Strings.newUrl,
-            ),
-            textInputAction: TextInputAction.done,
-            onSubmitted: (value) => confirm(c),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const ListDivider(),
+              sortOption(
+                context,
+                Strings.sortName,
+                SortingType.name,
+              ),
+              sortOption(
+                context,
+                Strings.sortDateAsc,
+                SortingType.dateASC,
+              ),
+              sortOption(
+                context,
+                Strings.sortCounterAsc,
+                SortingType.countASC,
+              ),
+              sortOption(
+                context,
+                Strings.sortDateDesc,
+                SortingType.dateDESC,
+              ),
+              sortOption(
+                context,
+                Strings.sortCounterDesc,
+                SortingType.countDESC,
+              ),
+              const ListDivider(),
+            ],
           ),
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(c),
+            onPressed: () => Navigator.pop(context),
             child: Text(Strings.cancel),
-          ),
-          TextButton(
-            onPressed: () async => confirm(c),
-            child: Text(Strings.rename),
           ),
         ],
       );
     },
   );
-}
-
-String subtitleCount(int count) {
-  return count == 1 ? "$count time" : "$count times";
 }

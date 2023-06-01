@@ -1,33 +1,54 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
+import 'package:logger_app/models/item.dart';
 
 class ListOfItems extends Equatable {
-  final int id;
+  final Key id;
   final String name;
-  final bool favourite;
-  final int count;
-  final DateTime timestamp;
-  final List<int> chartData;
+  final bool favorite;
+  final DateTime creationDate;
+  final List<ListItem> dates;
 
   const ListOfItems({
     required this.id,
     required this.name,
-    required this.favourite,
-    required this.count,
-    required this.timestamp,
-    required this.chartData,
+    required this.favorite,
+    required this.creationDate,
+    required this.dates,
   });
 
   factory ListOfItems.fromMap(dynamic map) {
+    List<ListItem> dates = List<ListItem>.from(
+      map['dates'].map((m) => ListItem.fromMap(m)),
+    );
+
     return ListOfItems(
-      id: map["id"],
+      id: Key(map["id"]),
       name: map["name"],
-      favourite: map["favourite"] == 1 ? true : false,
-      count: map["count"],
-      timestamp: DateTime.fromMillisecondsSinceEpoch(map["timestamp"] * 1000),
-      chartData: List<int>.from(map["chart_data"]),
+      favorite: map["favorite"],
+      creationDate: DateTime.fromMillisecondsSinceEpoch(map["creationDate"]),
+      dates: dates,
     );
   }
 
+  Map toMap() {
+    return {
+      "id": id.toString(),
+      "name": name,
+      "favorite": favorite,
+      "creationDate": creationDate.millisecondsSinceEpoch,
+      "dates": dates.map((e) => e.toMap()).toList(),
+    };
+  }
+
+  List<int> getChartData() {
+    return [0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2];
+  }
+
+  List<double> getLongChartData() {
+    return [0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2];
+  }
+
   @override
-  List<Object> get props => [id, name, favourite, count, timestamp, chartData];
+  List<Object> get props => [id, name, favorite, creationDate, dates];
 }

@@ -6,31 +6,15 @@ Live preview: [https://logger.mlukawski.com/](https://logger.mlukawski.com/)
 
 ![Banner image](screenshots/banner.png)
 
-More app screenshots in the [screenshots directory](screenshots).
-\
-*Screenshots may be little outdated.
-
 ## Features
 
 - Data charts:
   - Activity over the last two weeks
   - Items increase over the last month
-- Friends list:
-  - Invite, accept and remove requests
-  - View your friends counters
-- Profile picture customization
 - Many list sorting options
 - Responsive design
 - Light / dark theme support
 - Date and time picker for adding items
-- Automatic token refreshing
-
-## Wearables
-
-The application has a [Wear OS](https://wearos.google.com/)
-version available to provide a quick way for adding list items.
-\
-More info: [https://github.com/Pomoc48/logger-wear](https://github.com/Pomoc48/logger-wear)
 
 ## License
 

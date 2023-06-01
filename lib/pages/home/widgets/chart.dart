@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:logger_app/functions.dart';
 
 class LineChart extends StatelessWidget {
-  const LineChart({required this.data, required this.favourite, super.key});
+  const LineChart({required this.data, required this.favorite, super.key});
 
   final List<int> data;
-  final bool favourite;
+  final bool favorite;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class LineChart extends StatelessWidget {
       dataConverted.add(i.toDouble());
     }
 
-    Color color = favColor(favourite: favourite, context: context);
+    Color color = favColor(favorite: favorite, context: context);
 
     return Sparkline(
       lineWidth: 2,
