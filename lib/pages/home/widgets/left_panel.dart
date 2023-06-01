@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logger_app/widgets/fader.dart';
 
 class DesktopPanel extends StatelessWidget {
   const DesktopPanel({
@@ -13,17 +12,12 @@ class DesktopPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Fader(
-      child: Scaffold(
-        body: Row(
-          children: [
-            SizedBox(
-              width: 300,
-              child: left,
-            ),
-            Expanded(child: right),
-          ],
-        ),
+    return Scaffold(
+      body: Row(
+        children: [
+          SizedBox(width: 300, child: left),
+          Expanded(child: right),
+        ],
       ),
     );
   }

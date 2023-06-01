@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:logger_app/enums/list_sorting.dart';
 import 'package:logger_app/models/item.dart';
 import 'package:logger_app/models/list.dart';
+import 'package:logger_app/strings.dart';
 
 part 'list_event.dart';
 part 'list_state.dart';
@@ -14,12 +15,12 @@ class ListBloc extends Bloc<ListEvent, ListState> {
     on<LoadHome>((event, emit) async {
       GetStorage gs = GetStorage();
 
-      String? sortType = gs.read("sortType");
+      String? sortType = gs.read(DataKeys.sorting);
       sortType ??= SortingType.name.name;
 
       List<ListOfItems> list = [];
 
-      List? serialized = gs.read("listData");
+      List? serialized = gs.read(DataKeys.data);
 
       if (serialized != null) {
         list = List<ListOfItems>.from(
@@ -45,7 +46,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       newState.add(listOfItems);
 
       await _saveLocally(newState);
-      emit(ListLoaded(lists: newState, message: "List successfully added"));
+      emit(ListLoaded(lists: newState, message: Strings.listAdded));
     });
 
     on<QuickInsertItem>((event, emit) async {
@@ -57,7 +58,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       newState.removeWhere((element) => element.id == event.id);
 
       await _saveLocally(newState);
-      emit(ListLoaded(lists: newState, message: "List successfully removed"));
+      emit(ListLoaded(lists: newState, message: Strings.listRemoved));
     });
 
     on<ChangeSort>((event, emit) {
@@ -65,7 +66,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       List<ListOfItems> sorted = _sortList(newState, event.sortingType.name);
 
       emit(ListLoaded(lists: sorted));
-      GetStorage().write("sortType", event.sortingType.name);
+      GetStorage().write(DataKeys.sorting, event.sortingType.name);
     });
 
     on<InsertListItem>((event, emit) {
@@ -100,7 +101,7 @@ List<ListOfItems> getNewInstance(ListState state) {
 
 Future<void> _saveLocally(List<ListOfItems> lists) async {
   List data = lists.map((e) => e.toMap()).toList();
-  await GetStorage().write("listData", data);
+  await GetStorage().write(DataKeys.data, data);
 }
 
 List<ListOfItems> _sortList(

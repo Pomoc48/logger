@@ -50,7 +50,7 @@ class MobileList extends StatelessWidget {
           list: list,
         ),
         icon: const Icon(Icons.add),
-        label: Text(Strings.newItemFAB),
+        label: Text(Strings.newItem),
       ),
       body: ListView.separated(
         separatorBuilder: (c, i) => const ListDivider(),

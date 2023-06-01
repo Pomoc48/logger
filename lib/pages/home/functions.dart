@@ -20,7 +20,7 @@ Future<void> addNewListDialog({required BuildContext context}) async {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text(Strings.newItemFAB),
+        title: Text(Strings.newItem),
         content: SizedBox(
           width: 400,
           child: TextField(
