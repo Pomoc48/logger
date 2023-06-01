@@ -206,14 +206,3 @@ void sortList(List<ListOfItems> list) {
 
   list.sort((a, b) => a.name.compareTo(b.name));
 }
-
-Future<Map> checkPairingCode({
-  required String code,
-  required String token,
-}) async {
-  return await makeRequest(
-    url: "https://logger.mlukawski.com/connect/?pin=$code",
-    headers: {"Token": token},
-    type: RequestType.post,
-  );
-}

@@ -107,16 +107,6 @@ class ChangeSort extends HomeEvent {
   List<Object> get props => [state];
 }
 
-class CheckPairingCode extends HomeEvent {
-  final String code;
-  final String token;
-
-  const CheckPairingCode({required this.code, required this.token});
-
-  @override
-  List<Object> get props => [code, token];
-}
-
 class UpdatePhoto extends HomeEvent {
   final String url;
   final HomeLoaded state;

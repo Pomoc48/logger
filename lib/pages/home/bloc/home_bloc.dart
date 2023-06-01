@@ -189,19 +189,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       ));
     });
 
-    on<CheckPairingCode>((event, emit) async {
-      try {
-        Map response = await checkPairingCode(
-          code: event.code,
-          token: event.token,
-        );
-
-        emit(HomeMessage(response["message"]));
-      } catch (e) {
-        emit(HomeError(token: event.token));
-      }
-    });
-
     on<UpdatePhoto>((event, emit) async {
       try {
         Map response = await updatePhoto(

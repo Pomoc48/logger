@@ -74,63 +74,6 @@ class HomeDrawer extends StatelessWidget {
               );
             }
 
-            if (value == "connect") {
-              TextEditingController controller = TextEditingController();
-
-              void confirm() {
-                if (controller.text.trim().isNotEmpty) {
-                  BlocProvider.of<HomeBloc>(context).add(
-                    CheckPairingCode(
-                      code: controller.text,
-                      token: state.token,
-                    ),
-                  );
-
-                  Navigator.pop(context);
-                }
-              }
-
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text(Strings.connect),
-                    content: SizedBox(
-                      width: 400,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(Strings.connectMessage),
-                          TextField(
-                            autofocus: true,
-                            controller: controller,
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              label: Text(Strings.pairingCode),
-                              hintText: Strings.pairingHint,
-                            ),
-                            textInputAction: TextInputAction.done,
-                            onSubmitted: (value) => confirm(),
-                          ),
-                        ],
-                      ),
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: Text(Strings.cancel),
-                      ),
-                      TextButton(
-                        onPressed: () => confirm(),
-                        child: Text(Strings.connect),
-                      ),
-                    ],
-                  );
-                },
-              );
-            }
-
             if (value == "sort") {
               showDialog(
                 context: context,
@@ -250,11 +193,6 @@ class HomeDrawer extends StatelessWidget {
             iconData: Icons.sort,
             label: Strings.changeSorting,
             value: "sort",
-          ),
-          listTile(
-            iconData: Icons.watch,
-            label: Strings.connectWearable,
-            value: "connect",
           ),
           listTile(
             iconData: Icons.logout,
