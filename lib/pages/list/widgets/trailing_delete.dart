@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger_app/pages/home/bloc/home_bloc.dart';
+import 'package:logger_app/bloc/list_bloc.dart';
 import 'package:logger_app/strings.dart';
 
 class ListRemove extends StatelessWidget {
@@ -24,7 +24,7 @@ class ListRemove extends StatelessWidget {
       },
       onSelected: (value) {
         if (value == "delete") {
-          BlocProvider.of<HomeBloc>(context).add(
+          BlocProvider.of<ListBloc>(context).add(
             RemoveListItem(
               itemId: itemId,
               listId: listId,

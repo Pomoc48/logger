@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/functions.dart';
-import 'package:logger_app/pages/home/bloc/home_bloc.dart';
+import 'package:logger_app/bloc/list_bloc.dart';
 
 class QuickInsert extends StatelessWidget {
   const QuickInsert({
@@ -41,8 +41,8 @@ Future<void> quickItem({
 }) async {
   DateTime date = DateTime.now();
 
-  BlocProvider.of<HomeBloc>(context).add(
-    QuickInsertHome(
+  BlocProvider.of<ListBloc>(context).add(
+    QuickInsertItem(
       date: date,
       listId: listId,
     ),

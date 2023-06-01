@@ -1,19 +1,19 @@
-part of 'home_bloc.dart';
+part of 'list_bloc.dart';
 
-abstract class HomeState extends Equatable {
-  const HomeState();
+abstract class ListState extends Equatable {
+  const ListState();
 
   @override
   List<Object> get props => [];
 }
 
-class HomeInitial extends HomeState {}
+class ListInitial extends ListState {}
 
-class HomeLoaded extends HomeState {
+class ListLoaded extends ListState {
   final List<ListOfItems> lists;
   final String? message;
 
-  const HomeLoaded({
+  const ListLoaded({
     required this.lists,
     this.message,
   });

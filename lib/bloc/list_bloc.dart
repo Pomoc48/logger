@@ -6,11 +6,11 @@ import 'package:logger_app/enums/list_sorting.dart';
 import 'package:logger_app/models/item.dart';
 import 'package:logger_app/models/list.dart';
 
-part 'home_event.dart';
-part 'home_state.dart';
+part 'list_event.dart';
+part 'list_state.dart';
 
-class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc() : super(HomeInitial()) {
+class ListBloc extends Bloc<ListEvent, ListState> {
+  ListBloc() : super(ListInitial()) {
     on<LoadHome>((event, emit) async {
       GetStorage gs = GetStorage();
 
@@ -29,10 +29,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       List<ListOfItems> sorted = _sortList(list, sortType);
 
-      emit(HomeLoaded(lists: sorted));
+      emit(ListLoaded(lists: sorted));
     });
 
-    on<InsertHome>((event, emit) async {
+    on<InsertList>((event, emit) async {
       ListOfItems listOfItems = ListOfItems(
         id: UniqueKey(),
         name: event.name,
@@ -45,26 +45,26 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       newState.add(listOfItems);
 
       await _saveLocally(newState);
-      emit(HomeLoaded(lists: newState, message: "List successfully added"));
+      emit(ListLoaded(lists: newState, message: "List successfully added"));
     });
 
-    on<QuickInsertHome>((event, emit) async {
+    on<QuickInsertItem>((event, emit) async {
       //TODO: do some loading
     });
 
-    on<RemoveFromHome>((event, emit) async {
+    on<RemoveList>((event, emit) async {
       List<ListOfItems> newState = getNewInstance(state);
       newState.removeWhere((element) => element.id == event.id);
 
       await _saveLocally(newState);
-      emit(HomeLoaded(lists: newState, message: "List successfully removed"));
+      emit(ListLoaded(lists: newState, message: "List successfully removed"));
     });
 
     on<ChangeSort>((event, emit) {
       List<ListOfItems> newState = getNewInstance(state);
       List<ListOfItems> sorted = _sortList(newState, event.sortingType.name);
 
-      emit(HomeLoaded(lists: sorted));
+      emit(ListLoaded(lists: sorted));
       GetStorage().write("sortType", event.sortingType.name);
     });
 
@@ -88,14 +88,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       newState[index] = newList;
 
-      emit(HomeLoaded(lists: newState));
+      emit(ListLoaded(lists: newState));
       _saveLocally(newState);
     });
   }
 }
 
-List<ListOfItems> getNewInstance(HomeState state) {
-  return List.from((state as HomeLoaded).lists);
+List<ListOfItems> getNewInstance(ListState state) {
+  return List.from((state as ListLoaded).lists);
 }
 
 Future<void> _saveLocally(List<ListOfItems> lists) async {

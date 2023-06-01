@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger_app/pages/home/bloc/home_bloc.dart';
+import 'package:logger_app/bloc/list_bloc.dart';
 import 'package:logger_app/strings.dart';
 
 Future<void> addNewListDialog({required BuildContext context}) async {
@@ -8,7 +8,7 @@ Future<void> addNewListDialog({required BuildContext context}) async {
 
   void confirm() {
     if (controller.text.trim().isNotEmpty) {
-      BlocProvider.of<HomeBloc>(context).add(InsertHome(
+      BlocProvider.of<ListBloc>(context).add(InsertList(
         name: controller.text.trim(),
       ));
 

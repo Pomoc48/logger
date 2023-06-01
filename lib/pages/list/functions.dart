@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/models/list.dart';
-import 'package:logger_app/pages/home/bloc/home_bloc.dart';
+import 'package:logger_app/bloc/list_bloc.dart';
 
 Future<void> addNewItemDialog({
   required BuildContext context,
@@ -29,7 +29,7 @@ Future<void> addNewItemDialog({
 
   if (time == null) return;
 
-  BlocProvider.of<HomeBloc>(context).add(
+  BlocProvider.of<ListBloc>(context).add(
     InsertListItem(
       date: date.add(Duration(hours: time.hour, minutes: time.minute)),
       listId: list.id,

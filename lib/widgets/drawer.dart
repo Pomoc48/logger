@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/enums/list_sorting.dart';
-import 'package:logger_app/pages/home/bloc/home_bloc.dart';
+import 'package:logger_app/bloc/list_bloc.dart';
 import 'package:logger_app/strings.dart';
 import 'package:logger_app/widgets/divider.dart';
 
@@ -42,7 +42,7 @@ class HomeDrawer extends StatelessWidget {
       Widget sortOption(BuildContext c, String name, SortingType value) {
         return InkWell(
           onTap: () {
-            BlocProvider.of<HomeBloc>(c).add(ChangeSort(sortingType: value));
+            BlocProvider.of<ListBloc>(c).add(ChangeSort(sortingType: value));
             Navigator.pop(c);
           },
           child: Padding(

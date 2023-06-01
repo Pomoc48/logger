@@ -1,28 +1,28 @@
-part of 'home_bloc.dart';
+part of 'list_bloc.dart';
 
-abstract class HomeEvent extends Equatable {
-  const HomeEvent();
+abstract class ListEvent extends Equatable {
+  const ListEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class LoadHome extends HomeEvent {}
+class LoadHome extends ListEvent {}
 
-class InsertHome extends HomeEvent {
+class InsertList extends ListEvent {
   final String name;
 
-  const InsertHome({required this.name});
+  const InsertList({required this.name});
 
   @override
   List<Object> get props => [name];
 }
 
-class QuickInsertHome extends HomeEvent {
+class QuickInsertItem extends ListEvent {
   final Key listId;
   final DateTime date;
 
-  const QuickInsertHome({
+  const QuickInsertItem({
     required this.listId,
     required this.date,
   });
@@ -31,16 +31,16 @@ class QuickInsertHome extends HomeEvent {
   List<Object> get props => [listId, date];
 }
 
-class RemoveFromHome extends HomeEvent {
+class RemoveList extends ListEvent {
   final Key id;
 
-  const RemoveFromHome({required this.id});
+  const RemoveList({required this.id});
 
   @override
   List<Object> get props => [id];
 }
 
-class ChangeSort extends HomeEvent {
+class ChangeSort extends ListEvent {
   final SortingType sortingType;
 
   const ChangeSort({required this.sortingType});
@@ -49,7 +49,7 @@ class ChangeSort extends HomeEvent {
   List<Object> get props => [sortingType];
 }
 
-class InsertListItem extends HomeEvent {
+class InsertListItem extends ListEvent {
   final Key listId;
   final DateTime date;
 
@@ -62,7 +62,7 @@ class InsertListItem extends HomeEvent {
   List<Object> get props => [listId, date];
 }
 
-class RemoveListItem extends HomeEvent {
+class RemoveListItem extends ListEvent {
   final Key listId;
   final Key itemId;
 

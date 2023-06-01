@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger_app/functions.dart';
-import 'package:logger_app/pages/home/bloc/home_bloc.dart';
+import 'package:logger_app/bloc/list_bloc.dart';
 import 'package:logger_app/pages/home/functions.dart';
 import 'package:logger_app/pages/home/widgets/chart.dart';
 import 'package:logger_app/pages/home/widgets/quick_insert.dart';
@@ -17,7 +17,7 @@ import 'package:marquee_widget/marquee_widget.dart';
 class MobileHome extends StatelessWidget {
   const MobileHome({super.key, required this.state});
 
-  final HomeLoaded state;
+  final ListLoaded state;
 
   @override
   Widget build(BuildContext context) {
@@ -113,8 +113,8 @@ class MobileHome extends StatelessWidget {
 
                                 if (delete) {
                                   // ignore: use_build_context_synchronously
-                                  BlocProvider.of<HomeBloc>(context).add(
-                                    RemoveFromHome(id: state.lists[i].id),
+                                  BlocProvider.of<ListBloc>(context).add(
+                                    RemoveList(id: state.lists[i].id),
                                   );
                                 }
                               },
