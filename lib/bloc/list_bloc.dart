@@ -251,36 +251,3 @@ List<ListOfItems> _sortList({
 
   return [...favorites, ...normal];
 }
-
-List<double> _getChartData(List<ListItem> items) {
-  int itemCount = items.length;
-  List<double> doubleList = [];
-
-  for (int a = 0; a < 30; a++) {
-    DateTime now = DateTime.now().subtract(Duration(days: a));
-    doubleList.add(itemCount.toDouble());
-
-    if (items.any((item) => _matchDates(item.date, now))) {
-      itemCount -= _countItemsInOneDay(now, items);
-    }
-  }
-
-  return List.from(doubleList.reversed);
-}
-
-int _countItemsInOneDay(DateTime date, List<ListItem> items) {
-  int count = 0;
-
-  for (ListItem element in items) {
-    if (_matchDates(element.date, date)) count++;
-  }
-
-  return count;
-}
-
-bool _matchDates(DateTime d1, DateTime d2) {
-  if (d1.day != d2.day) return false;
-  if (d1.month != d2.month) return false;
-  if (d1.year != d2.year) return false;
-  return true;
-}
