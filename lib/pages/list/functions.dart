@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger_app/models/item.dart';
 import 'package:logger_app/models/list.dart';
 import 'package:logger_app/bloc/list_bloc.dart';
 
@@ -35,4 +36,15 @@ Future<void> addNewItemDialog({
       listId: list.id,
     ),
   );
+}
+
+List<ListItem> sortItemDates(List<ListItem> list) {
+  list.sort((a, b) {
+    int bTime = b.date.millisecondsSinceEpoch;
+    int aTime = a.date.millisecondsSinceEpoch;
+
+    return bTime.compareTo(aTime);
+  });
+
+  return list;
 }

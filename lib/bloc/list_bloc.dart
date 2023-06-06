@@ -85,7 +85,31 @@ class ListBloc extends Bloc<ListEvent, ListState> {
 
       newState[index] = newList;
 
-      emit(ListLoaded(lists: newState));
+      emit(ListLoaded(lists: newState, message: Strings.itemAdded));
+      _saveLocally(newState);
+    });
+
+    on<RemoveListItem>((event, emit) {
+      List<ListOfItems> newState = _getNewInstance(state);
+
+      int index = newState.indexWhere(
+        (element) => element.id == event.listId,
+      );
+
+      List<ListItem> newDates = [...newState[index].dates];
+      newDates.removeWhere((element) => element.id == event.itemId);
+
+      ListOfItems newList = ListOfItems(
+        id: event.listId,
+        name: newState[index].name,
+        favorite: newState[index].favorite,
+        creationDate: newState[index].creationDate,
+        dates: newDates,
+      );
+
+      newState[index] = newList;
+
+      emit(ListLoaded(lists: newState, message: Strings.itemRemoved));
       _saveLocally(newState);
     });
   }

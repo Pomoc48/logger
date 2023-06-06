@@ -25,6 +25,8 @@ class MobileList extends StatelessWidget {
       );
     }
 
+    final listDates = sortItemDates(list.dates);
+
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: LineChart(
@@ -56,17 +58,17 @@ class MobileList extends StatelessWidget {
           return Padding(
             padding: EdgeInsets.only(
               top: i == 0 ? 8 : 0,
-              bottom: i == list.dates.length - 1 ? 128 : 0,
+              bottom: i == listDates.length - 1 ? 128 : 0,
             ),
             child: ListTile(
               leading: ListLeading(
-                number: list.dates.length - i,
+                number: listDates.length - i,
                 favorite: list.favorite,
               ),
-              title: Text(dateTitle(list.dates[i].date)),
-              subtitle: Text(dateSubtitle(list.dates[i].date)),
+              title: Text(dateTitle(listDates[i].date)),
+              subtitle: Text(dateSubtitle(listDates[i].date)),
               trailing: ListRemove(
-                itemId: list.dates[i].id,
+                itemId: listDates[i].id,
                 listId: list.id,
               ),
             ),
