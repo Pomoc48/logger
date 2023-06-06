@@ -40,6 +40,7 @@ class Strings {
   static String listRemoved = "List removed";
   static String itemAdded = "New item added";
   static String itemRemoved = "Item removed";
+  static String listFavToggle = "Favorite status changed";
 }
 
 class Routes {

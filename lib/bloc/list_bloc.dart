@@ -57,15 +57,15 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       emit(ListLoaded(lists: newState, message: Strings.listRemoved));
     });
 
-    on<ChangeSort>((event, emit) {
+    on<ChangeSort>((event, emit) async {
       List<ListOfItems> newState = _getNewInstance(state);
       List<ListOfItems> sorted = _sortList(newState, event.sortingType.name);
 
+      await GetStorage().write(DataKeys.sorting, event.sortingType.name);
       emit(ListLoaded(lists: sorted));
-      GetStorage().write(DataKeys.sorting, event.sortingType.name);
     });
 
-    on<InsertListItem>((event, emit) {
+    on<InsertListItem>((event, emit) async {
       List<ListOfItems> newState = _getNewInstance(state);
 
       int index = newState.indexWhere(
@@ -85,11 +85,11 @@ class ListBloc extends Bloc<ListEvent, ListState> {
 
       newState[index] = newList;
 
+      await _saveLocally(newState);
       emit(ListLoaded(lists: newState, message: Strings.itemAdded));
-      _saveLocally(newState);
     });
 
-    on<RemoveListItem>((event, emit) {
+    on<RemoveListItem>((event, emit) async {
       List<ListOfItems> newState = _getNewInstance(state);
 
       int index = newState.indexWhere(
@@ -109,8 +109,29 @@ class ListBloc extends Bloc<ListEvent, ListState> {
 
       newState[index] = newList;
 
+      await _saveLocally(newState);
       emit(ListLoaded(lists: newState, message: Strings.itemRemoved));
-      _saveLocally(newState);
+    });
+
+    on<ToggleListFavorite>((event, emit) async {
+      List<ListOfItems> newState = _getNewInstance(state);
+
+      int index = newState.indexWhere(
+        (element) => element.id == event.id,
+      );
+
+      ListOfItems newList = ListOfItems(
+        id: event.id,
+        name: newState[index].name,
+        favorite: !newState[index].favorite,
+        creationDate: newState[index].creationDate,
+        dates: newState[index].dates,
+      );
+
+      newState[index] = newList;
+
+      await _saveLocally(newState);
+      emit(ListLoaded(lists: newState, message: Strings.listFavToggle));
     });
   }
 }

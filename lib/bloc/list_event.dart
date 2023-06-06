@@ -61,3 +61,12 @@ class RemoveListItem extends ListEvent {
   @override
   List<Object> get props => [listId, itemId];
 }
+
+class ToggleListFavorite extends ListEvent {
+  final Key id;
+
+  const ToggleListFavorite({required this.id});
+
+  @override
+  List<Object> get props => [id];
+}

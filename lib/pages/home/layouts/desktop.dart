@@ -78,13 +78,12 @@ class DesktopHome extends StatelessWidget {
             ),
           ),
           child: InkWell(
-            onTap: () async {
-              // BlocProvider.of<ListBloc>(context).add(LoadList(
-              //   list: state.lists[i],
-              //   token: state.token,
-              // ));
-
-              // await Navigator.pushNamed(context, Routes.list);
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                Routes.list,
+                arguments: state.lists[i].id,
+              );
             },
             borderRadius: BorderRadius.circular(12),
             child: Container(
@@ -179,11 +178,9 @@ class DesktopHome extends StatelessWidget {
                           }
 
                           if (value == "favorite") {
-                            // await updateListFav(
-                            //   id: state.lists[i].id,
-                            //   favourite: !state.lists[i].favorite,
-                            //   token: state.token,
-                            // );
+                            BlocProvider.of<ListBloc>(context).add(
+                              ToggleListFavorite(id: state.lists[i].id),
+                            );
                           }
 
                           if (value == "delete") {
