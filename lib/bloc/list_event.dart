@@ -18,19 +18,6 @@ class InsertList extends ListEvent {
   List<Object> get props => [name];
 }
 
-class QuickInsertItem extends ListEvent {
-  final Key listId;
-  final DateTime date;
-
-  const QuickInsertItem({
-    required this.listId,
-    required this.date,
-  });
-
-  @override
-  List<Object> get props => [listId, date];
-}
-
 class RemoveList extends ListEvent {
   final Key id;
 

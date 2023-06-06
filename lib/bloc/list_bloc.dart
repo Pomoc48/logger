@@ -49,10 +49,6 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       emit(ListLoaded(lists: newState, message: Strings.listAdded));
     });
 
-    on<QuickInsertItem>((event, emit) async {
-      //TODO: do some loading
-    });
-
     on<RemoveList>((event, emit) async {
       List<ListOfItems> newState = _getNewInstance(state);
       newState.removeWhere((element) => element.id == event.id);
