@@ -18,6 +18,8 @@ class DesktopList extends StatelessWidget {
   Widget build(BuildContext context) {
     double padding = width > 1200 ? 32 : 24;
 
+    final listDates = sortItemDates(list.dates);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(list.name),
@@ -65,18 +67,18 @@ class DesktopList extends StatelessWidget {
 
                   return ListTile(
                     leading: ListLeading(
-                      number: list.dates.length - i,
+                      number: listDates.length - i,
                       favorite: list.favorite,
                     ),
-                    title: Text(dateTitle(list.dates[i].date)),
-                    subtitle: Text(dateSubtitle(list.dates[i].date)),
+                    title: Text(dateTitle(listDates[i].date)),
+                    subtitle: Text(dateSubtitle(listDates[i].date)),
                     trailing: ListRemove(
-                      itemId: list.dates[i].id,
+                      itemId: listDates[i].id,
                       listId: list.id,
                     ),
                   );
                 },
-                itemCount: list.dates.length + 1,
+                itemCount: listDates.length + 1,
               ),
             ),
             SizedBox(width: padding),

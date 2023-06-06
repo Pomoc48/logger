@@ -18,19 +18,6 @@ class InsertList extends ListEvent {
   List<Object> get props => [name];
 }
 
-class QuickInsertItem extends ListEvent {
-  final Key listId;
-  final DateTime date;
-
-  const QuickInsertItem({
-    required this.listId,
-    required this.date,
-  });
-
-  @override
-  List<Object> get props => [listId, date];
-}
-
 class RemoveList extends ListEvent {
   final Key id;
 
@@ -73,4 +60,26 @@ class RemoveListItem extends ListEvent {
 
   @override
   List<Object> get props => [listId, itemId];
+}
+
+class ToggleListFavorite extends ListEvent {
+  final Key id;
+
+  const ToggleListFavorite({required this.id});
+
+  @override
+  List<Object> get props => [id];
+}
+
+class RenameList extends ListEvent {
+  final Key listId;
+  final String newName;
+
+  const RenameList({
+    required this.listId,
+    required this.newName,
+  });
+
+  @override
+  List<Object> get props => [listId, newName];
 }

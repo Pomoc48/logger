@@ -1,4 +1,4 @@
-package xyz.lukawski.logger
+package com.mlukawski.logger
 
 import io.flutter.embedding.android.FlutterActivity
 

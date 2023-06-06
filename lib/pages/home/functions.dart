@@ -98,13 +98,12 @@ Future<void> renameDialog({
 
   void confirm(BuildContext c) async {
     if (controller.text.trim().isNotEmpty) {
-      Navigator.pop(c);
+      BlocProvider.of<ListBloc>(context).add(RenameList(
+        listId: listId,
+        newName: controller.text.trim(),
+      ));
 
-      // await updateListName(
-      //   id: counterId,
-      //   name: controller.text,
-      //   token: state.token,
-      // );
+      Navigator.pop(c);
     }
   }
 
@@ -185,13 +184,13 @@ void showSortingOptions(BuildContext context) {
               ),
               sortOption(
                 context,
-                Strings.sortCounterAsc,
-                SortingType.countASC,
+                Strings.sortDateDesc,
+                SortingType.dateDESC,
               ),
               sortOption(
                 context,
-                Strings.sortDateDesc,
-                SortingType.dateDESC,
+                Strings.sortCounterAsc,
+                SortingType.countASC,
               ),
               sortOption(
                 context,

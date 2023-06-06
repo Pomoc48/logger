@@ -86,24 +86,21 @@ class MobileHome extends StatelessWidget {
                             title: getFavButtonString(
                               favorite: state.lists[i].favorite,
                             ),
-                            onTap: () async {
-                              // await updateListFav(
-                              //   id: state.lists[i].id,
-                              //   favourite: !state.lists[i].favorite,
-                              //   token: state.token,
-                              // );
+                            onTap: () {
+                              BlocProvider.of<ListBloc>(context).add(
+                                ToggleListFavorite(id: state.lists[i].id),
+                              );
                             },
                           ),
                           ModalList(
                             icon: Icons.edit,
                             title: Strings.changeName,
-                            onTap: () => {
-                              // renameDialog(
-                              //   context: context,
-                              //   counterId: state.lists[i].id,
-                              //   state: state,
-                              //   oldName: state.lists[i].name,
-                              // )
+                            onTap: () {
+                              renameDialog(
+                                context: context,
+                                listId: state.lists[i].id,
+                                oldName: state.lists[i].name,
+                              );
                             },
                           ),
                           ModalList(

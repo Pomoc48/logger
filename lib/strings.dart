@@ -36,8 +36,12 @@ class Strings {
   static String rename = "Rename";
 
   // Feedback
-  static String listAdded = "List successfully added";
-  static String listRemoved = "List successfully removed";
+  static String listAdded = "New list added";
+  static String listRemoved = "List removed";
+  static String itemAdded = "New item added";
+  static String itemRemoved = "Item removed";
+  static String listFavToggle = "Favorite status changed";
+  static String listRenamed = "List renamed";
 }
 
 class Routes {

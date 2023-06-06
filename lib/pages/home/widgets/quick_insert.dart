@@ -42,7 +42,7 @@ Future<void> quickItem({
   DateTime date = DateTime.now();
 
   BlocProvider.of<ListBloc>(context).add(
-    QuickInsertItem(
+    InsertListItem(
       date: date,
       listId: listId,
     ),
