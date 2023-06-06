@@ -28,7 +28,10 @@ class ListBloc extends Bloc<ListEvent, ListState> {
         );
       }
 
-      List<ListOfItems> sorted = _sortList(list, sortType);
+      List<ListOfItems> sorted = _sortList(
+        list: list,
+        sortTypeName: sortType,
+      );
 
       emit(ListLoaded(lists: sorted));
     });
@@ -44,6 +47,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
 
       List<ListOfItems> newState = _getNewInstance(state);
       newState.add(listOfItems);
+      newState = _sortList(list: newState);
 
       await _saveLocally(newState);
       emit(ListLoaded(lists: newState, message: Strings.listAdded));
@@ -52,6 +56,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
     on<RemoveList>((event, emit) async {
       List<ListOfItems> newState = _getNewInstance(state);
       newState.removeWhere((element) => element.id == event.id);
+      newState = _sortList(list: newState);
 
       await _saveLocally(newState);
       emit(ListLoaded(lists: newState, message: Strings.listRemoved));
@@ -59,7 +64,10 @@ class ListBloc extends Bloc<ListEvent, ListState> {
 
     on<ChangeSort>((event, emit) async {
       List<ListOfItems> newState = _getNewInstance(state);
-      List<ListOfItems> sorted = _sortList(newState, event.sortingType.name);
+      List<ListOfItems> sorted = _sortList(
+        list: newState,
+        sortTypeName: event.sortingType.name,
+      );
 
       await GetStorage().write(DataKeys.sorting, event.sortingType.name);
       emit(ListLoaded(lists: sorted));
@@ -84,6 +92,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       );
 
       newState[index] = newList;
+      newState = _sortList(list: newState);
 
       await _saveLocally(newState);
       emit(ListLoaded(lists: newState, message: Strings.itemAdded));
@@ -108,6 +117,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       );
 
       newState[index] = newList;
+      newState = _sortList(list: newState);
 
       await _saveLocally(newState);
       emit(ListLoaded(lists: newState, message: Strings.itemRemoved));
@@ -129,6 +139,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       );
 
       newState[index] = newList;
+      newState = _sortList(list: newState);
 
       await _saveLocally(newState);
       emit(ListLoaded(lists: newState, message: Strings.listFavToggle));
@@ -145,20 +156,45 @@ Future<void> _saveLocally(List<ListOfItems> lists) async {
   await GetStorage().write(DataKeys.data, data);
 }
 
-List<ListOfItems> _sortList(
-  List<ListOfItems> list,
-  String sortTypeName,
-) {
+List<ListOfItems> _sortList({
+  required List<ListOfItems> list,
+  String? sortTypeName,
+}) {
+  List<ListOfItems> favorites = [];
+  List<ListOfItems> normal = [];
+
+  if (sortTypeName == null) {
+    sortTypeName = GetStorage().read(DataKeys.sorting);
+    sortTypeName ??= SortingType.name.name;
+  }
+
+  for (ListOfItems element in list) {
+    if (element.favorite) {
+      favorites.add(element);
+    } else {
+      normal.add(element);
+    }
+  }
+
   if (sortTypeName == SortingType.countASC.name) {
-    list.sort((a, b) => b.dates.length.compareTo(a.dates.length));
+    favorites.sort((a, b) => b.dates.length.compareTo(a.dates.length));
+    normal.sort((a, b) => b.dates.length.compareTo(a.dates.length));
   }
 
   if (sortTypeName == SortingType.countDESC.name) {
-    list.sort((a, b) => a.dates.length.compareTo(b.dates.length));
+    favorites.sort((a, b) => a.dates.length.compareTo(b.dates.length));
+    normal.sort((a, b) => a.dates.length.compareTo(b.dates.length));
   }
 
   if (sortTypeName == SortingType.dateASC.name) {
-    list.sort((a, b) {
+    favorites.sort((a, b) {
+      int bTime = b.creationDate.millisecondsSinceEpoch;
+      int aTime = a.creationDate.millisecondsSinceEpoch;
+
+      return bTime.compareTo(aTime);
+    });
+
+    normal.sort((a, b) {
       int bTime = b.creationDate.millisecondsSinceEpoch;
       int aTime = a.creationDate.millisecondsSinceEpoch;
 
@@ -167,7 +203,14 @@ List<ListOfItems> _sortList(
   }
 
   if (sortTypeName == SortingType.dateDESC.name) {
-    list.sort((a, b) {
+    favorites.sort((a, b) {
+      int bTime = b.creationDate.millisecondsSinceEpoch;
+      int aTime = a.creationDate.millisecondsSinceEpoch;
+
+      return aTime.compareTo(bTime);
+    });
+
+    normal.sort((a, b) {
       int bTime = b.creationDate.millisecondsSinceEpoch;
       int aTime = a.creationDate.millisecondsSinceEpoch;
 
@@ -176,10 +219,15 @@ List<ListOfItems> _sortList(
   }
 
   if (sortTypeName == SortingType.name.name) {
-    list.sort((a, b) => a.name.compareTo(b.name));
+    favorites.sort(
+      (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()),
+    );
+    normal.sort(
+      (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()),
+    );
   }
 
-  return list;
+  return [...favorites, ...normal];
 }
 
 List<double> _getChartData(List<ListItem> items) {

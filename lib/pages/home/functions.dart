@@ -185,13 +185,13 @@ void showSortingOptions(BuildContext context) {
               ),
               sortOption(
                 context,
-                Strings.sortCounterAsc,
-                SortingType.countASC,
+                Strings.sortDateDesc,
+                SortingType.dateDESC,
               ),
               sortOption(
                 context,
-                Strings.sortDateDesc,
-                SortingType.dateDESC,
+                Strings.sortCounterAsc,
+                SortingType.countASC,
               ),
               sortOption(
                 context,
