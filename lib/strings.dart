@@ -41,6 +41,7 @@ class Strings {
   static String itemAdded = "New item added";
   static String itemRemoved = "Item removed";
   static String listFavToggle = "Favorite status changed";
+  static String listRenamed = "List renamed";
 }
 
 class Routes {

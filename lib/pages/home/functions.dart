@@ -98,13 +98,12 @@ Future<void> renameDialog({
 
   void confirm(BuildContext c) async {
     if (controller.text.trim().isNotEmpty) {
-      Navigator.pop(c);
+      BlocProvider.of<ListBloc>(context).add(RenameList(
+        listId: listId,
+        newName: controller.text.trim(),
+      ));
 
-      // await updateListName(
-      //   id: counterId,
-      //   name: controller.text,
-      //   token: state.token,
-      // );
+      Navigator.pop(c);
     }
   }
 

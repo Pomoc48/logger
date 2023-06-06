@@ -169,12 +169,11 @@ class DesktopHome extends StatelessWidget {
                           }
 
                           if (value == "rename") {
-                            // renameDialog(
-                            //   context: context,
-                            //   counterId: state.lists[i].id,
-                            //   state: state,
-                            //   oldName: state.lists[i].name,
-                            // );
+                            renameDialog(
+                              context: context,
+                              listId: state.lists[i].id,
+                              oldName: state.lists[i].name,
+                            );
                           }
 
                           if (value == "favorite") {

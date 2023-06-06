@@ -144,6 +144,28 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       await _saveLocally(newState);
       emit(ListLoaded(lists: newState, message: Strings.listFavToggle));
     });
+
+    on<RenameList>((event, emit) async {
+      List<ListOfItems> newState = _getNewInstance(state);
+
+      int index = newState.indexWhere(
+        (element) => element.id == event.listId,
+      );
+
+      ListOfItems newList = ListOfItems(
+        id: event.listId,
+        name: event.newName,
+        favorite: newState[index].favorite,
+        creationDate: newState[index].creationDate,
+        dates: newState[index].dates,
+      );
+
+      newState[index] = newList;
+      newState = _sortList(list: newState);
+
+      await _saveLocally(newState);
+      emit(ListLoaded(lists: newState, message: Strings.listRenamed));
+    });
   }
 }
 

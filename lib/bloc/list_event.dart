@@ -70,3 +70,16 @@ class ToggleListFavorite extends ListEvent {
   @override
   List<Object> get props => [id];
 }
+
+class RenameList extends ListEvent {
+  final Key listId;
+  final String newName;
+
+  const RenameList({
+    required this.listId,
+    required this.newName,
+  });
+
+  @override
+  List<Object> get props => [listId, newName];
+}
