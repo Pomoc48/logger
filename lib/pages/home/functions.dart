@@ -22,7 +22,7 @@ Future<void> addNewListDialog({required BuildContext context}) async {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text(Strings.newItem),
+        title: Text(Strings.listName),
         content: SizedBox(
           width: 400,
           child: TextField(
@@ -30,7 +30,6 @@ Future<void> addNewListDialog({required BuildContext context}) async {
             controller: controller,
             textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
-              label: Text(Strings.counterName),
               hintText: Strings.newListHint,
             ),
             textInputAction: TextInputAction.done,
@@ -119,7 +118,6 @@ Future<void> renameDialog({
             controller: controller,
             textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
-              label: Text(Strings.counterName),
               hintText: Strings.newListHint,
             ),
             textInputAction: TextInputAction.done,
