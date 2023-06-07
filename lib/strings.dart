@@ -2,24 +2,24 @@ class Strings {
   static String appName = "Logger";
 
   // Display text
-  static String empty = "No items to display";
+  static String empty = "The list is empty.\nAdd new items using the button.";
   static String areSure =
-      "Are you sure you want to delete this list?\nAll items inside will be permanently deleted.";
+      "Are you sure you want to delete this list? All items inside will be permanently deleted.";
   static String confirmation = "Confirmation";
-  static String addNewCounter = "Add new counter";
+  static String listName = "New list name";
   static String addNewDate = "Add new date";
+  static String addNewList = "Add new list";
+  static String changeName = "Name change";
   static String changeSorting = "List sorting";
 
   // List options
   static String addFav = "Add favorite";
   static String remFav = "Remove favorite";
   static String quickAdd = "Insert current time";
-  static String changeName = "Name change";
   static String removeForever = "Delete forever";
 
   // Hints / Labels
   static String newListHint = "Workout";
-  static String counterName = "Name of the counter";
 
   // Sorting
   static String sortName = "Alphabetically";
@@ -29,7 +29,6 @@ class Strings {
   static String sortCounterDesc = "Counter (lowest)";
 
   // Buttons
-  static String newItem = "New";
   static String create = "Create";
   static String cancel = "Cancel";
   static String delete = "Delete";

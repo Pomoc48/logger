@@ -15,25 +15,18 @@ class EmptyList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton.large(
         onPressed: () => press(),
-        icon: const Icon(Icons.add),
-        label: Text(Strings.newItem),
+        child: const Icon(Icons.add),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Icon(
-            Icons.error_outline,
-            size: 56,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-          const SizedBox(height: 16),
           Text(
             Strings.empty,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 56 + 32),
         ],

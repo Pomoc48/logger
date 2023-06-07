@@ -22,7 +22,7 @@ Future<void> addNewListDialog({required BuildContext context}) async {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text(Strings.newItem),
+        title: Text(Strings.listName),
         content: SizedBox(
           width: 400,
           child: TextField(
@@ -30,7 +30,6 @@ Future<void> addNewListDialog({required BuildContext context}) async {
             controller: controller,
             textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
-              label: Text(Strings.counterName),
               hintText: Strings.newListHint,
             ),
             textInputAction: TextInputAction.done,
@@ -67,18 +66,16 @@ Future<bool> confirmDelete({
           child: Text(message),
         ),
         actions: [
-          TextButton.icon(
+          TextButton(
             onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.close),
-            label: Text(Strings.cancel),
+            child: Text(Strings.cancel),
           ),
-          TextButton.icon(
+          TextButton(
             onPressed: () {
               dismiss = true;
               Navigator.pop(context);
             },
-            icon: const Icon(Icons.delete_outlined),
-            label: Text(Strings.delete),
+            child: Text(Strings.delete),
           ),
         ],
       );
@@ -119,7 +116,6 @@ Future<void> renameDialog({
             controller: controller,
             textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
-              label: Text(Strings.counterName),
               hintText: Strings.newListHint,
             ),
             textInputAction: TextInputAction.done,
