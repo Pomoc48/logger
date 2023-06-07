@@ -66,18 +66,16 @@ Future<bool> confirmDelete({
           child: Text(message),
         ),
         actions: [
-          TextButton.icon(
+          TextButton(
             onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.close),
-            label: Text(Strings.cancel),
+            child: Text(Strings.cancel),
           ),
-          TextButton.icon(
+          TextButton(
             onPressed: () {
               dismiss = true;
               Navigator.pop(context);
             },
-            icon: const Icon(Icons.delete_outlined),
-            label: Text(Strings.delete),
+            child: Text(Strings.delete),
           ),
         ],
       );
