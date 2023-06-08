@@ -44,7 +44,7 @@ class DesktopHome extends StatelessWidget {
         ),
         itemCount: state.lists.length + 1,
         itemBuilder: (context, i) {
-          if (i == state.lists.length) {
+          if (i == 0) {
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
@@ -72,6 +72,8 @@ class DesktopHome extends StatelessWidget {
               ),
             );
           }
+
+          i = i -= 1;
 
           return Container(
             decoration: BoxDecoration(
