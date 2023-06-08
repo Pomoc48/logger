@@ -4,7 +4,7 @@ Simple Flutter application for logging your life.
 \
 Live preview: [https://logger.mlukawski.com/](https://logger.mlukawski.com/)
 
-![Banner image](screenshots/banner.png)
+![Banner image](play_store/feature.png)
 
 ## Features
 

@@ -95,6 +95,7 @@ class DesktopList extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(width: padding),
           ],
         ),
       ),
