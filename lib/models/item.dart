@@ -10,18 +10,15 @@ class ListItem extends Equatable {
     required this.date,
   });
 
-  factory ListItem.fromMap(dynamic map) {
+  factory ListItem.fromMap(int timestamp) {
     return ListItem(
-      id: Key(map["id"]),
-      date: DateTime.fromMillisecondsSinceEpoch(map["date"]),
+      id: UniqueKey(),
+      date: DateTime.fromMillisecondsSinceEpoch(timestamp),
     );
   }
 
-  Map toMap() {
-    return {
-      "id": id.toString(),
-      "date": date.millisecondsSinceEpoch,
-    };
+  int toTimestamp() {
+    return date.millisecondsSinceEpoch;
   }
 
   @override

@@ -23,21 +23,20 @@ class ListOfItems extends Equatable {
     );
 
     return ListOfItems(
-      id: Key(map["id"]),
+      id: UniqueKey(),
       name: map["name"],
-      favorite: map["favorite"],
-      creationDate: DateTime.fromMillisecondsSinceEpoch(map["creationDate"]),
+      favorite: map["fav"],
+      creationDate: DateTime.fromMillisecondsSinceEpoch(map["created"]),
       dates: dates,
     );
   }
 
   Map toMap() {
     return {
-      "id": id.toString(),
       "name": name,
-      "favorite": favorite,
-      "creationDate": creationDate.millisecondsSinceEpoch,
-      "dates": dates.map((e) => e.toMap()).toList(),
+      "fav": favorite,
+      "created": creationDate.millisecondsSinceEpoch,
+      "dates": dates.map((e) => e.toTimestamp()).toList(),
     };
   }
 
