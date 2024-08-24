@@ -1,3 +1,4 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
@@ -11,48 +12,57 @@ void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
 
-  ThemeData light = ThemeData(
-    useMaterial3: true,
-    colorSchemeSeed: Colors.blue,
-    brightness: Brightness.light,
+  ColorScheme defaultLightColorScheme = ColorScheme.fromSwatch(
+    primarySwatch: Colors.blue,
   );
 
-  ThemeData dark = ThemeData(
-    useMaterial3: true,
-    colorSchemeSeed: Colors.blue,
+  ColorScheme defaultDarkColorScheme = ColorScheme.fromSwatch(
+    primarySwatch: Colors.blue,
     brightness: Brightness.dark,
   );
 
   runApp(
-    BlocProvider(
-      create: (context) => ListBloc()..add(LoadHome()),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: Strings.appName,
-        theme: light.copyWith(
-          textTheme: GoogleFonts.interTextTheme(light.textTheme),
-        ),
-        darkTheme: dark.copyWith(
-          textTheme: GoogleFonts.interTextTheme(dark.textTheme),
-        ),
-        scrollBehavior: const ScrollBehavior().copyWith(
-          physics: const BouncingScrollPhysics(),
-          scrollbars: false,
-        ),
-        routes: {
-          Routes.home: (context) => const HomePage(),
-        },
-        onGenerateRoute: (settings) {
-          if (settings.name == Routes.list) {
-            return MaterialPageRoute(
-              builder: (_) => ListPage(id: settings.arguments as Key),
-            );
-          }
+    DynamicColorBuilder(builder: (lightColorScheme, darkColorScheme) {
+      ThemeData light = ThemeData(
+        useMaterial3: true,
+        colorScheme: lightColorScheme ?? defaultLightColorScheme,
+      );
 
-          return null;
-        },
-        initialRoute: Routes.home,
-      ),
-    ),
+      ThemeData dark = ThemeData(
+        useMaterial3: true,
+        colorScheme: darkColorScheme ?? defaultDarkColorScheme,
+      );
+
+      return BlocProvider(
+        create: (context) => ListBloc()..add(LoadHome()),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: Strings.appName,
+          theme: light.copyWith(
+            textTheme: GoogleFonts.interTextTheme(light.textTheme),
+          ),
+          darkTheme: dark.copyWith(
+            textTheme: GoogleFonts.interTextTheme(dark.textTheme),
+          ),
+          scrollBehavior: const ScrollBehavior().copyWith(
+            physics: const BouncingScrollPhysics(),
+            scrollbars: false,
+          ),
+          routes: {
+            Routes.home: (context) => const HomePage(),
+          },
+          onGenerateRoute: (settings) {
+            if (settings.name == Routes.list) {
+              return MaterialPageRoute(
+                builder: (_) => ListPage(id: settings.arguments as Key),
+              );
+            }
+
+            return null;
+          },
+          initialRoute: Routes.home,
+        ),
+      );
+    }),
   );
 }
