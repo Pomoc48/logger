@@ -1,8 +1,9 @@
+> [!WARNING]
+> The project has been permanently shelved due to lack of time. This repo is not being maintained.
+
 # Logger
 
 Simple Flutter application for logging your life.
-\
-Live preview: [https://logger.mlukawski.com/](https://logger.mlukawski.com/)
 
 ![Banner image](play_store/feature.png)
 
